@@ -19,7 +19,7 @@
                 </ul>
             </nav>
         </nav>
-        <a href="?menu=Login"><button class="btnLoginCabecera">Login</button></a>
+        <a href="index.php?menu=Logout"><button class="btnLoginCabecera">Logout</button></a>
     </header>
 
     <?= $this->section('css') ?>

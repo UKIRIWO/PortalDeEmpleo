@@ -1,6 +1,4 @@
 <?php
-
-
 include_once "../Loaders/miAutoLoader.php";
 use League\Plates\Engine;
 
