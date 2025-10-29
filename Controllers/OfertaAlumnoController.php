@@ -4,7 +4,7 @@
 include_once "../Loaders/miAutoLoader.php";
 use League\Plates\Engine;
 
-class InicioController {
+class OfertaAlumnoController {
     private $templates;
 
     public function __construct() {
@@ -13,10 +13,10 @@ class InicioController {
 
     public function index() {
         $data = [
-            'titulo' => 'Inicio',
-            'mensaje' => 'Bienvenido al inicio de mi Web'
+            'titulo' => 'Ofertas de empleo',
+            'mensaje' => 'Bienvenido a las ofertas activas'
         ];
 
-        echo $this->templates->render('Inicio', $data);
+        echo $this->templates->render('OfertaAlumno', $data);
     }
 }

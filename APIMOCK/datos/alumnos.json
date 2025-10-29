@@ -1,72 +1,63 @@
 [
     {
         "id": 2,
-        "dni": "51239874K",
         "nombre": "Lucía",
-        "ape1": "Martínez",
-        "ape2": "Pérez"
+        "apellido": "Martínez",
+        "email": "Pérez"
     },
     {
         "id": 3,
-        "dni": "30457216B",
         "nombre": "Andrés",
-        "ape1": "Sánchez",
-        "ape2": "Gómez"
+        "apellido": "Sánchez",
+        "email": "Gómez"
     },
     {
         "id": 4,
-        "dni": "72849105X",
         "nombre": "Marina",
-        "ape1": "Rodríguez",
-        "ape2": "López"
+        "apellido": "Rodríguez",
+        "email": "López"
     },
     {
         "id": 5,
-        "dni": "93576142D",
         "nombre": "Hugo",
-        "ape1": "Fernández",
-        "ape2": "Ruiz"
+        "apellido": "Fernández",
+        "email": "Ruiz"
     },
     {
         "id": 6,
-        "dni": "65729418M",
         "nombre": "Elena",
-        "ape1": "Jiménez",
-        "ape2": "Santos"
+        "apellido": "Jiménez",
+        "email": "Santos"
     },
     {
         "id": 7,
-        "dni": "84392067V",
         "nombre": "Carlos",
-        "ape1": "Domínguez",
-        "ape2": "Morales"
+        "apellido": "Domínguez",
+        "email": "Morales"
     },
     {
         "id": 8,
-        "dni": "71930852N",
         "nombre": "Beatriz",
-        "ape1": "García",
-        "ape2": "Ortega"
+        "apellido": "García",
+        "email": "Ortega"
     },
     {
         "id": 9,
-        "dni": "26843591L",
         "nombre": "Raúl",
-        "ape1": "Vega",
-        "ape2": "Herrera"
+        "apellido": "Vega",
+        "email": "Herrera"
     },
     {
         "id": 10,
-        "dni": "48920375C",
         "nombre": "Sofía",
-        "ape1": "Molina",
-        "ape2": "Castro"
+        "apellido": "Molina",
+        "email": "Castro"
     },
     {
         "id": 11,
-        "dni": "37658249R",
+
         "nombre": "Daniel",
-        "ape1": "Navarro",
-        "ape2": "Torres"
+        "apellido": "Navarro",
+        "email": "Torres"
     }
 ]

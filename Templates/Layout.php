@@ -4,19 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Proyecto</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../Public/css/cabecera.css">
+    <link rel="stylesheet" href="../Public/css/pie.css">
 </head>
 
 <body>
-    <!--Así se define una seccion (header, content, footer)-->
+    <header>
+        <a href="index.html"><img src="img/logoWorkSphere-sinFondo.png" alt="Logo" class="logoHead"></a>
+        <nav>
+            <nav>
+                <ul>
+                    <li><a href="?menu=Inicio">Inicio</a></li>
+                    <li><a href="?menu=OfertaAlumno">OfertaAlumno</a></li>
+                </ul>
+            </nav>
+        </nav>
+        <a href="?menu=Login"><button class="btnLoginCabecera">Login</button></a>
+    </header>
 
-    <!--Manolo quiere que esto tenga css y js dentro de la propia plantilla (es decir, hereda css y js)-->
     <?= $this->section('css') ?>
     <?= $this->section('js') ?>
-    <?= $this->section('header') ?>
-    <?= $this->section('content') ?>
-    <?= $this->section('footer') ?>
+    <?= $this->section('contenido') ?>
 
+    
+    <footer>
+        <div id="footer-left">
+            <div id="foot-L-container-more-links">
+                <a href="index.html"><img src="img/logoWorkSphere-sinFondo.png" alt="" id="footer-logo"></a>
+                <ul id="foot-L-container-links">
+                    <li><a href="" class="footer-link">Contacto</a></li>
+                    <li><a href="" class="footer-link">Términos de uso</a></li>
+                    <li><a href="" class="footer-link">Política de prive</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer-right">
+            <div id="foot-R-container-social">
+                <h2>Redes sociales</h2>
+                <div id="foot-R-container-social-icons">
+                    <a href=""><img src="img/facebook_logo.png" alt="" class="social-icon"></a>
+                    <a href=""><img src="img/instagram_logo.png" alt="" class="social-icon"></a>
+                    <a href=""><img src="img/twitter_logo.png" alt="" class="social-icon"></a>
+                    <a href=""><img src="img/youtube_logo.png" alt="" class="social-icon"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

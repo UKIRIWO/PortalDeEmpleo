@@ -37,7 +37,7 @@ header nav ul li a:hover {
     color: #0073b1; 
 }
 
-.btnLogin {
+.btnLoginCabecera {
     background-color: #003a5c;
     color: white;
     border: none;
@@ -48,7 +48,7 @@ header nav ul li a:hover {
     transition: background-color 0.3s;
 }
 
-.btnLogin:hover {
+.btnLoginCabecera:hover {
     background-color: #005c8b;
 }
 

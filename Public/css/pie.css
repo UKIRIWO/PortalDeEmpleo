@@ -10,7 +10,7 @@ footer{
 
 /*Footer left*/
 
-#container-more-links{
+#foot-L-container-more-links{
   display: flex;
   align-items: center;
   width: 100%;
@@ -22,20 +22,20 @@ footer{
   width: 150px;
 }
 
-#container-footer-links{
+#foot-L-container-links{
   list-style-type: none;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-#container-footer-links a{
+#foot-L-container-links a{
   text-decoration: none;
   color: #000;
   transition: color 0.25s;
 }
 
-#container-footer-links a:hover{
+#foot-L-container-links a:hover{
   color: #0073b1; 
 }
 
@@ -47,7 +47,7 @@ footer{
   width: 60px;
 }
 
-#container-social{
+#foot-R-container-social{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -56,11 +56,11 @@ footer{
   gap: 30px;
 }
 
-#container-social h2{
+#foot-R-container-social h2{
   width: 100%;
 }
 
-#container-social-icons{
+#foot-R-container-social-icons{
   display: flex;
   justify-content: space-between;
   padding: 0% 20%;

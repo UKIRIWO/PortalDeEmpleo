@@ -13,9 +13,11 @@ window.addEventListener("load", function () {
         ajx.send();
     }
 
-    boton.onclick = function () {
-        descargarGET("datos/alumnos.json", mostrarAlumnos);
-    };
+    // boton.onclick = function () {
+    //     descargarGET("datos/alumnos.json", mostrarAlumnos);
+    // };
+
+    descargarGET("datos/alumnos.json", mostrarAlumnos);
 
     function mostrarAlumnos(ajx) {
         const alumnos = JSON.parse(ajx.responseText);
