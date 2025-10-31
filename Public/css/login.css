@@ -1,11 +1,14 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    background-image: url("../img/fondoFormulaio.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .login-container {
@@ -13,7 +16,7 @@ body {
     padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 20%;
+    width: 25%;
     text-align: center;
 }
 
@@ -87,6 +90,7 @@ input[type="text"]:focus,input[type="password"]:focus {
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .btn-register:hover {

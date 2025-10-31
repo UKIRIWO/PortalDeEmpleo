@@ -2,6 +2,8 @@
 
 <?php $this->start('css') ?>
 <link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/registroAlumno.css">
+<link rel="stylesheet" href="css/modal.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -18,11 +20,18 @@
         </form>
 
         <div class="register-options">
-            <p>¿No tienes cuenta?</p>
-            <div class="register-buttons">
-                <a href="#" class="btn-register">Registrarse como Alumno</a>
-                <a href="#" class="btn-register">Registrarse como Empresa</a>
+            <p id="btnPrueba">¿No tienes cuenta?</p>
+            <div class="register-buttons" >
+                <span class="btn-register" id="AlumnRegisBtn">Registrarse como Alumno</span>
+                <a href="?menu=Registro" class="btn-register">Registrarse como Empresa</a>
             </div>
         </div>
     </div>
+    <div id="modalAlumno"></div>
+    <div id="modalPrueba"></div>
+<?php $this->stop() ?>
+
+<?php $this->start('js') ?>
+<script src="js/Modal.js"></script>
+<script src="js/registroAlumno.js"></script>
 <?php $this->stop() ?>

@@ -19,12 +19,13 @@ if (!Login::estaLogeado()) {
     $menu = $_GET['menu'] ?? 'Login';
 
     if ($menu === 'Registro'){
-        //registro
+        (new RegistroEmpresaController())->index();
     } else {
         (new LoginController())->index();
     }
 
 } else {
+    // hacer que el engine sea singletone, es decir se crea uno, se pasa por parametro y así solo hay que crear 1
     $menu = $_GET['menu'] ?? 'Inicio';
     switch ($menu) {
         case 'Inicio':

@@ -1,0 +1,77 @@
+<div class="velo" id="veloRegistroAlumno">
+    <span class="cerrarModal" id="cerrarModalAlumno">X</span>
+    <div class="modal">
+        <h2>Registro de Alumno</h2>
+
+        <form action="registrar_alumno.php" method="POST" id="formAlumno">
+            <div>
+                <h3>Datos de usuario</h3>
+
+                <div class="inptLabe">
+                    <label for="usernameAlumno">Nombre de usuario</label>
+                    <input type="text" id="usernameAlumno" name="usernameAlumno" required>
+
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="passwordAlumno">Contraseña</label>
+                    <input type="password" id="passwordAlumno" name="passwordAlumno" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="passwordAlumno2">Repetir contraseña</label>
+                    <input type="password" id="passwordAlumno2" name="passwordAlumno2" required>
+                </div>
+
+                <div></div>
+                <h3>Datos personales</h3>
+                <div></div>
+
+                <div class="inptLabe">
+                    <label for="dni">DNI</label>
+                    <input type="text" id="dni" name="dni" maxlength="9" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="ape1">Primer apellido</label>
+                    <input type="text" id="ape1" name="ape1" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="ape2">Segundo apellido</label>
+                    <input type="text" id="ape2" name="ape2">
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                </div>
+
+
+                <div class="inptLabe">
+                    <label for="curriculum">Currículum (URL o ruta)</label>
+                    <input type="text" id="curriculum" name="curriculum">
+                </div>
+            </div>
+
+            <input type="submit" value="Registrarse">
+        </form>
+    </div>
+</div>
