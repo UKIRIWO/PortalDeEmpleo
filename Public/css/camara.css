@@ -1,0 +1,57 @@
+.divVideo{
+    width: 600px;
+    height: 450px;
+    position: relative;
+}
+
+.fondo_rojo{
+    background-color: #ff000026;
+    position: absolute;
+}
+
+.arriba{
+    width: 100%;
+    height: 16.67%; /* 75px de 450px */
+}
+
+.abajo{
+    top: 83.34%; /* 375px de 450px */
+    width: 100%;
+    height: 16.67%; /* 75px de 450px */
+}
+
+.izquierda{
+    top: 16.67%; /* 75px de 450px */
+    width: 25%; /* 150px de 600px */
+    height: 66.67%; /* 300px de 450px */
+}
+
+.derecha{
+    top: 16.67%; /* 75px de 450px */
+    left: 75%; /* 450px de 600px */
+    width: 25%; /* 150px de 600px */
+    height: 66.67%; /* 300px de 450px */
+}
+
+.borde{
+    border: 1px dashed black;
+    position: absolute;
+    height: 66.67%; /* 300px de 450px */
+    width: 50%; /* 300px de 600px */
+    top: 16.67%; /* 75px de 450px */
+    left: 25%; /* 150px de 600px */
+}
+
+
+
+
+
+/*tablet*/
+@media (min-width: 768px) and (max-width: 1199px){
+    
+}
+
+/*movil*/
+@media (max-width: 767px){
+
+}

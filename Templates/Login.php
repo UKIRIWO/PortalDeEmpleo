@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="css/login.css">
 <link rel="stylesheet" href="css/registroAlumno.css">
 <link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/camara.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -28,7 +29,7 @@
         </div>
     </div>
     <div id="modalAlumno"></div>
-    <div id="modalPrueba"></div>
+    <div id="modalCamara"></div>
 <?php $this->stop() ?>
 
 <?php $this->start('js') ?>
