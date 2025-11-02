@@ -38,7 +38,7 @@ class RepoCiclo {
 
         return $ciclos;
     }
-
+    
     public static function save($ciclo) {
         $con = DB::getConnection();
         $stmt = $con->prepare("INSERT INTO ciclo (nombre, nivel, familia_fk) VALUES (?, ?, ?)");

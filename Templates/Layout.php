@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <a href="index.html"><img src="img/logoWorkSphere-sinFondo.png" alt="Logo" class="logoHead"></a>
+        <a href="?menu=Inicio"><img src="img/logoWorkSphere-sinFondo.png" alt="Logo" class="logoHead"></a>
         <nav>
             <nav>
                 <ul>
@@ -30,11 +30,11 @@
     <footer>
         <div id="footer-left">
             <div id="foot-L-container-more-links">
-                <a href="index.html"><img src="img/logoWorkSphere-sinFondo.png" alt="" id="footer-logo"></a>
+                <a href="?menu=Inicio"><img src="img/logoWorkSphere-sinFondo.png" alt="" id="footer-logo"></a>
                 <ul id="foot-L-container-links">
                     <li><a href="" class="footer-link">Contacto</a></li>
                     <li><a href="" class="footer-link">Términos de uso</a></li>
-                    <li><a href="" class="footer-link">Política de prive</a></li>
+                    <li><a href="" class="footer-link">Política de privacidad</a></li>
                 </ul>
             </div>
         </div>

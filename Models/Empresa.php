@@ -3,6 +3,7 @@
 class Empresa
 {
     private $id;
+    private $nombre;
     private $idUserFk;
     private $direccion;
     private $personaDeContacto;
@@ -11,9 +12,10 @@ class Empresa
     private $logo;
     private $idRolFk;
 
-    public function __construct($id = null, $idUserFk = null, $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "", $idRolFk = null)
+    public function __construct($id = null, $nombre = "", $idUserFk = null, $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "", $idRolFk = null)
     {
         $this->id = $id;
+        $this->nombre = $nombre;
         $this->idUserFk = $idUserFk;
         $this->direccion = $direccion;
         $this->personaDeContacto = $personaDeContacto;
@@ -25,6 +27,9 @@ class Empresa
 
     public function getId() { return $this->id; }
     public function setId($id) { $this->id = $id; }
+
+    public function getNombre() { return $this->nombre; }
+    public function setNombre($nombre) { $this->nombre = $nombre; }
 
     public function getIdUserFk() { return $this->idUserFk; }
     public function setIdUserFk($idUserFk) { $this->idUserFk = $idUserFk; }

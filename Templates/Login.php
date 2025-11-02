@@ -10,7 +10,7 @@
 <?php $this->start('contenido') ?>
 <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form action="index.php?menu=Inicio" method="POST">
+        <form action="index.php" method="POST">
             <label for="username">Nombre:</label>
             <input type="text" name="username" id="username" required>
 

@@ -11,6 +11,7 @@ class RepoEmpresa {
         if ($fila) {
             return new Empresa(
                 $fila['id'],
+                $fila['nombre'],
                 $fila['id_user_fk'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
@@ -33,6 +34,7 @@ class RepoEmpresa {
         foreach ($filas as $fila) {
             $empresas[] = new Empresa(
                 $fila['id'],
+                $fila['nombre'],
                 $fila['id_user_fk'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
@@ -45,13 +47,7 @@ class RepoEmpresa {
         return $empresas;
     }
 
-    /**
-     * Guarda una empresa junto con su usuario en una transacción
-     * Este es el ÚNICO método para guardar empresas
-     * @param User $user Usuario asociado a la empresa
-     * @param Empresa $empresa Datos de la empresa
-     * @return bool true si se guardó correctamente, false si hubo error
-     */
+
     public static function save($user, $empresa) {
         $con = DB::getConnection();
         
@@ -70,8 +66,9 @@ class RepoEmpresa {
             $user->setId($idUser);
             
             // Insertar empresa
-            $stmt = $con->prepare("INSERT INTO empresa (id_user_fk, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $con->prepare("INSERT INTO empresa (nombre, id_user_fk, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
+                $empresa->getNombre(),
                 $idUser,
                 $empresa->getDireccion(),
                 $empresa->getPersonaDeContacto(),
@@ -99,8 +96,9 @@ class RepoEmpresa {
 
     public static function update($empresa) {
         $con = DB::getConnection();
-        $stmt = $con->prepare("UPDATE empresa SET direccion = ?, persona_de_contacto = ?, correo_de_contacto = ?, telefono_de_contacto = ?, logo = ? WHERE id = ?");
+        $stmt = $con->prepare("UPDATE empresa SET nombre = ?, direccion = ?, persona_de_contacto = ?, correo_de_contacto = ?, telefono_de_contacto = ?, logo = ? WHERE id = ?");
         $stmt->execute([
+            $empresa->getNombre(),
             $empresa->getDireccion(),
             $empresa->getPersonaDeContacto(),
             $empresa->getCorreoDeContacto(),
@@ -110,13 +108,6 @@ class RepoEmpresa {
         ]);
     }
 
-    /**
-     * Elimina una empresa y su usuario asociado
-     * Este es el ÚNICO método para eliminar empresas
-     * También elimina automáticamente por CASCADE: ofertas, oferta_ciclo y solicitudes
-     * @param int $id ID de la empresa
-     * @return bool true si se eliminó correctamente, false si hubo error
-     */
     public static function delete($id) {
         $con = DB::getConnection();
         

@@ -2,15 +2,18 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 include_once __DIR__ . "/../Loaders/miAutoLoader.php";
 
-
 Session::abrirsesion();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion']) == 'Login') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Procesar login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'Login') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     if (Login::login($username, $password)) {
         header("Location: Index.php?menu=Inicio");
+        exit;
+    } else {
+        header("Location: Index.php?menu=Login");  //sacar una modal con el error
         exit;
     }
 }
@@ -25,8 +28,8 @@ if (!Login::estaLogeado()) {
     }
 
 } else {
-    // hacer que el engine sea singletone, es decir se crea uno, se pasa por parametro y así solo hay que crear 1
     $menu = $_GET['menu'] ?? 'Inicio';
+    
     switch ($menu) {
         case 'Inicio':
             (new InicioController())->index();
@@ -40,13 +43,10 @@ if (!Login::estaLogeado()) {
         case 'PanelAdmin':
             //(new PanelAdminController())->index();
             break;
-        case 'Login':
-            (new LoginController())->index();
-            break;
         case 'Logout':
             Login::logout();
             header("Location: index.php");
-            break;
+            exit;
         default:
             echo "Página no encontrada";
             break;
