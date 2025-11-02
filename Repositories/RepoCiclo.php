@@ -11,6 +11,7 @@ class RepoCiclo {
         if ($fila) {
             return new Ciclo(
                 $fila['id'],
+                $fila['nombre'],
                 $fila['nivel'],
                 $fila['familia_fk']
             );
@@ -29,6 +30,7 @@ class RepoCiclo {
         foreach ($filas as $fila) {
             $ciclos[] = new Ciclo(
                 $fila['id'],
+                $fila['nombre'],
                 $fila['nivel'],
                 $fila['familia_fk']
             );
@@ -39,8 +41,9 @@ class RepoCiclo {
 
     public static function save($ciclo) {
         $con = DB::getConnection();
-        $stmt = $con->prepare("INSERT INTO ciclo (nivel, familia_fk) VALUES (?, ?)");
+        $stmt = $con->prepare("INSERT INTO ciclo (nombre, nivel, familia_fk) VALUES (?, ?, ?)");
         $stmt->execute([
+            $ciclo->getNombre(),
             $ciclo->getNivel(),
             $ciclo->getFamiliaFk()
         ]);
@@ -49,8 +52,9 @@ class RepoCiclo {
 
     public static function update($ciclo) {
         $con = DB::getConnection();
-        $stmt = $con->prepare("UPDATE ciclo SET nivel = ?, familia_fk = ? WHERE id = ?");
+        $stmt = $con->prepare("UPDATE ciclo SET nombre = ?, nivel = ?, familia_fk = ? WHERE id = ?");
         $stmt->execute([
+            $ciclo->getNombre(),
             $ciclo->getNivel(),
             $ciclo->getFamiliaFk(),
             $ciclo->getId()
@@ -63,4 +67,3 @@ class RepoCiclo {
         $stmt->execute([$id]);
     }
 }
-?>
