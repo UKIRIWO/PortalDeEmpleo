@@ -31,31 +31,24 @@ class Login
         Session::cerrarsesion();
     }
 
-    /**
-     * Intenta hacer login con usuario y contraseña
-     * @param string $username Nombre de usuario
-     * @param string $password Contraseña en texto plano
-     * @return bool true si login exitoso, false si falla
-     */
     public static function login($username, $password)
     {
-        // Buscar usuario en la BD
+        // Busca un usuario en la BD
         $user = RepoUser::findByUsername($username);
-        
-        // Si no existe el usuario, retornar false
+
         if ($user == null) {
             return false;
         }
         
-        // Verificar la contraseña
+        // Verifica la contraseña
         if (!password_verify($password, $user->getPassword())) {
             return false;
         }
         
-        // Obtener el rol del usuario
+        // Cojo el rol del usuario
         $userWithRole = RepoUser::findByIdWithRole($user->getId());
         
-        // Guardar en sesión
+        // Guarda la sesión
         Session::abrirsesion();
         $_SESSION['user'] = [
             'id' => $user->getId(),
@@ -67,10 +60,6 @@ class Login
         return true;
     }
 
-    /**
-     * Obtiene el rol del usuario actual
-     * @return string|null 'admin', 'empresa', 'alumno' o null si no está logeado
-     */
     public static function getRol()
     {
         if (!self::estaLogeado()) {
@@ -79,10 +68,7 @@ class Login
         return $_SESSION['user']['rol_nombre'];
     }
 
-    /**
-     * Obtiene el ID del usuario actual
-     * @return int|null
-     */
+
     public static function getUserId()
     {
         if (!self::estaLogeado()) {
@@ -91,10 +77,6 @@ class Login
         return $_SESSION['user']['id'];
     }
 
-    /**
-     * Obtiene el username del usuario actual
-     * @return string|null
-     */
     public static function getUsername()
     {
         if (!self::estaLogeado()) {
@@ -103,38 +85,23 @@ class Login
         return $_SESSION['user']['username'];
     }
 
-    /**
-     * Verifica si el usuario actual tiene un rol específico
-     * @param string $rol Nombre del rol ('admin', 'empresa', 'alumno')
-     * @return bool
-     */
+
     public static function tieneRol($rol)
     {
         return self::getRol() === $rol;
     }
 
-    /**
-     * Verifica si el usuario es administrador
-     * @return bool
-     */
     public static function esAdmin()
     {
         return self::tieneRol('admin');
     }
 
-    /**
-     * Verifica si el usuario es empresa
-     * @return bool
-     */
+
     public static function esEmpresa()
     {
         return self::tieneRol('empresa');
     }
 
-    /**
-     * Verifica si el usuario es alumno
-     * @return bool
-     */
     public static function esAlumno()
     {
         return self::tieneRol('alumno');

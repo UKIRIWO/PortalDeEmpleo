@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
         header("Location: Index.php?menu=Inicio");
         exit;
     } else {
-        header("Location: Index.php?menu=Login");  //sacar una modal con el error
+        header("Location: Index.php?menu=Login");
         exit;
     }
 }

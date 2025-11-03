@@ -51,13 +51,6 @@ class RepoAlumno {
         return $alumnos;
     }
 
-    /**
-     * Guarda un alumno junto con su usuario en una transacción
-     * Este es el ÚNICO método para guardar alumnos
-     * @param User $user Usuario asociado al alumno
-     * @param Alumno $alumno Datos del alumno
-     * @return bool true si se guardó correctamente, false si hubo error
-     */
     public static function save($user, $alumno) {
         $con = DB::getConnection();
         
@@ -122,28 +115,20 @@ class RepoAlumno {
         ]);
     }
 
-    /**
-     * Elimina un alumno y su usuario asociado
-     * Este es el ÚNICO método para eliminar alumnos
-     * @param int $id ID del alumno
-     * @return bool true si se eliminó correctamente, false si hubo error
-     */
     public static function delete($id) {
         $con = DB::getConnection();
         
         try {
-            // Obtener el id del usuario antes de eliminar
+
             $alumno = self::findById($id);
             if ($alumno == null) {
                 return false;
             }
             
             $idUser = $alumno->getIdUserFk();
-            
-            // Iniciar transacción
+
             $con->beginTransaction();
             
-            // Eliminar el usuario (CASCADE eliminará automáticamente el alumno, estudios y solicitudes)
             $stmt = $con->prepare("DELETE FROM user WHERE id = ?");
             $stmt->execute([$idUser]);
             

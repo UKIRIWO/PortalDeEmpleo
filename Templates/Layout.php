@@ -3,38 +3,58 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mi Proyecto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>web</title>
+    
     <link rel="stylesheet" href="../Public/css/cabecera.css">
     <link rel="stylesheet" href="../Public/css/pie.css">
+    
+    <?php $this->section('css') ?>
 </head>
 
 <body>
     <header>
-        <a href="?menu=Inicio"><img src="img/logoWorkSphere-sinFondo.png" alt="Logo" class="logoHead"></a>
+        <a href="?menu=Inicio">
+            <img src="img/logoWorkSphere-sinFondo.png" alt="Logo WorkSphere" class="logoHead">
+        </a>
+        
         <nav>
-            <nav>
-                <ul>
-                    <li><a href="?menu=Inicio">Inicio</a></li>
-                    <li><a href="?menu=OfertaAlumno">OfertaAlumno</a></li>
-                </ul>
-            </nav>
+            <?php
+            $rol = Login::getRol();
+            switch ($rol) {
+                case 'admin':
+                    $this->insert('partials/nav_admin');
+                    break;
+                case 'empresa':
+                    $this->insert('partials/nav_empresa');
+                    break;
+                case 'alumno':
+                    $this->insert('partials/nav_alumno');
+                    break;
+                
+                default:
+                    break;
+            }
+            ?>
         </nav>
+        
         <a href="index.php?menu=Logout"><button class="btnLoginCabecera">Logout</button></a>
     </header>
 
-    <?= $this->section('css') ?>
-    <?= $this->section('js') ?>
-    <?= $this->section('contenido') ?>
+    <main>
+        <?= $this->section('contenido') ?>
+    </main>
 
-    
     <footer>
         <div id="footer-left">
             <div id="foot-L-container-more-links">
-                <a href="?menu=Inicio"><img src="img/logoWorkSphere-sinFondo.png" alt="" id="footer-logo"></a>
+                <a href="?menu=Inicio">
+                    <img src="img/logoWorkSphere-sinFondo.png" alt="Logo WorkSphere" id="footer-logo">
+                </a>
                 <ul id="foot-L-container-links">
-                    <li><a href="" class="footer-link">Contacto</a></li>
-                    <li><a href="" class="footer-link">Términos de uso</a></li>
-                    <li><a href="" class="footer-link">Política de privacidad</a></li>
+                    <li><a href="?menu=Contacto" class="footer-link">Contacto</a></li>
+                    <li><a href="?menu=Terminos" class="footer-link">Términos de uso</a></li>
+                    <li><a href="?menu=Privacidad" class="footer-link">Política de privacidad</a></li>
                 </ul>
             </div>
         </div>
@@ -42,14 +62,25 @@
             <div id="foot-R-container-social">
                 <h2>Redes sociales</h2>
                 <div id="foot-R-container-social-icons">
-                    <a href=""><img src="img/facebook_logo.png" alt="" class="social-icon"></a>
-                    <a href=""><img src="img/instagram_logo.png" alt="" class="social-icon"></a>
-                    <a href=""><img src="img/twitter_logo.png" alt="" class="social-icon"></a>
-                    <a href=""><img src="img/youtube_logo.png" alt="" class="social-icon"></a>
+                    <a href="https://facebook.com" target="_blank">
+                        <img src="img/facebook_logo.png" alt="Facebook" class="social-icon">
+                    </a>
+                    <a href="https://instagram.com" target="_blank">
+                        <img src="img/instagram_logo.png" alt="Instagram" class="social-icon">
+                    </a>
+                    <a href="https://twitter.com" target="_blank">
+                        <img src="img/twitter_logo.png" alt="Twitter" class="social-icon">
+                    </a>
+                    <a href="https://youtube.com" target="_blank">
+                        <img src="img/youtube_logo.png" alt="YouTube" class="social-icon">
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
+
+
+    <?php $this->section('js') ?>
 </body>
 
 </html>

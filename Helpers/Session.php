@@ -10,14 +10,10 @@ class Session
         }
     }
 
-
-
     public static function cerrarsesion()
     {
         session_destroy();
     }
-
-
 
     public static function leersesion($clave)
     {
