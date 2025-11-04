@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($clase){
-    $carpetas = ["API", "APIMOCK", "Controllers", "Helpers", "Models", "Public", "Repositories", "Templates", "Views"];
+    $carpetas = ["API", "APIMOCK", "Controllers", "Helpers", "Models", "Public", "Repositories", "Views"];
 
     $base = realpath(__DIR__ . "/../");
 

@@ -15,6 +15,6 @@ class EmpresaSolicitudesController {
             'solicitudes' => $solicitudes
         ];
 
-        echo $this->templates->render('EmpresaSolicitudes', $data);
+        echo $this->templates->render('pages/EmpresaSolicitudes', $data);
     }
 }

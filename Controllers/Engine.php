@@ -7,7 +7,7 @@ class Engine {
 
     public static function getEngine() {
         if (self::$engine === null) {
-            self::$engine = new PlatesEngine(__DIR__ . '/../templates');
+            self::$engine = new PlatesEngine(__DIR__ . '/../Views');
         }
         return self::$engine;
     }

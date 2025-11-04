@@ -13,6 +13,6 @@ class AlumnoSolicitudController {
             'titulo' => 'Alumno Solicitud'
         ];
 
-        echo $this->templates->render('AlumnoSolicitud', $data);
+        echo $this->templates->render('pages/AlumnoSolicitud', $data);
     }
 }

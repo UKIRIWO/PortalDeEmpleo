@@ -13,6 +13,6 @@ class InicioController {
             'titulo' => 'Inicio'
         ];
 
-        echo $this->templates->render('Inicio', $data);
+        echo $this->templates->render('pages/Inicio', $data);
     }
 }

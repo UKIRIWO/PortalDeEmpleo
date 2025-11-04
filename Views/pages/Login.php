@@ -1,4 +1,4 @@
-<?php $this->layout('Layout_simple'); ?>
+<?php $this->layout('layouts/Layout_simple'); ?>
 
 <?php $this->start('css') ?>
 <link rel="stylesheet" href="css/login.css">

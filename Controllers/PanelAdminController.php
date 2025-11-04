@@ -13,6 +13,6 @@ class PanelAdminController {
             'titulo' => 'Panel Admin'
         ];
 
-        echo $this->templates->render('PanelAdmin', $data);
+        echo $this->templates->render('pages/PanelAdmin', $data);
     }
 }

@@ -15,7 +15,7 @@ class OfertasController {
             'ofertas' => $ofertas
         ];
 
-        echo $this->templates->render('Ofertas', $data);
+        echo $this->templates->render('pages/Ofertas', $data);
     }
 }
 

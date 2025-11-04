@@ -13,6 +13,6 @@ class RegistroEmpresaController {
             'titulo' => 'RegistroEmpresa'
         ];
 
-        echo $this->templates->render('RegistroEmpresa', $data);
+        echo $this->templates->render('pages/RegistroEmpresa', $data);
     }
 }

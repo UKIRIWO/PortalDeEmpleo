@@ -13,6 +13,6 @@ class EmpresaOfertasController {
             'titulo' => 'Empresa Ofertas'
         ];
 
-        echo $this->templates->render('EmpresaOfertas', $data);
+        echo $this->templates->render('pages/EmpresaOfertas', $data);
     }
 }

@@ -13,6 +13,6 @@ class LoginController {
             'titulo' => 'Iniciar sesión'
         ];
 
-        echo $this->templates->render('Login', $data);
+        echo $this->templates->render('pages/Login', $data);
     }
 }

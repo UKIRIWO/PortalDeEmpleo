@@ -1,4 +1,4 @@
-<?php $this->layout('Layout'); ?>
+<?php $this->layout('layouts/Layout'); ?>
 
 <?php $this->start('contenido') ?>
 <h1>Ofertas de trabajo</h1>
