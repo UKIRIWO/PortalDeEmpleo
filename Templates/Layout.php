@@ -17,19 +17,18 @@
         <a href="?menu=Inicio">
             <img src="img/logoWorkSphere-sinFondo.png" alt="Logo WorkSphere" class="logoHead">
         </a>
-        
         <nav>
             <?php
             $rol = Login::getRol();
             switch ($rol) {
                 case 'admin':
-                    $this->insert('partials/nav_admin');
+                    $this->insert('partials/_nav_admin');
                     break;
                 case 'empresa':
-                    $this->insert('partials/nav_empresa');
+                    $this->insert('partials/_nav_empresa');
                     break;
                 case 'alumno':
-                    $this->insert('partials/nav_alumno');
+                    $this->insert('partials/_nav_alumno');
                     break;
                 
                 default:

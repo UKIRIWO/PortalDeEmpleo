@@ -48,7 +48,7 @@ function putAlumno() {
             
         } else {
 
-        $user = RepoUser::findById($alumno->getIdUser());
+        $user = RepoUser::findById($alumno->getIdUserFK());
         if (!$user) {
             http_response_code(404);
             echo json_encode(["error" => "Usuario del alumno no encontrado"]);

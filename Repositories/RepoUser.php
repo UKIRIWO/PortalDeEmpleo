@@ -67,11 +67,6 @@ class RepoUser {
         $stmt->execute([$id]);
     }
 
-    /**
-     * Busca un usuario por nombre de usuario
-     * @param string $nombreUsuario
-     * @return User|null
-     */
     public static function findByUsername($nombreUsuario) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user WHERE nombre_usuario = ?");
@@ -90,18 +85,18 @@ class RepoUser {
         return null;
     }
 
-    /**
-     * Obtiene un usuario con su rol incluido
-     * @param int $id
-     * @return array|null Array con datos del user y nombre del rol
-     */
-    public static function findByIdWithRole($id) {
+    public static function findUserWithRoleById($id) {
         $con = DB::getConnection();
-        $stmt = $con->prepare("SELECT u.*, r.nombre as rol_nombre FROM user u 
+        $stmt = $con->prepare("SELECT u.*, r.nombre as rol_nombre
+                              FROM user u 
                               JOIN rol r ON u.id_rol_fk = r.id 
                               WHERE u.id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getIdUser($id){
+
     }
 }
 ?>

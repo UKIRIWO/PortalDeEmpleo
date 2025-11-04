@@ -18,6 +18,24 @@ class RepoRol {
         return null;
     }
 
+    public static function findRolByUser($idUser) {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT r.* FROM rol r 
+                              JOIN user u ON r.id = u.id_rol_fk 
+                              WHERE u.id = ?");
+        $stmt->execute([$idUser]);
+        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($fila) {
+            return new Rol(
+                $fila['id'],
+                $fila['nombre']
+            );
+        }
+
+        return null;
+    }
+
     public static function findAll() {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM rol");

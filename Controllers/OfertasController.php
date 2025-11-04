@@ -1,18 +1,21 @@
 <?php
 include_once "../Loaders/miAutoLoader.php";
 
-class InicioController {
+class OfertasController {
     private $templates;
 
     public function __construct() {
         $this->templates = Engine::getEngine();
     }
-
+    
     public function index() {
+        $ofertas = RepoOferta::findAll() ?? [];
         $data = [
-            'titulo' => 'Inicio'
+            'titulo' => 'Ofertas de empleo',
+            'ofertas' => $ofertas
         ];
 
-        echo $this->templates->render('Inicio', $data);
+        echo $this->templates->render('Ofertas', $data);
     }
 }
+

@@ -34,8 +34,8 @@ if (!Login::estaLogeado()) {
         case 'Inicio':
             (new InicioController())->index();
             break;
-        case 'OfertaAlumno':
-            (new OfertaAlumnoController())->index();
+        case 'Ofertas':
+            (new OfertasController())->index();
             break;
         case 'SolicitudAlumno':
             //(new AlumnoSolicitudController())->index();

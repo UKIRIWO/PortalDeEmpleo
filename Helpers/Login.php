@@ -33,28 +33,25 @@ class Login
 
     public static function login($username, $password)
     {
-        // Busca un usuario en la BD
         $user = RepoUser::findByUsername($username);
 
         if ($user == null) {
             return false;
         }
         
-        // Verifica la contraseña
         if (!password_verify($password, $user->getPassword())) {
             return false;
         }
         
-        // Cojo el rol del usuario
-        $userWithRole = RepoUser::findByIdWithRole($user->getId());
+        $userRole = RepoRol::findRolByUser($user->getId());
         
-        // Guarda la sesión
         Session::abrirsesion();
+
         $_SESSION['user'] = [
             'id' => $user->getId(),
             'username' => $user->getNombreUsuario(),
             'rol_id' => $user->getIdRolFk(),
-            'rol_nombre' => $userWithRole['rol_nombre']  // 'admin', 'empresa', 'alumno'
+            'rol_nombre' => $userRole->getNombre()  // 'admin', 'empresa', 'alumno'
         ];
         
         return true;
