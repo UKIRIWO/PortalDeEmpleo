@@ -1,9 +1,5 @@
 <?php $this->layout('layouts/Layout_simple'); ?>
 
-<?php $this->start('css') ?>
-<link rel="stylesheet" href="css/registroEmpresa.css">
-<?php $this->stop() ?>
-
 <?php $this->start('contenido') ?>
 <div class="form-container">
     <h2>Registro de Empresa</h2>

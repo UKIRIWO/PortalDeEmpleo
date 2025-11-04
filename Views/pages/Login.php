@@ -2,9 +2,6 @@
 
 <?php $this->start('css') ?>
 <link rel="stylesheet" href="css/login.css">
-<link rel="stylesheet" href="css/registroAlumno.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/camara.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -12,12 +9,12 @@
         <h2>Iniciar Sesión</h2>
         <form action="index.php" method="POST">
             <label for="username">Nombre:</label>
-            <input type="text" name="username" id="username" required>
+            <input type="text" name="username" id="username" autocomplete="username" required>
 
             <label for="password">Contraseña:</label>
             <input type="password" name="password" id="password" required>
 
-            <input type="submit" name="accion" value="Login" class="btn-login">
+            <input type="submit" name="accion" value="Login" class="btn-submit">
         </form>
 
         <div class="register-options">

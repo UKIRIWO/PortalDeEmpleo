@@ -1,7 +1,7 @@
 <?php
 include_once "../Loaders/miAutoLoader.php";
 
-class EmpresaOfertasController {
+class PageNotFoundController {
     private $templates;
 
     public function __construct() {
@@ -10,9 +10,9 @@ class EmpresaOfertasController {
 
     public function index() {
         $data = [
-            'titulo' => 'Empresa Ofertas'
+            'titulo' => 'Página no encontrada'
         ];
 
-        echo $this->templates->render('pages/EmpresaOfertas', $data);
+        echo $this->templates->render('pages/PageNotFound', $data);
     }
 }

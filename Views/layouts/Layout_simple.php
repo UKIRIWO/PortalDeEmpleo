@@ -4,16 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Proyecto</title>
-    <link rel="stylesheet" href="../Public/css/cabecera.css">
-    <link rel="stylesheet" href="../Public/css/pie.css">
+    <link rel="stylesheet" href="../Public/css/style.css">
+    <?= $this->section('css') ?>
 </head>
 
 <body>
-
-    <?= $this->section('css') ?>
-    <?= $this->section('js') ?>
+    
     <?= $this->section('contenido') ?>
-
+    <?= $this->section('js') ?>
 </body>
 
 </html>

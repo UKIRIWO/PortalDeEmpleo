@@ -1,0 +1,440 @@
+/*
+Índice
+
+1. RESET Y BASE
+2. HEADER / CABECERA
+3. FOOTER / PIE
+4. LOGIN
+5. REGISTRO ALUMNO
+6. MODAL
+7. CÁMARA
+*/
+
+/* ========================================
+   1. RESET Y BASE
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* ========================================
+   2. HEADER / CABECERA
+   ======================================== */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+
+.logoHead {
+    height: 100px;
+    width: 100%;
+}
+
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px; 
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1em;
+    transition: color 0.25s;
+}
+
+header nav ul li a:hover {
+    color: #0073b1; 
+}
+
+.btnLoginCabecera {
+    background-color: #003a5c;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.btnLoginCabecera:hover {
+    background-color: #005c8b;
+}
+
+/* ========================================
+   3. FOOTER / PIE
+   ======================================== */
+
+footer{
+  background-color: rgb(234, 234, 234);
+  display: flex;
+  padding: 30px 0px;
+}
+
+#footer-left, #footer-right{
+  width: 50%;
+}
+
+/*Footer left*/
+
+#foot-L-container-more-links{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 20%;
+  gap: 50px;
+}
+
+#footer-logo{
+  width: 150px;
+}
+
+#foot-L-container-links{
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#foot-L-container-links a{
+  text-decoration: none;
+  color: #000;
+  transition: color 0.25s;
+}
+
+#foot-L-container-links a:hover{
+  color: #0073b1; 
+}
+
+
+
+
+/*Footer right*/
+.social-icon{
+  width: 60px;
+}
+
+#foot-R-container-social{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+}
+
+#foot-R-container-social h2{
+  width: 100%;
+}
+
+#foot-R-container-social-icons{
+  display: flex;
+  justify-content: space-between;
+  padding: 0% 20%;
+  width: 100%;
+  align-items: center;
+}
+
+
+/* ========================================
+   4. LOGIN
+   ======================================== */
+
+.login-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+h3{
+    margin-bottom: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+label {
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"], input[type="password"], input[type="date"] {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.btn-submit {
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+.register-options {
+    margin-top: 1.5rem;
+}
+
+.register-options p {
+    color: #555;
+    margin-bottom: 0.8rem;
+}
+
+.register-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-register {
+    display: block;
+    padding: 0.6rem;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-register:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+
+/* ========================================
+   5. REGISTRO ALUMNO
+   ======================================== */
+
+
+#formAlumno .inptLabe{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#btnCamara{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    margin: auto 25%;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+
+#formAlumno input[type="text"], #formAlumno input[type="date"], #formAlumno input[type="password"]{
+    width: 50%;
+}
+
+
+
+/*------------*/
+
+
+
+.registro-alumno-container input,
+.registro-alumno-container select,
+.registro-alumno-container textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.registro-alumno-container textarea {
+    resize: vertical;
+}
+
+.registro-alumno-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.registro-alumno-container button:hover {
+    background-color: #0056b3;
+}
+
+/* ========================================
+   6. MODAL
+   ======================================== */
+
+.velo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(200, 200, 200, 0.525);
+    z-index: 9;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: white;
+    padding: 25px 20px;
+    z-index: 10;
+}
+
+.cerrarModal {
+    z-index: 10;
+    position: absolute;
+    cursor: pointer;
+    top: 3%;
+    right: 3%;
+    font-size: 40px;
+}
+
+
+/* ========================================
+   7. CÁMARA
+   ======================================== */
+
+.divVideo{
+    width: 600px;
+    height: 450px;
+    position: relative;
+}
+
+.fondo_rojo{
+    background-color: #ff000026;
+    position: absolute;
+}
+
+.arriba{
+    width: 100%;
+    height: 16.67%; /* 75px de 450px */
+}
+
+.abajo{
+    top: 83.34%; /* 375px de 450px */
+    width: 100%;
+    height: 16.67%; /* 75px de 450px */
+}
+
+.izquierda{
+    top: 16.67%; /* 75px de 450px */
+    width: 25%; /* 150px de 600px */
+    height: 66.67%; /* 300px de 450px */
+}
+
+.derecha{
+    top: 16.67%; /* 75px de 450px */
+    left: 75%; /* 450px de 600px */
+    width: 25%; /* 150px de 600px */
+    height: 66.67%; /* 300px de 450px */
+}
+
+.borde{
+    border: 1px dashed black;
+    position: absolute;
+    height: 66.67%; /* 300px de 450px */
+    width: 50%; /* 300px de 600px */
+    top: 16.67%; /* 75px de 450px */
+    left: 25%; /* 150px de 600px */
+}
+
+#captura {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+  margin: 15px 20%;
+  width: 60%;
+}
+
+#captura:hover {
+  background-color: #0056b3;
+}
+
+#canvas {
+  display: block;
+  width: 300px;
+  height: 300px;
+  border: solid 1px #99c2e6;
+  border-radius: 8px;
+}
+
+.divCaptura{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+
+/*
+Responsive
+*/
+
+/*tablet*/
+@media (min-width: 768px) and (max-width: 1199px){
+    .login-container{
+        width: 30%;
+    }
+}
+
+/*movil*/
+@media (max-width: 767px){
+    .login-container{
+        width: 80%;
+    }
+}

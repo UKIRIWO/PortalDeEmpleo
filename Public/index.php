@@ -41,14 +41,14 @@ if (!Login::estaLogeado()) {
             //(new AlumnoSolicitudController())->index();
             break;
         case 'PanelAdmin':
-            //(new PanelAdminController())->index();
+            (new PanelAdminController())->index();
             break;
         case 'Logout':
             Login::logout();
             header("Location: index.php");
             exit;
         default:
-            echo "Página no encontrada";
+            (new PageNotFoundController())->index();
             break;
     }
 }

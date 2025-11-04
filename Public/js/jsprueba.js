@@ -159,15 +159,6 @@ window.addEventListener("load", function () {
 
 
 
-
-
-
-
-
-
-
-    
-
     function asignarEventosFila(fila, nombre, email) {
         const btnEditar = fila.querySelector(".editar");
         const btnEliminar = fila.querySelector(".eliminar");
