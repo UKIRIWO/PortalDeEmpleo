@@ -69,6 +69,15 @@
 
         <input type="submit" value="Registrarse">
     </form>
-    <a href="?menu=Login" class="volver-btn">Iniciar de sesión</a>
+    
+    <?php
+    use Helpers\Login;
+    $rol = Login::getRol();
+    if ($rol == 'admin'){?>
+        <a href="?menu=PanelAdmin" class="volver-btn">Volver al panel de administración</a>
+    <?php
+    } else { ?>
+        <a href="?menu=Login" class="volver-btn">Iniciar de sesión</a>
+    <?php } ?>
 </div>
 <?php $this->stop() ?>

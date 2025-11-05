@@ -1,6 +1,9 @@
-<?php $this->layout('layouts/Layout', ['titulo' => 'Gestión de Empresas y Alumnos']) ?>
+<?php $this->layout('layouts/Layout'); ?>
+<?php // $this->layout('layouts/Layout', ['titulo' => 'Gestión de Empresas y Alumnos']) ?>
 
-<?php $this->start('css') ?>
+<?php $this->start('js') ?>
+<script src="js/Modal.js"></script>
+<script src="js/panelAdmin_alumno.js"></script>
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -100,9 +103,3 @@
 </main>
 <?php $this->stop() ?>
 
-<?php $this->start('js') ?>
-<script src="../Public/js/Modal.js"></script>
-<script src="../Public/js/logicaAlumno.js"></script>
-
-
-<?php $this->stop() ?>

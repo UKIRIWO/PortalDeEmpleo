@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../../Loaders/miAutoLoader.php';
+include_once '../Loaders/miAutoLoader.php';
 use Helpers\Session;
 use Helpers\Login;
 use Repositories\RepoAlumno;
@@ -44,15 +44,16 @@ try {
 
 function getAlumnos() {
     if (isset($_GET['id'])) {
-        $alumno = RepoAlumno::findById($_GET['id']);
+        $alumno = RepoAlumno::findByIdWithoutCurriculum($_GET['id']);
         if ($alumno) {
             $user = RepoUser::findById($alumno->getIdUserFk());
-            
+            //transformar en arrayMap
             echo json_encode([
                 'id' => $alumno->getId(),
                 'id_user' => $alumno->getIdUserFk(),
                 'username' => $user->getNombreUsuario(),
                 'dni' => $alumno->getDni(),
+                'email' => $alumno->getEmail(),
                 'nombre' => $alumno->getNombre(),
                 'ape1' => $alumno->getApe1(),
                 'ape2' => $alumno->getApe2(),
@@ -76,6 +77,7 @@ function getAlumnos() {
                 'id_user' => $alumno->getIdUserFk(),
                 'username' => $user ? $user->getNombreUsuario() : '',
                 'dni' => $alumno->getDni(),
+                'email' => $alumno->getEmail(),
                 'nombre' => $alumno->getNombre(),
                 'ape1' => $alumno->getApe1(),
                 'ape2' => $alumno->getApe2(),
@@ -86,7 +88,7 @@ function getAlumnos() {
         }
         
         echo json_encode($resultado);
-    }
+    }   
 }
 
 function postAlumno($data) {

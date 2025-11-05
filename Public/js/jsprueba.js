@@ -2,7 +2,6 @@ window.addEventListener("load", function () {
 
     cargarAlumnos();
 
-    // --- MODAL: Añadir alumno ---
     const modalAlumno = Modal.crear("modalAlumno", "html/nuevoAlumno.html", function () {
         const botonAgregar = document.getElementById("btnAgregar");
         if (botonAgregar) botonAgregar.onclick = () => modalAlumno.mostrar();
