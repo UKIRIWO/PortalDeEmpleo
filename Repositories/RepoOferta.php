@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\Oferta;
 class RepoOferta {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM oferta WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Oferta(
@@ -26,7 +27,7 @@ class RepoOferta {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM oferta");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $ofertas = [];
         foreach ($filas as $fila) {
@@ -47,7 +48,7 @@ class RepoOferta {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM oferta WHERE id_empresa_fk = ?");
         $stmt->execute([$idEmpresa]);
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $ofertas = [];
         foreach ($filas as $fila) {

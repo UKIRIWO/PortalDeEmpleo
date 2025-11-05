@@ -1,4 +1,5 @@
 <?php
+namespace Controllers;
 include_once "../Loaders/miAutoLoader.php";
 
 class RegistroEmpresaController {

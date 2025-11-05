@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\User;
 class RepoUser {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new User(
@@ -24,7 +25,7 @@ class RepoUser {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $users = [];
         foreach ($filas as $fila) {
@@ -71,7 +72,7 @@ class RepoUser {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user WHERE nombre_usuario = ?");
         $stmt->execute([$nombreUsuario]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new User(
@@ -92,7 +93,7 @@ class RepoUser {
                               JOIN rol r ON u.id_rol_fk = r.id 
                               WHERE u.id = ?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public static function getIdUser($id){

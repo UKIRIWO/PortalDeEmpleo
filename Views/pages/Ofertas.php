@@ -3,6 +3,7 @@
 <?php $this->start('contenido') ?>
 <h1>Ofertas de trabajo</h1>
 <?php
+    use Helpers\Login;
     $rol = Login::getRol();
     switch ($rol) {
         case 'admin':

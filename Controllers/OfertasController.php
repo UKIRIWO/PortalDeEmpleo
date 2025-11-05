@@ -1,6 +1,7 @@
 <?php
+namespace Controllers;
 include_once "../Loaders/miAutoLoader.php";
-
+use Repositories\RepoOferta;
 class OfertasController {
     private $templates;
 

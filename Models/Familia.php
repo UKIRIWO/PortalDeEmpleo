@@ -1,5 +1,5 @@
 <?php
-
+namespace Models;
 class Familia
 {
     private $id;

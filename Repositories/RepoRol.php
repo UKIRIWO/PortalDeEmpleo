@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\Rol;
 class RepoRol {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM rol WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Rol(
@@ -24,7 +25,7 @@ class RepoRol {
                               JOIN user u ON r.id = u.id_rol_fk 
                               WHERE u.id = ?");
         $stmt->execute([$idUser]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Rol(
@@ -40,7 +41,7 @@ class RepoRol {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM rol");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $roles = [];
         foreach ($filas as $fila) {

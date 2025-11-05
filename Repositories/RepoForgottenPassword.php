@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\ForgottenPassword;
 class RepoForgottenPassword {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM forgotten_password WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new ForgottenPassword(
@@ -27,7 +28,7 @@ class RepoForgottenPassword {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM forgotten_password");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $forgottenPasswords = [];
         foreach ($filas as $fila) {
@@ -49,7 +50,7 @@ class RepoForgottenPassword {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM forgotten_password WHERE token = ?");
         $stmt->execute([$token]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new ForgottenPassword(

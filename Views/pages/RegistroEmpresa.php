@@ -1,5 +1,9 @@
 <?php $this->layout('layouts/Layout_simple'); ?>
 
+<?php $this->push('css') ?>
+<link rel="stylesheet" href="css/registroEmpresa.css">
+<?php $this->stop() ?>
+
 <?php $this->start('contenido') ?>
 <div class="form-container">
     <h2>Registro de Empresa</h2>
@@ -12,13 +16,13 @@
                 <label for="username">Nombre de usuario</label>
                 <input type="text" id="username" name="username" required>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="inptLabe">
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password" required>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="inptLabe">
                 <label for="password2">Repetir contraseña</label>
                 <input type="password" id="password2" name="password2" required>
@@ -26,6 +30,13 @@
         </div>
 
         <h3>Datos de la empresa</h3>
+
+        <div class="form-row">
+            <div class="inptLabe">
+                <label for="nombreEmpresa">Nombre de la empresa</label>
+                <input type="text" id="nombreEmpresa" name="nombreEmpresa" required>
+            </div>
+        </div>
 
         <div class="form-row">
             <div class="inptLabe">

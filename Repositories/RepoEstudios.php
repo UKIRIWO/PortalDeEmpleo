@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\Estudios;
 class RepoEstudios {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM estudios WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Estudios(
@@ -25,7 +26,7 @@ class RepoEstudios {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM estudios");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $estudios = [];
         foreach ($filas as $fila) {
@@ -45,7 +46,7 @@ class RepoEstudios {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM estudios WHERE id_alumno_fk = ?");
         $stmt->execute([$idAlumno]);
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $estudios = [];
         foreach ($filas as $fila) {

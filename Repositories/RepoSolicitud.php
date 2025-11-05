@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\Solicitud;
 class RepoSolicitud {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM solicitud WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Solicitud(
@@ -25,7 +26,7 @@ class RepoSolicitud {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM solicitud");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $solicitudes = [];
         foreach ($filas as $fila) {
@@ -45,7 +46,7 @@ class RepoSolicitud {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM solicitud WHERE id_oferta_fk = ?");
         $stmt->execute([$idOferta]);
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $solicitudes = [];
         foreach ($filas as $fila) {
@@ -65,7 +66,7 @@ class RepoSolicitud {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM solicitud WHERE id_alumno_fk = ?");
         $stmt->execute([$idAlumno]);
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $solicitudes = [];
         foreach ($filas as $fila) {

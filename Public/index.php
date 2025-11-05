@@ -1,6 +1,14 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 include_once __DIR__ . "/../Loaders/miAutoLoader.php";
+use Helpers\Session;
+use Helpers\Login;
+use Controllers\LoginController;
+use Controllers\RegistroEmpresaController;
+use Controllers\InicioController;
+use Controllers\OfertasController;
+use Controllers\PanelAdminController;
+use Controllers\PageNotFoundController;
 
 Session::abrirsesion();
 
@@ -21,15 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 if (!Login::estaLogeado()) {
     $menu = $_GET['menu'] ?? 'Login';
 
-    if ($menu === 'Registro'){
+    if ($menu === 'Registro') {
         (new RegistroEmpresaController())->index();
     } else {
         (new LoginController())->index();
     }
-
 } else {
     $menu = $_GET['menu'] ?? 'Inicio';
-    
+
     switch ($menu) {
         case 'Inicio':
             (new InicioController())->index();
@@ -43,6 +50,9 @@ if (!Login::estaLogeado()) {
         case 'PanelAdmin':
             (new PanelAdminController())->index();
             break;
+        case 'RegistroEmpresa':
+            (new RegistroEmpresaController())->index();
+            exit;
         case 'Logout':
             Login::logout();
             header("Location: index.php");

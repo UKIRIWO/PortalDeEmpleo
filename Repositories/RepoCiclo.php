@@ -1,12 +1,13 @@
 <?php
-
+namespace Repositories;
+use Models\Ciclo;
 class RepoCiclo {
 
     public static function findById($id) {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM ciclo WHERE id = ?");
         $stmt->execute([$id]);
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($fila) {
             return new Ciclo(
@@ -24,7 +25,7 @@ class RepoCiclo {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM ciclo");
         $stmt->execute();
-        $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $ciclos = [];
         foreach ($filas as $fila) {

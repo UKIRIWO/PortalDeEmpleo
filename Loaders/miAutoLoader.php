@@ -1,5 +1,5 @@
 <?php
-
+/* 
 spl_autoload_register(function ($clase){
     $carpetas = ["API", "APIMOCK", "Controllers", "Helpers", "Models", "Public", "Repositories", "Views"];
 
@@ -13,20 +13,16 @@ spl_autoload_register(function ($clase){
         }
     }
 });
+*/
 
-
-/* 
+namespace Loaders;
 spl_autoload_register(function ($clase) {
 
-    $clase = str_replace('App\\', '', $clase);
     $clase = str_replace('\\', '/', $clase);
 
-    $fichero = __DIR__ . '/../../' . $clase . '.php';
+    $fichero = __DIR__ . '/../' . $clase . '.php';
 
     if (file_exists($fichero)) {
-        require_once($fichero);
-    } else { //try
-        echo "<!-- NO ENCONTRADO: $fichero -->";
-    }
+        require_once $fichero;
+    } 
 });
-*/

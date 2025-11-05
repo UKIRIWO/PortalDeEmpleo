@@ -1,6 +1,7 @@
 <?php
+namespace Controllers;
 include_once "../Loaders/miAutoLoader.php";
-
+use Repositories\RepoEmpresa;
 class PanelAdminController {
     private $templates;
 
@@ -9,8 +10,12 @@ class PanelAdminController {
     }
 
     public function index() {
+        $empresas=RepoEmpresa::findAll();
+        $empresasC=RepoEmpresa::findAllCandidata();
         $data = [
-            'titulo' => 'Panel Admin'
+            'titulo' => 'Panel Admin',
+            'empresas' => $empresas,
+            'empresasC' => $empresasC
         ];
 
         echo $this->templates->render('pages/PanelAdmin', $data);

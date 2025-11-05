@@ -1,5 +1,5 @@
 <?php
-
+namespace Repositories;
 class DB {
 
     private static $con = null;
@@ -11,7 +11,7 @@ class DB {
 
     public static function getConnection() {
         if (self::$con === null) {
-            self::$con = new PDO(
+            self::$con = new \PDO(
                 'mysql:host=' . self::$host .
                 ';dbname=' . self::$db .
                 ';charset=utf8mb4', self::$user, self::$pass

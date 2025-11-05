@@ -1,5 +1,5 @@
 <?php
-
+namespace Models;
 class Empresa
 {
     private $id;
@@ -10,9 +10,9 @@ class Empresa
     private $correoDeContacto;
     private $telefonoDeContacto;
     private $logo;
-    private $idRolFk;
 
-    public function __construct($id = null, $nombre = "", $idUserFk = null, $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "", $idRolFk = null)
+
+    public function __construct($id = null, $nombre = "", $idUserFk = null, $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "")
     {
         $this->id = $id;
         $this->nombre = $nombre;
@@ -22,7 +22,6 @@ class Empresa
         $this->correoDeContacto = $correoDeContacto;
         $this->telefonoDeContacto = $telefonoDeContacto;
         $this->logo = $logo;
-        $this->idRolFk = $idRolFk;
     }
 
     public function getId() { return $this->id; }
@@ -48,7 +47,4 @@ class Empresa
 
     public function getLogo() { return $this->logo; }
     public function setLogo($logo) { $this->logo = $logo; }
-
-    public function getIdRolFk() { return $this->idRolFk; }
-    public function setIdRolFk($idRolFk) { $this->idRolFk = $idRolFk; }
 }

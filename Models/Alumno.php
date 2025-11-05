@@ -1,10 +1,11 @@
 <?php
-
+namespace Models;
 class Alumno
 {
     private $id;
     private $idUserFk;
     private $dni;
+    private $email;
     private $nombre;
     private $ape1;
     private $ape2;
@@ -14,11 +15,12 @@ class Alumno
     private $foto;
     private $idRolFk;
 
-    public function __construct($id = null, $idUserFk = null, $dni = "", $nombre = "", $ape1 = "", $ape2 = "", $curriculum = null, $fechaNacimiento = "", $direccion = "", $foto = "", $idRolFk = null)
+    public function __construct($id = null, $idUserFk = null, $dni = "", $email = "", $nombre = "", $ape1 = "", $ape2 = "", $curriculum = null, $fechaNacimiento = "", $direccion = "", $foto = "", $idRolFk = null)
     {
         $this->id = $id;
         $this->idUserFk = $idUserFk;
         $this->dni = $dni;
+        $this->email = $email;
         $this->nombre = $nombre;
         $this->ape1 = $ape1;
         $this->ape2 = $ape2;
@@ -37,6 +39,9 @@ class Alumno
 
     public function getDni() { return $this->dni; }
     public function setDni($dni) { $this->dni = $dni; }
+
+    public function getEmail() { return $this->email; }
+    public function setEmail($email) { $this->email = $email; }
 
     public function getNombre() { return $this->nombre; }
     public function setNombre($nombre) { $this->nombre = $nombre; }

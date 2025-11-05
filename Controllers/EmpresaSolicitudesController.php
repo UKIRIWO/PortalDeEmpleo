@@ -1,4 +1,6 @@
 <?php
+namespace Controllers;
+use Repositories\RepoSolicitud;
 include_once "../Loaders/miAutoLoader.php";
 
 class EmpresaSolicitudesController {

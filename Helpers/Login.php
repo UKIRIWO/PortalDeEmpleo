@@ -1,6 +1,8 @@
 <?php
+namespace Helpers;
 include_once "Session.php";
-
+use Repositories\RepoRol;
+use Repositories\RepoUser;
 class Login
 {
     public static function estaLogeado()

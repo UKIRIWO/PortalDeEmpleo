@@ -1,6 +1,6 @@
 <?php $this->layout('layouts/Layout_simple'); ?>
 
-<?php $this->start('css') ?>
+<?php $this->unshift('css') ?>
 <link rel="stylesheet" href="css/login.css">
 <?php $this->stop() ?>
 

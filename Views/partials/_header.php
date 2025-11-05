@@ -7,6 +7,7 @@
         <li><a href="?menu=Ofertas">Ofertas</a></li>
 
         <?php
+        use Helpers\Login;
         $rol = Login::getRol();
         switch ($rol) {
             case 'admin':
