@@ -24,7 +24,7 @@
         <?= $this->insert('partials/_footer');?>
     </footer>
 
-    <?php $this->section('js') ?>
+    <?= $this->section('js') ?>
 </body>
 
 </html>
