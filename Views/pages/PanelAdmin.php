@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/Layout'); ?>
-<?php // $this->layout('layouts/Layout', ['titulo' => 'Gestión de Empresas y Alumnos']) ?>
+<?php // $this->layout('layouts/Layout', ['titulo' => 'Gestión de Empresas y Alumnos']) 
+?>
 
 <?php $this->start('js') ?>
 <script src="js/Modal.js"></script>
@@ -7,12 +8,11 @@
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
-<main>
-    <!-- Sección Alumnos -->
+<div id="PanelAdmin">
     <section class="gestion-alumnos">
         <h1>Gestión de Alumnos</h1>
-        <button id="btnAgregar">Añadir alumno</button>
-        <button id="btnAgregarVarios">Añadir varios alumnos</button>
+        <button id="btnAgregarAlumno" class="btnAgregar">Añadir Alumno</button>
+        <button id="btnAgregarVariosAlumnos" class="btnAgregar">Añadir Varios Alumnos</button>
 
         <table id="tablaAlumnos">
             <thead>
@@ -32,6 +32,7 @@
 
     </section>
     <!-- Contenedor del modal -->
+    <div id="modalCrearAlumno"></div>
     <div id="modalDetallesAlumnos"></div>
     <div id="modalEditar"></div>
     <div id="modalEliminar"></div>
@@ -39,8 +40,9 @@
     <!-- Sección Empresas -->
     <section class="gestion-empresas">
         <h1>Empresas Aprobadas</h1>
-        <button><a href="index.php?menu=RegistroEmpresa">Añadir Empresa</a></button>
-        <table>
+        <button class="btnAgregar"><a href="index.php?menu=RegistroEmpresa">Añadir Empresa</a></button>
+        <button class="btnAgregar"><a href="index.php?menu=RegistroEmpresa">Añadir Varias Empresa</a></button>
+        <table id="tablaEmpresas">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -68,7 +70,7 @@
         </table>
 
         <h1>Empresas Pendientes de Aprobación</h1>
-        <table>
+        <table id="tablaEmpresasPendientes">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -88,8 +90,8 @@
                         <td>
                             <form method="post" action="index.php?menu=PanelAdmin">
                                 <input type="hidden" name="aprobarEmpresa" value="<?= $empresaC->getIdUserFk() ?>">
-                                <button type="submit" name="accion" value="aprobar">Aprobar</button>
-                                <button type="submit" name="accion" value="rechazar">Rechazar</button>
+                                <button type="submit" name="accion" value="aprobar" class="btnAgregar">Aprobar</button>
+                                <button type="submit" name="accion" value="rechazar" class="btnEliminar">Rechazar</button>
                             </form>
 
                         </td>
@@ -98,8 +100,5 @@
             </tbody>
         </table>
     </section>
-
-
-</main>
+</div>
 <?php $this->stop() ?>
-

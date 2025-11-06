@@ -8,7 +8,7 @@
     
     <link rel="stylesheet" href="../Public/css/style.css">
     
-    <?php $this->section('css') ?>
+    <?= $this->section('css') ?>
 </head>
 
 <body>

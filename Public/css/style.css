@@ -9,6 +9,8 @@
 6. MODAL
 7. CÁMARA
 8. REGISTRO EMPRESA
+9. PANEL ADMIN
+F. Responsive
 */
 
 /* ========================================
@@ -522,7 +524,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
 
 
 /* ========================================
-   9. RESPONSIVE
+   F. RESPONSIVE
    ======================================== */
 
 /*tablet*/
@@ -549,4 +551,118 @@ input[type="file"]::-webkit-file-upload-button:hover {
         flex-direction: column;
         gap: 0;
     }
+}
+
+
+
+
+/*-------------------------------------------------*/
+.gestion-empresas h1, .gestion-alumnos h1 {
+    color: #007bff; /* Título principal */
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#tablaEmpresas{
+    margin-bottom: 20px;
+}
+
+/* Estilos de Sección de Gestión (Alumnos y Empresas) */
+.gestion-alumnos, .gestion-empresas {
+    background-color: #ffffff;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilos de Botones Generales */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+
+.btnAgregar, #btnGuardarNuevoAlumno {
+    background-color: #28a745;
+    color: white;
+}
+
+.btnAgregar:hover, #btnGuardarNuevoAlumno:hover {
+    background-color: #218838;
+}
+
+#tablaEmpresasPendientes button[value="rechazar"], #btnCancelarNuevoAlumno {
+    background-color: #dc3545;
+    color: white;
+}
+
+#tablaEmpresasPendientes button[value="rechazar"]:hover, #btnCancelarNuevoAlumno:hover {
+    background-color: #c82333;
+}
+
+
+/* Estilos para el botón que contiene un <a> (Añadir Empresa) */
+.gestion-empresas button a {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Para que el enlace ocupe todo el botón */
+}
+
+
+/* Estilos de Tablas */
+#tablaAlumnos, #tablaEmpresas, #tablaEmpresasPendientes {
+    width: 100%;
+    border-collapse: collapse; /* Bordes de celdas unidos */
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Encabezados de Tabla */
+#tablaAlumnos thead th, #tablaEmpresas thead th, #tablaEmpresasPendientes thead th {
+    background-color: #007bff; /* Color azul para encabezados */
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Filas de la Tabla */
+#tablaAlumnos tbody td, #tablaEmpresas tbody td, #tablaEmpresasPendientes tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Efecto cebra en las filas */
+#tablaAlumnos tbody tr:nth-child(even), #tablaEmpresas tbody tr:nth-child(even), #tablaEmpresasPendientes tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Efecto al pasar el ratón por la fila */
+#tablaAlumnos tbody tr:hover, #tablaEmpresas tbody tr:hover, #tablaEmpresasPendientes tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Contenedores de Modal (ocultos por defecto, listos para ser estilizados como modales) */
+#modalCrearAlumno, #modalDetallesAlumnos, #modalEditar, #modalEliminar {
+    /* Aquí se definirían los estilos para hacerlos aparecer como modales (por ejemplo, display: none; y luego estilos de superposición) */
+    /* Para este CSS, simplemente definimos un tamaño mínimo si se mostraran para evitar que colapsen completamente */
+    min-height: 0;
+}
+
+/* Estilos para el formulario dentro de la celda de acciones */
+.gestion-empresas table form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+#PanelAdmin .btn-submit{
+    width: 50%;
+    text-align: center;
 }

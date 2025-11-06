@@ -13,9 +13,8 @@ class Alumno
     private $fechaNacimiento;
     private $direccion;
     private $foto;
-    private $idRolFk;
 
-    public function __construct($id = null, $idUserFk = null, $dni = "", $email = "", $nombre = "", $ape1 = "", $ape2 = "", $curriculum = null, $fechaNacimiento = "", $direccion = "", $foto = "", $idRolFk = null)
+    public function __construct($id = null, $idUserFk = null, $dni = "", $email = "", $nombre = "", $ape1 = "", $ape2 = "", $curriculum = null, $fechaNacimiento = "", $direccion = "", $foto = "")
     {
         $this->id = $id;
         $this->idUserFk = $idUserFk;
@@ -28,7 +27,6 @@ class Alumno
         $this->fechaNacimiento = $fechaNacimiento;
         $this->direccion = $direccion;
         $this->foto = $foto;
-        $this->idRolFk = $idRolFk;
     }
 
     public function getId() { return $this->id; }
@@ -63,7 +61,4 @@ class Alumno
 
     public function getFoto() { return $this->foto; }
     public function setFoto($foto) { $this->foto = $foto; }
-
-    public function getIdRolFk() { return $this->idRolFk; }
-    public function setIdRolFk($idRolFk) { $this->idRolFk = $idRolFk; }
 }
