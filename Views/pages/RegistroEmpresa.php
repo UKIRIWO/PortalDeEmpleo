@@ -76,7 +76,8 @@
     if ($rol == 'admin'){?>
         <a href="?menu=PanelAdmin" class="volver-btn">Volver al panel de administración</a>
     <?php
-    } else { ?>
+    } else {
+        ?>
         <a href="?menu=Login" class="volver-btn">Iniciar de sesión</a>
     <?php } ?>
 </div>

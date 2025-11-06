@@ -274,7 +274,7 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
     background-color: #f8f8f8;
     cursor: pointer;
 }
-#formAlumno input[type="text"], #formAlumno input[type="date"], #formAlumno input[type="password"]{
+#formAlumno input[type="text"], #formAlumno input[type="date"], #formAlumno input[type="password"], #formAlumno input[type="email"]{
     width: 100%;
 }
 
@@ -443,6 +443,7 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
 
 /* Campos de entrada */
 input[type="text"],
+input[type="email"],
 input[type="password"],
 input[type="date"],
 input[type="email"],
@@ -597,12 +598,12 @@ button {
     background-color: #218838;
 }
 
-#tablaEmpresasPendientes button[value="rechazar"], #btnCancelarNuevoAlumno {
+#tablaEmpresasPendientes button[value="rechazar"], #btnCancelarNuevoAlumno, .btnEliminar {
     background-color: #dc3545;
     color: white;
 }
 
-#tablaEmpresasPendientes button[value="rechazar"]:hover, #btnCancelarNuevoAlumno:hover {
+#tablaEmpresasPendientes button[value="rechazar"]:hover, #btnCancelarNuevoAlumno:hover, .btnEliminar:hover {
     background-color: #c82333;
 }
 

@@ -190,6 +190,9 @@ class RepoAlumno{
             $stmt = $con->prepare("DELETE FROM user WHERE id = ?");
             $stmt->execute([$idUser]);
 
+            $stmt = $con->prepare("DELETE FROM alumno WHERE id = ?");
+            $stmt->execute([$id]);
+
             $con->commit();
             return true;
         } catch (\Exception $e) {

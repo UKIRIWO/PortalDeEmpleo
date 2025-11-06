@@ -10,13 +10,13 @@ use Repositories\RepoUser;
 use Models\Alumno;
 use Models\User;
 
-// Session::abrirsesion();
+Session::abrirsesion();
 
-// if (!Login::estaLogeado() || !Login::esAdmin()) {
-//     http_response_code(403);
-//     echo json_encode(['error' => 'No autorizado']);
-//     exit;
-// }
+if (!Login::estaLogeado() || !Login::esAdmin()) {
+    http_response_code(403);
+    echo json_encode(['error' => 'No autorizado']);
+    exit;
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true);
@@ -183,7 +183,7 @@ function postAlumno()
     http_response_code(201);
         echo json_encode([
             'success' => true,
-            'message' => 'Alumno creado correctamente',
+            'mensaje' => 'Alumno creado correctamente',
             'id' => $alumno->getId()
         ]);
     } catch (Exception $e) {
@@ -191,67 +191,6 @@ function postAlumno()
         echo json_encode(['error' => $e->getMessage()]);
     }
 }
-
-// function postAlumno($data)
-// {
-
-//     if (
-//         !isset($data['username']) ||
-//         !isset($data['password']) ||
-//         !isset($data['dni']) ||
-//         !isset($data['email']) ||
-//         !isset($data['nombre']) ||
-//         !isset($data['ape1']) ||
-//         !isset($data['ape2']) ||
-//         !isset($data['fecha_nacimiento']) ||
-//         !isset($data['direccion'])
-
-//     ) {
-//         http_response_code(400);
-//         echo json_encode(['error' => 'Datos incompletos']);
-//         return;
-//     }
-
-
-//     $user = new User(
-//         null,
-//         $data['username'] ?? null,
-//         password_hash($data['password'], PASSWORD_DEFAULT),
-//         3
-//     );
-
-
-//     $alumno = new Alumno(
-//         null,
-//         null,
-//         $data['dni'],
-//         $data['email'],
-//         $data['nombre'],
-//         $data['ape1'],
-//         $data['ape2'] ?? null,
-//         $data['curriculum'] ?? null,
-//         $data['fecha_nacimiento'] ?? null,
-//         $data['direccion'] ?? null,
-//         $data['foto'] ?? null
-//     );
-
-
-//     if (RepoAlumno::save($user, $alumno)) {
-//         http_response_code(201);
-//         echo json_encode([
-//             'success' => true,
-//             'id' => $alumno->getId(),
-//             'id' => $alumno->getId(),
-//             'message' => 'Alumno creado correctamente'
-//         ]);
-//     } else {
-//         http_response_code(500);
-//         echo json_encode(['error' => 'Error al crear alumno']);
-//     }
-// }
-
-
-
 
 
 
@@ -320,17 +259,18 @@ function putAlumno($data)
 
 function deleteAlumno()
 {
-    if (!isset($_GET['id'])) {
+    $input = json_decode(file_get_contents("php://input"), true);
+    if (!isset($input['id'])) {
         http_response_code(400);
         echo json_encode(['error' => 'ID no proporcionado']);
         return;
     }
 
     // Eliminar alumno (y usuario en cascada)
-    if (RepoAlumno::delete($_GET['id'])) {
+    if (RepoAlumno::delete($input['id'])) {
         echo json_encode([
             'success' => true,
-            'message' => 'Alumno eliminado correctamente'
+            'mensaje' => 'Alumno eliminado correctamente'
         ]);
     } else {
         http_response_code(500);

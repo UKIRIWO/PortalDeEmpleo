@@ -68,7 +68,9 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-
+        <?php
+        if($empresasC){
+        ?>
         <h1>Empresas Pendientes de Aprobación</h1>
         <table id="tablaEmpresasPendientes">
             <thead>
@@ -99,6 +101,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <?php } ?>
     </section>
 </div>
 <?php $this->stop() ?>
