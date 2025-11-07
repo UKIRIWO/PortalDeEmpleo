@@ -99,7 +99,7 @@ window.addEventListener("load", function () {
         const btnEliminar = fila.querySelector(".eliminar");
         const btnDetalles = fila.querySelector(".detalles");
 
-        // EDITAR
+        // EDITAR (put)
         btnEditar.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
 
@@ -160,7 +160,7 @@ window.addEventListener("load", function () {
         };
 
 
-        // Eliminar
+        // Eliminar (DELETE)
         btnEliminar.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
             const modalEliminar = Modal.crear("modalEliminar", "html/eliminarAlumno.html", function () {
@@ -191,6 +191,8 @@ window.addEventListener("load", function () {
 
         };
 
+
+        // Detalles (GET con ID)
         btnDetalles.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
 
