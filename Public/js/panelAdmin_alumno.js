@@ -19,6 +19,7 @@ window.addEventListener("load", function () {
                         <td>${alumno.email}</td>
                         <td class="tdAccion">
                             <input type="hidden" class="idAlumno" value="${alumno.id}">
+                            <button class="detalles btnDetalles">Detalles</button>
                             <button class="editar btnEditar">Editar</button>
                             <button class="eliminar btnEliminar">Eliminar</button>
                         </td>
@@ -38,15 +39,15 @@ window.addEventListener("load", function () {
 
 
     // Post
-    const modalCrearAlumno = Modal.crear("modalCrearAlumno", "html/nuevoAlumno.html", function () {
+    const modalCrear = Modal.crear("modalCrear", "html/nuevoAlumno.html", function () {
         const botonAgregarAlumno = document.getElementById("btnAgregarAlumno");
-        botonAgregarAlumno.onclick = () => modalCrearAlumno.mostrar();
+        botonAgregarAlumno.onclick = () => modalCrear.mostrar();
 
         const btnGuardarAlumno = document.getElementById("btnGuardarNuevoAlumno");
         const btnCancelarAlumno = document.getElementById("btnCancelarNuevoAlumno");
-        
+
         btnGuardarAlumno.onclick = () => {
-            
+
             const username = document.getElementById("nuevoUsername").value;
             const password = document.getElementById("nuevoPassword").value;
             const dni = document.getElementById("nuevoDni").value;
@@ -83,12 +84,12 @@ window.addEventListener("load", function () {
             })
                 .then(res => res.json())
                 .then(() => {
-                    modalCrearAlumno.ocultar();
+                    modalCrear.ocultar();
                     cargarAlumnos();
                 })
                 .catch(err => console.error("Error POST alumno:", err));
         };
-        btnCancelarAlumno.onclick = () => modalCrearAlumno.ocultar();
+        btnCancelarAlumno.onclick = () => modalCrear.ocultar();
     });
 
 
@@ -96,51 +97,72 @@ window.addEventListener("load", function () {
     function asignarEventosFila(fila) {
         const btnEditar = fila.querySelector(".editar");
         const btnEliminar = fila.querySelector(".eliminar");
+        const btnDetalles = fila.querySelector(".detalles");
 
-        // Editar
+        // EDITAR
         btnEditar.onclick = () => {
-            const modalEditar = Modal.crear("modalEditar", "html/editarAlumno.html", function () {
-                modalEditar.mostrar();
-                // document.getElementById("editarIdAlumno").value = fila.querySelector(".idAlumnoEditar").textContent;
-                // document.getElementById("editarIdUser").value = fila.querySelector(".id_userEditar").textContent;
-                // document.getElementById("editarDniAlumno").value = fila.querySelector(".dniEditar").textContent;
-                // document.getElementById("editarNombreAlumno").value = fila.querySelector(".nombreEditar").textContent;
-                // document.getElementById("editarEmailAlumno").value = fila.querySelector(".emailEditar").textContent;
-                
+            const idAlumno = fila.querySelector(".idAlumno").value;
 
-                const btnGuardarEditar = document.getElementById("btnGuardarEditar");
-                btnGuardarEditar.onclick = () => {
-                    const data = {
-                        id: fila.querySelector(".idAlumno").value,
-                        username: document.getElementById("editarUsername").value,
-                        password: document.getElementById("editarPassword").value,
-                        nombre: document.getElementById("editarNombre").value,
-                        ape1: document.getElementById("editarApe1").value,
-                        ape2: document.getElementById("editarAp2").value,
-                        email: document.getElementById("editarEmail").value,
-                        fecha_nacimiento: document.getElementById("editarFechaNacimiento").value,
-                        direccion: document.getElementById("editarDireccion").value,
-                    };
+            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`)
+                .then(res => res.json())
+                .then(alumno => {
+                    const modalEditar = Modal.crear("modalEditar", "html/editarAlumno.html", function () {
 
-                    fetch('/portalDeEmpleo/api/ApiAlumno.php', {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    })
-                    .then(res => res.json())
-                    .then(() => {
-                        modalEditar.ocultar();
-                        cargarAlumnos();
-                    })
-                    .catch(err => console.error("Error PUT alumno:", err));
-                };
-            });
+                        modalEditar.mostrar();
+
+                        // Rellenar los campos con los datos obtenidos
+                        document.getElementById("editarUsername").value = alumno.username || "";
+                        document.getElementById("editarDni").value = alumno.dni || "";
+                        document.getElementById("editarNombre").value = alumno.nombre || "";
+                        document.getElementById("editarApe1").value = alumno.ape1 || "";
+                        document.getElementById("editarApe2").value = alumno.ape2 || "";
+                        document.getElementById("editarEmail").value = alumno.email || "";
+                        document.getElementById("editarFechaNacimiento").value = alumno.fecha_nacimiento || "";
+                        document.getElementById("editarDireccion").value = alumno.direccion || "";
+                        
+
+                        // Evento del botón Guardar (mantienes tu lógica original)
+                        const btnGuardar = document.getElementById("btnGuardarEditar");
+                        btnGuardar.onclick = () => {
+                            const datosActualizados = {
+                                id: alumno.id,
+                                password: document.getElementById("editarPassword").value,
+                                dni: document.getElementById("editarDni").value,
+                                nombre: document.getElementById("editarNombre").value,
+                                ape1: document.getElementById("editarApe1").value,
+                                ape2: document.getElementById("editarApe2").value,
+                                email: document.getElementById("editarEmail").value,
+                                fecha_nacimiento: document.getElementById("editarFechaNacimiento").value,
+                                direccion: document.getElementById("editarDireccion").value
+
+                            };
+
+                            fetch('/portalDeEmpleo/api/ApiAlumno.php', {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(datosActualizados)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        alert("Alumno actualizado correctamente");
+                                        modalEditar.ocultar();
+                                        cargarAlumnos();
+                                    } else {
+                                        alert("Error: " + (data.error || "Error desconocido"));
+                                    }
+                                })
+                                .catch(err => console.error("Error al actualizar alumno:", err));
+                        };
+                    });
+                })
+                .catch(err => console.error("Error al obtener alumno:", err));
         };
+
 
         // Eliminar
         btnEliminar.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
-            console.log(idAlumno);
             const modalEliminar = Modal.crear("modalEliminar", "html/eliminarAlumno.html", function () {
                 modalEliminar.mostrar();
 
@@ -149,24 +171,60 @@ window.addEventListener("load", function () {
                     fetch('/portalDeEmpleo/api/ApiAlumno.php', {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: idAlumno})
+                        body: JSON.stringify({ id: idAlumno })
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.mensaje) {
-                            alert(data.mensaje);
-                            modalEliminar.ocultar();
-                            fila.remove();
-                        } else if (data.error) {
-                            alert("Error: " + data.error);
-                        }
-                    })
-                    .catch(err => console.error("Error DELETE alumno:", err));
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.mensaje) {
+                                alert(data.mensaje);
+                                modalEliminar.ocultar();
+                                fila.remove();
+                            } else if (data.error) {
+                                alert("Error: " + data.error);
+                            }
+                        })
+                        .catch(err => console.error("Error DELETE alumno:", err));
                 };
                 const btnCancelar = document.getElementById("btnCancelarEliminar");
-                btnCancelar.onclick = function(){modalEliminar.ocultar()};
+                btnCancelar.onclick = function () { modalEliminar.ocultar() };
             });
-            
+
+        };
+
+        btnDetalles.onclick = () => {
+            const idAlumno = fila.querySelector(".idAlumno").value;
+
+            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`)
+                .then(res => res.json())
+                .then(alumno => {
+                    const modalDetalles = Modal.crear("modalDetalles", "html/detallesAlumno.html", function () {
+                        modalDetalles.mostrar();
+
+                        // Mostrar los datos del alumno en el HTML
+                        let fotoPerfil = document.getElementById("detalleFoto");
+                        let rutaFoto = '';
+
+                        if (alumno.foto && alumno.foto.trim() !== '') {
+                            rutaFoto = "../.imagenes/alumno/" + alumno.foto;
+                        } else {
+                            rutaFoto = "../.imagenes/alumno/predeterminada.png";
+                        }
+
+                        fotoPerfil.src = rutaFoto;
+                        document.getElementById("detalleUsername").textContent = alumno.username || "—";
+                        document.getElementById("detalleDni").textContent = alumno.dni || "—";
+                        document.getElementById("detalleNombre").textContent = alumno.nombre || "—";
+                        document.getElementById("detalleApe1").textContent = alumno.ape1 || "—";
+                        document.getElementById("detalleApe2").textContent = alumno.ape2 || "—";
+                        document.getElementById("detalleEmail").textContent = alumno.email || "—";
+                        document.getElementById("detalleFechaNacimiento").textContent = alumno.fecha_nacimiento || "—";
+                        document.getElementById("detalleDireccion").textContent = alumno.direccion || "—";
+
+                        // Botón cerrar
+                        document.getElementById("btnCerrarDetalles").onclick = () => modalDetalles.ocultar();
+                    });
+                })
+                .catch(err => console.error("Error al obtener alumno:", err));
         };
     }
 });

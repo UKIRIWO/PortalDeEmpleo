@@ -1,7 +1,6 @@
-/*
-Índice
+/* Índice
 
-1. RESET
+1. GENERAL
 2. HEADER
 3. FOOTER
 4. LOGIN
@@ -9,12 +8,13 @@
 6. MODAL
 7. CÁMARA
 8. REGISTRO EMPRESA
-9. PANEL ADMIN
+9. PANEL ADMINISTRACIÓN
+10. MODAL DETALLES
 F. Responsive
 */
 
 /* ========================================
-   1. RESET
+   1. GENERAL
    ======================================== */
 
 * {
@@ -26,6 +26,72 @@ F. Responsive
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+}
+
+/*Botones*/
+.btnVerde {
+    background-color: #28a745;
+    color: white;
+}
+
+.btnVerde:hover {
+    background-color: #1e7932;
+}
+
+.btnRojo{
+    background-color: #dc3545;
+    color: white;
+}
+
+.btnRojo:hover {
+    background-color: #a81d2b;
+}
+
+.btnAmarillo{
+    background-color: #dcd100;
+    color: white;
+}
+
+.btnAmarillo:hover{
+    background-color: #b6ad00;
+}
+
+/*Botón azul*/
+.btnAzul{
+    background-color: #007bff;
+    color: white;
+}
+
+.btnAzul:hover{
+    background-color: #0056b3;
+}
+
+
+.btnAgregar, #btnGuardarNuevoAlumno, .btnDetalles {
+    background-color: #28a745;
+    color: white;
+}
+
+.btnAgregar:hover, #btnGuardarNuevoAlumno:hover, .btnDetalles:hover {
+    background-color: #1e7932;
+}
+
+#tablaEmpresasPendientes button[value="rechazar"], #btnCancelarNuevoAlumno, .btnEliminar {
+    background-color: #dc3545;
+    color: white;
+}
+
+#tablaEmpresasPendientes button[value="rechazar"]:hover, #btnCancelarNuevoAlumno:hover, .btnEliminar:hover {
+    background-color: #a81d2b;
+}
+
+.btnEditar{
+    background-color: #dcd100;
+    color: white;
+}
+
+.btnEditar:hover{
+    background-color: #b6ad00;
 }
 
 /* ========================================
@@ -61,6 +127,8 @@ header nav ul li a {
     transition: color 0.25s;
 }
 
+
+/*Botón azul*/
 header nav ul li a:hover {
     color: #0073b1; 
 }
@@ -197,11 +265,12 @@ input[type="text"], input[type="password"], input[type="date"] {
     transition: border-color 0.3s;
 }
 
+
 input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus {
     border-color: #007bff;
     outline: none;
 }
-
+/*Botón azul*/
 .btn-submit {
     text-decoration: none;
     margin-top: 0.5rem;
@@ -233,7 +302,7 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
     flex-direction: column;
     gap: 0.5rem;
 }
-
+/*Botón azul*/
 .btn-register {
     display: block;
     padding: 0.6rem;
@@ -364,6 +433,7 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
     left: 25%; /* 150px de 600px */
 }
 
+/*Botón azul*/
 #captura {
   background-color: #007bff;
   color: white;
@@ -463,6 +533,7 @@ input:focus {
 }
 
 /* Botón */
+/*Botón azul*/
 input[type="submit"] {
     background-color: #1976d2;
     color: white;
@@ -501,6 +572,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #0d47a1;
 }
 
+/*Botón azul especial*/
 .volver-btn {
     display: block;
     margin: 20px auto 0;
@@ -510,7 +582,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 1em;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
     text-decoration: none;
     width: 50%;
     text-align: center;
@@ -555,11 +627,11 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 
-
-
-/*-------------------------------------------------*/
+/* ========================================
+   9. PANEL ADMINISTRACIÓN
+   ======================================== */
 .gestion-empresas h1, .gestion-alumnos h1 {
-    color: #007bff; /* Título principal */
+    color: #007bff;
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -569,16 +641,14 @@ input[type="file"]::-webkit-file-upload-button:hover {
     margin-bottom: 20px;
 }
 
-/* Estilos de Sección de Gestión (Alumnos y Empresas) */
 .gestion-alumnos, .gestion-empresas {
     background-color: #ffffff;
     padding: 25px;
     margin-bottom: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos de Botones Generales */
 button {
     padding: 10px 15px;
     border: none;
@@ -589,26 +659,7 @@ button {
 }
 
 
-.btnAgregar, #btnGuardarNuevoAlumno {
-    background-color: #28a745;
-    color: white;
-}
-
-.btnAgregar:hover, #btnGuardarNuevoAlumno:hover {
-    background-color: #218838;
-}
-
-#tablaEmpresasPendientes button[value="rechazar"], #btnCancelarNuevoAlumno, .btnEliminar {
-    background-color: #dc3545;
-    color: white;
-}
-
-#tablaEmpresasPendientes button[value="rechazar"]:hover, #btnCancelarNuevoAlumno:hover, .btnEliminar:hover {
-    background-color: #c82333;
-}
-
-
-/* Estilos para el botón que contiene un <a> (Añadir Empresa) */
+/* Estilos para el botón que contiene un "a" (Añadir Empresa) */
 .gestion-empresas button a {
     text-decoration: none;
     color: inherit;
@@ -666,4 +717,39 @@ button {
 #PanelAdmin .btn-submit{
     width: 50%;
     text-align: center;
+}
+
+
+/* ========================================
+   10. MODAL DETALLES
+   ======================================== */
+
+.modal-detalles {
+    width: auto;
+    background: white;
+    border-radius: 10px;
+    padding: 20px 40px;
+}
+
+.detalle-contenedor {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.detalle-contenedor{
+    align-items: center;
+}
+
+.detalle-contenedor img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+.detalle-contenedor p {
+    margin: 5px 0;
 }

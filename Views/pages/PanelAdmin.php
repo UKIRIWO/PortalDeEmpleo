@@ -32,8 +32,8 @@
 
     </section>
     <!-- Contenedor del modal -->
-    <div id="modalCrearAlumno"></div>
-    <div id="modalDetallesAlumnos"></div>
+    <div id="modalCrear"></div>
+    <div id="modalDetalles"></div>
     <div id="modalEditar"></div>
     <div id="modalEliminar"></div>
 
@@ -41,7 +41,6 @@
     <section class="gestion-empresas">
         <h1>Empresas Aprobadas</h1>
         <button class="btnAgregar"><a href="index.php?menu=RegistroEmpresa">Añadir Empresa</a></button>
-        <button class="btnAgregar"><a href="index.php?menu=RegistroEmpresa">Añadir Varias Empresa</a></button>
         <table id="tablaEmpresas">
             <thead>
                 <tr>
@@ -60,9 +59,10 @@
                         <td><?= $empresa->getNombre() ?></td>
                         <td><?= $empresa->getCorreoDeContacto() ?></td>
                         <td>
-                            <button>Editar</button>
-                            <button>Eliminar</button>
-                            <button>Detalles</button>
+                            <button class="btnDetalles">Detalles</button>
+                            <button class="btnEditar">Editar</button>
+                            <button class="btnEliminar">Eliminar</button>
+                            
                         </td>
                     </tr>
                 <?php endforeach; ?>
