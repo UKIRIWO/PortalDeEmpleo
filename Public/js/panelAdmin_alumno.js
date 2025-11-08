@@ -119,45 +119,80 @@ window.addEventListener("load", function () {
                         document.getElementById("editarEmail").value = alumno.email || "";
                         document.getElementById("editarFechaNacimiento").value = alumno.fecha_nacimiento || "";
                         document.getElementById("editarDireccion").value = alumno.direccion || "";
-                        
 
-                        // Evento del botón Guardar (mantienes tu lógica original)
+
+                        // Evento del botón Guardar con Base64
                         const btnGuardar = document.getElementById("btnGuardarEditar");
-                        btnGuardar.onclick = () => {
-                            const datosActualizados = {
-                                id: alumno.id,
-                                password: document.getElementById("editarPassword").value,
-                                dni: document.getElementById("editarDni").value,
-                                nombre: document.getElementById("editarNombre").value,
-                                ape1: document.getElementById("editarApe1").value,
-                                ape2: document.getElementById("editarApe2").value,
-                                email: document.getElementById("editarEmail").value,
-                                fecha_nacimiento: document.getElementById("editarFechaNacimiento").value,
-                                direccion: document.getElementById("editarDireccion").value
+                        btnGuardar.onclick = async () => {
+                            try {
+                                // Preparar datos básicos
+                                const datosActualizados = {
+                                    id: alumno.id,
+                                    username: document.getElementById("editarUsername").value,
+                                    dni: document.getElementById("editarDni").value,
+                                    nombre: document.getElementById("editarNombre").value,
+                                    ape1: document.getElementById("editarApe1").value,
+                                    ape2: document.getElementById("editarApe2").value,
+                                    email: document.getElementById("editarEmail").value,
+                                    fecha_nacimiento: document.getElementById("editarFechaNacimiento").value,
+                                    direccion: document.getElementById("editarDireccion").value
+                                };
 
-                            };
+                                // Password
+                                const password = document.getElementById("editarPassword").value;
+                                if (password) {
+                                    datosActualizados.password = password;
+                                }
 
-                            fetch('/portalDeEmpleo/api/ApiAlumno.php', {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(datosActualizados)
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        alert("Alumno actualizado correctamente");
-                                        modalEditar.ocultar();
-                                        cargarAlumnos();
-                                    } else {
-                                        alert("Error: " + (data.error || "Error desconocido"));
-                                    }
-                                })
-                                .catch(err => console.error("Error al actualizar alumno:", err));
+                                // Curriculum (convertir a Base64)
+                                const curriculumFile = document.getElementById("editarCurriculum").files[0];
+                                if (curriculumFile) {
+                                    datosActualizados.curriculum = await fileToBase64(curriculumFile);
+                                }
+
+                                // Foto (convertir a Base64)
+                                const fotoFile = document.getElementById("editarFoto").files[0];
+                                if (fotoFile) {
+                                    datosActualizados.foto = await fileToBase64(fotoFile);
+                                }
+
+                                // Enviar con PUT
+                                const response = await fetch('/portalDeEmpleo/api/ApiAlumno.php', {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(datosActualizados)
+                                });
+
+                                const data = await response.json();
+
+                                if (data.success) {
+                                    alert(data.message || "Alumno actualizado correctamente");
+                                    modalEditar.ocultar();
+                                    cargarAlumnos();
+                                } else {
+                                    alert("Error: " + (data.error || "Error desconocido"));
+                                }
+
+                            } catch (err) {
+                                console.error("Error al actualizar alumno:", err);
+                                alert("Error al actualizar el alumno");
+                            }
                         };
                     });
                 })
                 .catch(err => console.error("Error al obtener alumno:", err));
         };
+
+        // Función auxiliar para convertir archivo a Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
 
 
         // Eliminar (DELETE)

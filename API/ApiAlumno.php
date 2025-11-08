@@ -200,47 +200,115 @@ function postAlumno()
 
 function putAlumno()
 {
-    $data = json_decode(file_get_contents('php://input'), true);
-    // Actualizar alumno existente
-    if (!isset($data['id'])) {
-        http_response_code(400);
-        echo json_encode(['error' => 'ID no proporcionado']);
-        return;
-    }
+    try {
+        // Obtener datos del JSON
+        $data = json_decode(file_get_contents('php://input'), true);
 
-    $alumno = RepoAlumno::findById($data['id']);
-    if (!$alumno) {
-        http_response_code(404);
-        echo json_encode(['error' => 'Alumno no encontrado']);
-        return;
-    }
-
-    
-    if (isset($data['dni'])) $alumno->setDni($data['dni']);
-    if (isset($data['nombre'])) $alumno->setNombre($data['nombre']);
-    if (isset($data['ape1'])) $alumno->setApe1($data['ape1']);
-    if (isset($data['ape2'])) $alumno->setApe2($data['ape2']);
-    if (isset($data['email'])) $alumno->setEmail($data['email']);
-    if (isset($data['fecha_nacimiento'])) $alumno->setFechaNacimiento($data['fecha_nacimiento']);
-    if (isset($data['direccion'])) $alumno->setDireccion($data['direccion']);
-    if (isset($data['foto'])) $alumno->setFoto($data['foto']);
-
-    RepoAlumno::update($alumno);
-
-    
-    if (isset($data['username']) || isset($data['password'])) {
-        $user = RepoUser::findById($alumno->getIdUserFk());
-        if ($user) {
-            if (isset($data['username'])) $user->setNombreUsuario($data['username']);
-            if (isset($data['password'])) $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
-            RepoUser::update($user);
+        if (!isset($data['id'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'ID no proporcionado']);
+            return;
         }
-    }
 
-    echo json_encode([
-        'success' => true,
-        'message' => 'Alumno actualizado correctamente'
-    ]);
+        $id = $data['id'];
+
+        // Buscar alumno
+        $alumno = RepoAlumno::findById($id);
+        if (!$alumno) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Alumno no encontrado']);
+            return;
+        }
+
+        $idUser = $alumno->getIdUserFk();
+
+        // Actualizar datos básicos del alumno
+        if (isset($data['dni'])) $alumno->setDni($data['dni']);
+        if (isset($data['nombre'])) $alumno->setNombre($data['nombre']);
+        if (isset($data['ape1'])) $alumno->setApe1($data['ape1']);
+        if (isset($data['ape2'])) $alumno->setApe2($data['ape2']);
+        if (isset($data['email'])) $alumno->setEmail($data['email']);
+        if (isset($data['fecha_nacimiento'])) $alumno->setFechaNacimiento($data['fecha_nacimiento']);
+        if (isset($data['direccion'])) $alumno->setDireccion($data['direccion']);
+
+        // Procesar curriculum (Base64 a BLOB)
+        if (isset($data['curriculum']) && !empty($data['curriculum'])) {
+            // El formato es: "data:application/pdf;base64,JVBERi0xLjQK..."
+            // Separar el contenido Base64 del prefijo
+            $parts = explode(',', $data['curriculum']);
+            
+            if (count($parts) === 2) {
+                $curriculumBase64 = $parts[1];
+                $curriculumContent = base64_decode($curriculumBase64);
+                
+                if ($curriculumContent !== false) {
+                    $alumno->setCurriculum($curriculumContent);
+                }
+            }
+        }
+
+        // Procesar foto (Base64 a archivo en servidor)
+        if (isset($data['foto']) && !empty($data['foto'])) {
+            // El formato es: "data:image/png;base64,iVBORw0KGgo..."
+            $parts = explode(',', $data['foto']);
+            
+            if (count($parts) === 2) {
+                $fotoBase64 = $parts[1];
+                $fotoContent = base64_decode($fotoBase64);
+                
+                if ($fotoContent !== false) {
+                    $rutaFoto = "foto_" . $idUser . ".png";
+                    
+                    // Crear carpeta si no existe
+                    if (!file_exists("../.imagenes/alumno/")) {
+                        mkdir("../.imagenes/alumno/", 0777, true);
+                    }
+                    
+                    // Guardar archivo en servidor
+                    if (file_put_contents("../.imagenes/alumno/" . $rutaFoto, $fotoContent) !== false) {
+                        // Solo actualizar BD si era null antes
+                        if ($alumno->getFoto() === null) {
+                            $alumno->setFoto($rutaFoto);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Actualizar alumno en BD
+        RepoAlumno::update($alumno);
+
+        // Actualizar usuario (username y/o password)
+        if (isset($data['username']) || isset($data['password'])) {
+            $user = RepoUser::findById($idUser);
+            if ($user) {
+                if (isset($data['username'])) {
+                    $user->setNombreUsuario($data['username']);
+                }
+                if (isset($data['password']) && !empty($data['password'])) {
+                    $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
+                }
+                RepoUser::update($user);
+            }
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Alumno actualizado correctamente'
+        ]);
+
+    } catch (PDOException $e) {
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            http_response_code(409);
+            echo json_encode(['error' => 'Ya existe un registro con estos datos (DNI o username duplicado)']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error de base de datos: ' . $e->getMessage()]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => $e->getMessage()]);
+    }
 }
 
 
