@@ -36,6 +36,7 @@
     <div id="modalDetalles"></div>
     <div id="modalEditar"></div>
     <div id="modalEliminar"></div>
+    <div id="modalVerCurriculum"></div>
 
     <!-- Sección Empresas -->
     <section class="gestion-empresas">

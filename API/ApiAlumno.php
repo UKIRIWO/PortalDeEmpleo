@@ -53,19 +53,24 @@ try {
 function getAlumnos()
 {
     if (isset($_GET['id'])) {
-        $alumno = RepoAlumno::findByIdWithoutCurriculum($_GET['id']);
+        $alumno = RepoAlumno::findById($_GET['id']);
         if ($alumno) {
             $user = RepoUser::findById($alumno->getIdUserFk());
+            $curriculumBase64 = null;
+            if ($alumno->getCurriculum() && $alumno->getCurriculum() !== 'CV pendiente') {
+                $curriculumBase64 = base64_encode($alumno->getCurriculum());
+            }
+            
             echo json_encode([
                 'id' => $alumno->getId(),
                 'id_user' => $alumno->getIdUserFk(),
                 'username' => $user->getNombreUsuario(),
-                'password' => $user->getPassword(),
                 'dni' => $alumno->getDni(),
                 'email' => $alumno->getEmail(),
                 'nombre' => $alumno->getNombre(),
                 'ape1' => $alumno->getApe1(),
                 'ape2' => $alumno->getApe2(),
+                'curriculum' => $curriculumBase64,
                 'fecha_nacimiento' => $alumno->getFechaNacimiento(),
                 'direccion' => $alumno->getDireccion(),
                 'foto' => $alumno->getFoto()
@@ -294,7 +299,7 @@ function putAlumno()
 
         echo json_encode([
             'success' => true,
-            'message' => 'Alumno actualizado correctamente'
+            'mensaje' => 'Alumno actualizado correctamente'
         ]);
 
     } catch (PDOException $e) {

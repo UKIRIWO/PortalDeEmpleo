@@ -93,7 +93,7 @@ window.addEventListener("load", function () {
     });
 
 
-    // --- FUNCIONES AUXILIARES ---
+    // --- EDITAR/ELIMINAR/DETALLES ---
     function asignarEventosFila(fila) {
         const btnEditar = fila.querySelector(".editar");
         const btnEliminar = fila.querySelector(".eliminar");
@@ -110,7 +110,7 @@ window.addEventListener("load", function () {
 
                         modalEditar.mostrar();
 
-                        // Rellenar los campos con los datos obtenidos
+                        // Relleno los input con los datos del alumno
                         document.getElementById("editarUsername").value = alumno.username || "";
                         document.getElementById("editarDni").value = alumno.dni || "";
                         document.getElementById("editarNombre").value = alumno.nombre || "";
@@ -121,11 +121,11 @@ window.addEventListener("load", function () {
                         document.getElementById("editarDireccion").value = alumno.direccion || "";
 
 
-                        // Evento del botón Guardar con Base64
+                        // Botón guardar
                         const btnGuardar = document.getElementById("btnGuardarEditar");
                         btnGuardar.onclick = async () => {
                             try {
-                                // Preparar datos básicos
+                                // JSON con los datos
                                 const datosActualizados = {
                                     id: alumno.id,
                                     username: document.getElementById("editarUsername").value,
@@ -144,13 +144,13 @@ window.addEventListener("load", function () {
                                     datosActualizados.password = password;
                                 }
 
-                                // Curriculum (convertir a Base64)
+                                // Curriculum (Base64)
                                 const curriculumFile = document.getElementById("editarCurriculum").files[0];
                                 if (curriculumFile) {
                                     datosActualizados.curriculum = await fileToBase64(curriculumFile);
                                 }
 
-                                // Foto (convertir a Base64)
+                                // Foto (Base64)
                                 const fotoFile = document.getElementById("editarFoto").files[0];
                                 if (fotoFile) {
                                     datosActualizados.foto = await fileToBase64(fotoFile);
@@ -166,7 +166,7 @@ window.addEventListener("load", function () {
                                 const data = await response.json();
 
                                 if (data.success) {
-                                    alert(data.message || "Alumno actualizado correctamente");
+                                    // alert(data.mensaje);
                                     modalEditar.ocultar();
                                     cargarAlumnos();
                                 } else {
@@ -211,7 +211,7 @@ window.addEventListener("load", function () {
                         .then(res => res.json())
                         .then(data => {
                             if (data.mensaje) {
-                                alert(data.mensaje);
+                                // alert(data.mensaje);
                                 modalEliminar.ocultar();
                                 fila.remove();
                             } else if (data.error) {
@@ -256,6 +256,26 @@ window.addEventListener("load", function () {
                         document.getElementById("detalleEmail").textContent = alumno.email || "—";
                         document.getElementById("detalleFechaNacimiento").textContent = alumno.fecha_nacimiento || "—";
                         document.getElementById("detalleDireccion").textContent = alumno.direccion || "—";
+
+
+                        document.getElementById("btnVerCurriculum").onclick = () => {
+                            const modalCurriculum = Modal.crear("modalVerCurriculum", "html/curriculumAlumno.html", function () {
+                                modalCurriculum.mostrar();
+
+                                // Obtener el curriculum del alumno (viene en la respuesta del GET)
+                                const curriculumBlob = alumno.curriculum;
+
+                                if (!curriculumBlob || curriculumBlob === null) {
+                                    alert('Este alumno no tiene curriculum cargado');
+                                    modalCurriculum.ocultar();
+                                    return;
+                                }
+
+                                // Convertir el BLOB a Base64 y mostrarlo en el iframe
+                                const iframe = document.getElementById("iframeCurriculum");
+                                iframe.src = "data:application/pdf;base64," + curriculumBlob;
+                            });
+                        };
 
                         // Botón cerrar
                         document.getElementById("btnCerrarDetalles").onclick = () => modalDetalles.ocultar();

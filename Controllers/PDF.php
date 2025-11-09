@@ -1,5 +1,5 @@
 <?php
-namespace Helpers;
+namespace Controllers;
 
 require __DIR__ . '/../vendor/autoload.php';
 use Dompdf\Dompdf;

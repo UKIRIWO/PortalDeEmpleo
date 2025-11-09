@@ -10,6 +10,7 @@
 8. REGISTRO EMPRESA
 9. PANEL ADMINISTRACIÓN
 10. MODAL DETALLES
+11. MODAL CURRICULUM
 F. Responsive
 */
 
@@ -724,13 +725,6 @@ button {
    10. MODAL DETALLES
    ======================================== */
 
-.modal-detalles {
-    width: auto;
-    background: white;
-    border-radius: 10px;
-    padding: 20px 40px;
-}
-
 .detalle-contenedor {
     display: flex;
     align-items: flex-start;
@@ -752,4 +746,29 @@ button {
 
 .detalle-contenedor p {
     margin: 5px 0;
+}
+
+
+
+/* ========================================
+   11. MODAL CURRICULUM
+   ======================================== */
+
+.modalCurriculum {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalCurriculum h2 {
+    margin-bottom: 15px;
+}
+
+.iframe-pdf {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ddd;
+    border-radius: 4px;
 }
