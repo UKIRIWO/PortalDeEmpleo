@@ -1,6 +1,9 @@
 <?php
+
 namespace Repositories;
+
 use Models\Empresa;
+
 class RepoEmpresa
 {
 
@@ -52,7 +55,8 @@ class RepoEmpresa
     }
 
 
-    public static function saveWithUser($user, $empresa) {
+    public static function saveWithUser($user, $empresa)
+    {
         $con = DB::getConnection();
 
         try {
@@ -86,7 +90,6 @@ class RepoEmpresa
             // Confirmar transacción
             $con->commit();
             return true;
-
         } catch (\Exception $e) {
             // Revertir cambios si hay error
             $con->rollBack();
@@ -224,7 +227,7 @@ class RepoEmpresa
             $user->setId($idUser);
 
             // Insertar empresa
-            $stmt = $con->prepare("INSERT INTO empresa_candidata (id_user_fk, nombre direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $con->prepare("INSERT INTO empresa_candidata (id_user_fk, nombre, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 $idUser,
                 $empresa->getNombre(),
@@ -256,7 +259,7 @@ class RepoEmpresa
         $con = DB::getConnection();
 
         try {
-            $empresa = self::findById($id);
+            $empresa = self::findByIdCandidata($id);
             if ($empresa == null) {
                 return false;
             }
@@ -273,6 +276,53 @@ class RepoEmpresa
         } catch (\Exception $e) {
             $con->rollBack();
             error_log("Error al eliminar empresa con usuario: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function aprobarCandidata($id)
+    {
+        $con = DB::getConnection();
+
+        try {
+            // Buscar la empresa candidata
+            $empresaCandidata = self::findByIdCandidata($id);
+            if ($empresaCandidata == null) {
+                return false;
+            }
+            
+            $con->beginTransaction();
+
+            // Insertar en la tabla empresa
+            
+            $stmt = $con->prepare("
+            INSERT INTO empresa (id_user_fk, nombre, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+            
+            $stmt->execute([
+                $empresaCandidata->getIdUserFk(),
+                $empresaCandidata->getNombre(),
+                $empresaCandidata->getDireccion(),
+                $empresaCandidata->getPersonaDeContacto(),
+                $empresaCandidata->getCorreoDeContacto(),
+                $empresaCandidata->getTelefonoDeContacto(),
+                $empresaCandidata->getLogo()
+            ]);
+
+            // Eliminar de la tabla empresa_candidata
+            $stmt = $con->prepare("DELETE FROM empresa_candidata WHERE id = ?");
+            $stmt->execute([$id]);
+
+            // (Opcional) Actualizar rol del usuario a “empresa aprobada” (por ejemplo, id_rol_fk = 2)
+            $stmt = $con->prepare("UPDATE user SET id_rol_fk = 2 WHERE id = ?");
+            $stmt->execute([$empresaCandidata->getIdUserFk()]);
+
+            $con->commit();
+            return true;
+        } catch (\Exception $e) {
+            $con->rollBack();
+            error_log("Error al aprobar empresa candidata: " . $e->getMessage());
             return false;
         }
     }

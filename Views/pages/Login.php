@@ -21,7 +21,7 @@
             <p id="btnPrueba">¿No tienes cuenta?</p>
             <div class="register-buttons" >
                 <span class="btn-register" id="AlumnRegisBtn">Registrarse como Alumno</span>
-                <a href="?menu=Registro" class="btn-register">Registrarse como Empresa</a>
+                <a href="?menu=RegistroEmpresa" class="btn-register">Registrarse como Empresa</a>
             </div>
         </div>
     </div>

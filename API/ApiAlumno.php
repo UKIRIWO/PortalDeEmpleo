@@ -172,8 +172,7 @@ function postAlumno()
 
         // Procesar foto de perfil (archivo en servidor)
         if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK) {
-            $extension = pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION);
-            $rutaFoto = "foto_" . $alumno->getIdUserFk() . "." . $extension;
+            $rutaFoto = "foto_" . $alumno->getIdUserFk() . ".png";
 
             if (move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], "../.imagenes/alumno/" . $rutaFoto)) {
                 $alumno->setFoto($rutaFoto);

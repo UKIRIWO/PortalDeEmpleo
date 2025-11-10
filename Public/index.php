@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 if (!Login::estaLogeado()) {
     $menu = $_GET['menu'] ?? 'Login';
 
-    if ($menu === 'Registro') {
+    if ($menu === 'RegistroEmpresa') {
         $controller = new RegistroEmpresaController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->procesarRegistroCandidata();
@@ -54,20 +54,20 @@ if (!Login::estaLogeado()) {
         case 'Ofertas':
             (new OfertasController())->index();
             break;
-        case 'SolicitudAlumno':
-            //(new AlumnoSolicitudController())->index();
-            break;
         case 'PanelAdmin':
-            (new PanelAdminController())->index();
+            $controller = new PanelAdminController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->procesarPanelAdmin();
+            } else {
+                $controller->index();
+            }
             break;
         case 'RegistroEmpresa':
             $controller = new RegistroEmpresaController();
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                error_log("llamando procesarRegistroEmpresa()");
                 $controller->procesarRegistroEmpresa();
             } else {
-                error_log("Cargando plantilla registro");
                 $controller->index();
             }
             exit;

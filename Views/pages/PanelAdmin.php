@@ -60,48 +60,50 @@
                         <td><?= $empresa->getNombre() ?></td>
                         <td><?= $empresa->getCorreoDeContacto() ?></td>
                         <td>
-                            <button class="btnDetalles">Detalles</button>
-                            <button class="btnEditar">Editar</button>
-                            <button class="btnEliminar">Eliminar</button>
-                            
+                            <form method="POST" action="index.php?menu=PanelAdmin">
+                                <input type="hidden" name="id_empresa" value="<?= $empresa->getId() ?>">
+                                <button type="submit" name="accion" value="detalles" class="btnDetalles">Detalles</button>
+                                <button type="submit" name="accion" value="editar" class="btnEditar">Editar</button>
+                                <button type="submit" name="accion" value="eliminar" class="btnEliminar">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
         <?php
-        if($empresasC){
+        if ($empresasC) {
         ?>
-        <h1>Empresas Pendientes de Aprobación</h1>
-        <table id="tablaEmpresasPendientes">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>ID_user</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($empresasC as $empresaC): ?>
+            <h1>Empresas Pendientes de Aprobación</h1>
+            <table id="tablaEmpresasPendientes">
+                <thead>
                     <tr>
-                        <td><?= $empresa->getId() ?></td>
-                        <td><?= $empresa->getIdUserFk() ?></td>
-                        <td><?= $empresa->getNombre() ?></td>
-                        <td><?= $empresa->getCorreoDeContacto() ?></td>
-                        <td>
-                            <form method="post" action="index.php?menu=PanelAdmin">
-                                <input type="hidden" name="aprobarEmpresa" value="<?= $empresaC->getIdUserFk() ?>">
-                                <button type="submit" name="accion" value="aprobar" class="btnAgregar">Aprobar</button>
-                                <button type="submit" name="accion" value="rechazar" class="btnEliminar">Rechazar</button>
-                            </form>
-
-                        </td>
+                        <th>ID</th>
+                        <th>ID_user</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($empresasC as $empresaC): ?>
+                        <tr>
+                            <td><?= $empresaC->getId() ?></td>
+                            <td><?= $empresaC->getIdUserFk() ?></td>
+                            <td><?= $empresaC->getNombre() ?></td>
+                            <td><?= $empresaC->getCorreoDeContacto() ?></td>
+                            <td>
+                                <form method="POST" action="index.php?menu=PanelAdmin">
+                                    <input type="hidden" name="id_empresa" value="<?= $empresaC->getId() ?>">
+                                    <input type="hidden" name="id_user" value="<?= $empresaC->getIdUserFk() ?>">
+                                    <button type="submit" name="accion" value="aprobar" class="btnAgregar">Aprobar</button>
+                                    <button type="submit" name="accion" value="rechazar" class="btnEliminar">Rechazar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         <?php } ?>
     </section>
 </div>
