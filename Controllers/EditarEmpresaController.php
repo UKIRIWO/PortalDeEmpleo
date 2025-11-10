@@ -2,7 +2,7 @@
 namespace Controllers;
 include_once "../Loaders/miAutoLoader.php";
 
-class AlumnoSolicitudController {
+class EditarEmpresaController {
     private $templates;
 
     public function __construct() {
@@ -11,9 +11,9 @@ class AlumnoSolicitudController {
 
     public function index() {
         $data = [
-            'titulo' => 'Alumno Solicitud'
+            'titulo' => 'Editar Empresa'
         ];
 
-        echo $this->templates->render('pages/AlumnoSolicitud', $data);
+        echo $this->templates->render('pages/EditarEmpresa', $data);
     }
 }
