@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 include_once __DIR__ . "/../Loaders/miAutoLoader.php";
+
 use Helpers\Session;
 use Helpers\Login;
 use Controllers\LoginController;
@@ -11,6 +12,10 @@ use Controllers\PanelAdminController;
 use Controllers\PageNotFoundController;
 
 Session::abrirsesion();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Procesar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'Login') {
@@ -30,7 +35,12 @@ if (!Login::estaLogeado()) {
     $menu = $_GET['menu'] ?? 'Login';
 
     if ($menu === 'Registro') {
-        (new RegistroEmpresaController())->index();
+        $controller = new RegistroEmpresaController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->procesarRegistroCandidata();
+        } else {
+            $controller->index();
+        }
     } else {
         (new LoginController())->index();
     }
@@ -51,7 +61,15 @@ if (!Login::estaLogeado()) {
             (new PanelAdminController())->index();
             break;
         case 'RegistroEmpresa':
-            (new RegistroEmpresaController())->index();
+            $controller = new RegistroEmpresaController();
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                error_log("llamando procesarRegistroEmpresa()");
+                $controller->procesarRegistroEmpresa();
+            } else {
+                error_log("Cargando plantilla registro");
+                $controller->index();
+            }
             exit;
         case 'Logout':
             Login::logout();

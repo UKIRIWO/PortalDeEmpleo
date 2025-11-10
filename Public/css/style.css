@@ -233,7 +233,6 @@ footer{
     padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 25%;
     text-align: center;
 }
 
@@ -477,6 +476,8 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 /* Títulos */
@@ -603,16 +604,11 @@ input[type="file"]::-webkit-file-upload-button:hover {
 
 /*tablet*/
 @media (min-width: 768px) and (max-width: 1199px){
-    .login-container{
-        width: 30%;
-    }
+
 }
 
 /*movil*/
 @media (max-width: 767px){
-    .login-container{
-        width: 80%;
-    }
 
     /*RegistroEmpresa*/
 

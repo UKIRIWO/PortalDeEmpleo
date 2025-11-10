@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grados Superiores por Familias</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .custom-select {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .select-trigger {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .select-trigger:hover {
+            border-color: #3498db;
+        }
+        
+        .select-trigger::after {
+            content: "▼";
+            font-size: 12px;
+            color: #7f8c8d;
+            transition: transform 0.3s ease;
+        }
+        
+        .select-trigger.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .options-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .options-container.active {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .family-group {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .family-header {
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .family-header::after {
+            content: "▼";
+            font-size: 10px;
+            color: #7f8c8d;
+            transition: transform 0.3s ease;
+        }
+        
+        .family-header.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .family-options {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .family-options.active {
+            max-height: 500px;
+        }
+        
+        .option {
+            padding: 10px 15px 10px 25px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .option input {
+            margin-right: 10px;
+            transform: scale(1.1);
+        }
+        
+        .selected-values {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .selected-values span {
+            background-color: #e1f0fa;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #dde4e6;
+        }
+        
+        .info-box {
+            background-color: #e1f5fe;
+            border-left: 4px solid #0288d1;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #01579b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selección de Grados Superiores</h1>
+    
+    <div class="custom-select">
+        <div class="select-trigger">Selecciona los grados que te interesan</div>
+        <div class="options-container">
+            <!-- Familia Informática -->
+            <div class="family-group">
+                <div class="family-header">Informática y Comunicaciones</div>
+                <div class="family-options">
+                    <label class="option">
+                        <input type="checkbox" value="ASIR"> Administración de Sistemas Informáticos en Red (ASIR)
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="DAW"> Desarrollo de Aplicaciones Web (DAW)
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="DAM"> Desarrollo de Aplicaciones Multiplataforma (DAM)
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Familia Sanidad -->
+            <div class="family-group">
+                <div class="family-header">Sanidad</div>
+                <div class="family-options">
+                    <label class="option">
+                        <input type="checkbox" value="Dietetica"> Dietética
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="HigieneBucodental"> Higiene Bucodental
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="ImagenDiagnostica"> Imagen para el Diagnóstico
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="Laboratorio"> Laboratorio Clínico y Biomédico
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Familia Administración -->
+            <div class="family-group">
+                <div class="family-header">Administración y Gestión</div>
+                <div class="family-options">
+                    <label class="option">
+                        <input type="checkbox" value="AdministracionFinanciera"> Administración y Finanzas
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="AsistenciaDireccion"> Asistencia a la Dirección
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Familia Comercio y Marketing -->
+            <div class="family-group">
+                <div class="family-header">Comercio y Marketing</div>
+                <div class="family-options">
+                    <label class="option">
+                        <input type="checkbox" value="ComercioInternacional"> Comercio Internacional
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="TransporteLogistica"> Transporte y Logística
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="MarketingPublicidad"> Marketing y Publicidad
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Familia Electricidad -->
+            <div class="family-group">
+                <div class="family-header">Electricidad y Electrónica</div>
+                <div class="family-options">
+                    <label class="option">
+                        <input type="checkbox" value="AutomatizacionRobotica"> Automatización y Robótica Industrial
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" value="MantenimientoElectronico"> Mantenimiento Electrónico
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="selected-values"></div>
+    </div>
+    
+    <div class="buttons">
+        <button class="btn-secondary" id="limpiar">Limpiar Selección</button>
+        <button class="btn-primary" id="enviar">Enviar</button>
+    </div>
+    
+    <div class="info-box">
+        <h3>¿Cómo funciona?</h3>
+        <p>Este componente organiza los grados superiores por familias profesionales. Haz clic en el campo para desplegar las familias, luego en cada familia para ver los grados disponibles. Selecciona los que te interesen y haz clic fuera para cerrar la lista.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectTrigger = document.querySelector('.select-trigger');
+            const optionsContainer = document.querySelector('.options-container');
+            const familyHeaders = document.querySelectorAll('.family-header');
+            const checkboxes = document.querySelectorAll('.option input');
+            const selectedValues = document.querySelector('.selected-values');
+            const limpiarBtn = document.getElementById('limpiar');
+            const enviarBtn = document.getElementById('enviar');
+            
+            // Alternar visibilidad del menú desplegable
+            selectTrigger.addEventListener('click', function() {
+                optionsContainer.classList.toggle('active');
+                selectTrigger.classList.toggle('active');
+            });
+            
+            // Alternar visibilidad de las opciones de cada familia
+            familyHeaders.forEach(header => {
+                header.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const familyOptions = this.nextElementSibling;
+                    familyOptions.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Cerrar el menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!selectTrigger.contains(e.target) && !optionsContainer.contains(e.target)) {
+                    optionsContainer.classList.remove('active');
+                    selectTrigger.classList.remove('active');
+                    
+                    // Cerrar también todas las familias
+                    document.querySelectorAll('.family-options').forEach(options => {
+                        options.classList.remove('active');
+                    });
+                    document.querySelectorAll('.family-header').forEach(header => {
+                        header.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Actualizar texto del trigger y mostrar selecciones
+            function updateSelectedValues() {
+                const selectedOptions = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.parentElement.textContent.trim());
+                
+                if (selectedOptions.length > 0) {
+                    selectTrigger.textContent = selectedOptions.length + ' grado(s) seleccionado(s)';
+                    selectedValues.innerHTML = '<strong>Seleccionados:</strong> ' + 
+                        selectedOptions.map(option => `<span>${option}</span>`).join('');
+                } else {
+                    selectTrigger.textContent = 'Selecciona los grados que te interesan';
+                    selectedValues.innerHTML = '';
+                }
+            }
+            
+            // Agregar evento a cada checkbox
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelectedValues);
+            });
+            
+            // Limpiar selección
+            limpiarBtn.addEventListener('click', function() {
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+                updateSelectedValues();
+            });
+            
+            // Enviar formulario (simulado)
+            enviarBtn.addEventListener('click', function() {
+                const selectedOptions = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+                
+                if (selectedOptions.length > 0) {
+                    alert('Grados seleccionados: ' + selectedOptions.join(', '));
+                } else {
+                    alert('Por favor, selecciona al menos un grado');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,8 +3,8 @@ namespace Models;
 class Empresa
 {
     private $id;
-    private $nombre;
     private $idUserFk;
+    private $nombre;
     private $direccion;
     private $personaDeContacto;
     private $correoDeContacto;
@@ -12,11 +12,11 @@ class Empresa
     private $logo;
 
 
-    public function __construct($id = null, $nombre = "", $idUserFk = null, $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "")
+    public function __construct($id = null, $idUserFk = null, $nombre = "" , $direccion = "", $personaDeContacto = "", $correoDeContacto = "", $telefonoDeContacto = "", $logo = "")
     {
         $this->id = $id;
-        $this->nombre = $nombre;
         $this->idUserFk = $idUserFk;
+        $this->nombre = $nombre;
         $this->direccion = $direccion;
         $this->personaDeContacto = $personaDeContacto;
         $this->correoDeContacto = $correoDeContacto;
@@ -27,11 +27,11 @@ class Empresa
     public function getId() { return $this->id; }
     public function setId($id) { $this->id = $id; }
 
-    public function getNombre() { return $this->nombre; }
-    public function setNombre($nombre) { $this->nombre = $nombre; }
-
     public function getIdUserFk() { return $this->idUserFk; }
     public function setIdUserFk($idUserFk) { $this->idUserFk = $idUserFk; }
+
+    public function getNombre() { return $this->nombre; }
+    public function setNombre($nombre) { $this->nombre = $nombre; }
 
     public function getDireccion() { return $this->direccion; }
     public function setDireccion($direccion) { $this->direccion = $direccion; }

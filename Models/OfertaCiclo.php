@@ -7,12 +7,11 @@ class OfertaCiclo
     private $idOfertaFk;
     private $required;
 
-    public function __construct($id = null, $idCicloFk = null, $idOfertaFk = null, $required = false)
+    public function __construct($id = null, $idCicloFk = null, $idOfertaFk = null)
     {
         $this->id = $id;
         $this->idCicloFk = $idCicloFk;
         $this->idOfertaFk = $idOfertaFk;
-        $this->required = $required;
     }
 
     public function getId() { return $this->id; }
@@ -23,7 +22,4 @@ class OfertaCiclo
 
     public function getIdOfertaFk() { return $this->idOfertaFk; }
     public function setIdOfertaFk($idOfertaFk) { $this->idOfertaFk = $idOfertaFk; }
-
-    public function getRequired() { return $this->required; }
-    public function setRequired($required) { $this->required = $required; }
 }

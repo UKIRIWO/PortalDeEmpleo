@@ -8,7 +8,7 @@
 <div class="form-container">
     <h2>Registro de Empresa</h2>
 
-    <form action="registrar_empresa.php" method="POST" enctype="multipart/form-data">
+    <form action="index.php?menu=RegistroEmpresa" method="POST" enctype="multipart/form-data">
         <h3>Datos de usuario</h3>
 
         <div class="form-row">

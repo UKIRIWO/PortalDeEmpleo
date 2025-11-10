@@ -14,8 +14,8 @@ class RepoEmpresa
         if ($fila) {
             return new Empresa(
                 $fila['id'],
-                $fila['nombre'],
                 $fila['id_user_fk'],
+                $fila['nombre'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
                 $fila['correo_de_contacto'],
@@ -38,8 +38,8 @@ class RepoEmpresa
         foreach ($filas as $fila) {
             $empresas[] = new Empresa(
                 $fila['id'],
-                $fila['nombre'],
                 $fila['id_user_fk'],
+                $fila['nombre'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
                 $fila['correo_de_contacto'],
@@ -52,60 +52,60 @@ class RepoEmpresa
     }
 
 
-    // public static function save($user, $empresa) {
-    //     $con = DB::getConnection();
+    public static function saveWithUser($user, $empresa) {
+        $con = DB::getConnection();
 
-    //     try {
-    //         // Iniciar transacción
-    //         $con->beginTransaction();
+        try {
+            // Iniciar transacción
+            $con->beginTransaction();
 
-    //         // Insertar usuario
-    //         $stmt = $con->prepare("INSERT INTO user (nombre_usuario, password, id_rol_fk) VALUES (?, ?, ?)");
-    //         $stmt->execute([
-    //             $user->getNombreUsuario(),
-    //             $user->getPassword(),
-    //             $user->getIdRolFk()
-    //         ]);
-    //         $idUser = $con->lastInsertId();
-    //         $user->setId($idUser);
+            // Insertar usuario
+            $stmt = $con->prepare("INSERT INTO user (nombre_usuario, password, id_rol_fk) VALUES (?, ?, ?)");
+            $stmt->execute([
+                $user->getNombreUsuario(),
+                $user->getPassword(),
+                $user->getIdRolFk()
+            ]);
+            $idUser = $con->lastInsertId();
+            $user->setId($idUser);
 
-    //         // Insertar empresa
-    //         $stmt = $con->prepare("INSERT INTO empresa (nombre, id_user_fk, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    //         $stmt->execute([
-    //             $empresa->getNombre(),
-    //             $idUser,
-    //             $empresa->getDireccion(),
-    //             $empresa->getPersonaDeContacto(),
-    //             $empresa->getCorreoDeContacto(),
-    //             $empresa->getTelefonoDeContacto(),
-    //             $empresa->getLogo()
-    //         ]);
-    //         $empresa->setId($con->lastInsertId());
-    //         $empresa->setIdUserFk($idUser);
+            // Insertar empresa
+            $stmt = $con->prepare("INSERT INTO empresa (id_user_fk, nombre, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $idUser,
+                $empresa->getNombre(),
+                $empresa->getDireccion(),
+                $empresa->getPersonaDeContacto(),
+                $empresa->getCorreoDeContacto(),
+                $empresa->getTelefonoDeContacto(),
+                $empresa->getLogo()
+            ]);
+            $empresa->setId($con->lastInsertId());
+            $empresa->setIdUserFk($idUser);
 
-    //         // Confirmar transacción
-    //         $con->commit();
-    //         return true;
+            // Confirmar transacción
+            $con->commit();
+            return true;
 
-    //     } catch (Exception $e) {
-    //         // Revertir cambios si hay error
-    //         $con->rollBack();
-    //         $errorMsg = "Error al guardar empresa con usuario: " . $e->getMessage();
-    //         error_log($errorMsg);
-    //         // Mostrar el error en pantalla para debug
-    //         echo "<p style='color: red;'><strong>Error MySQL:</strong> " . $e->getMessage() . "</p>";
-    //         return false;
-    //     }
-    // }
+        } catch (\Exception $e) {
+            // Revertir cambios si hay error
+            $con->rollBack();
+            $errorMsg = "Error al guardar empresa con usuario: " . $e->getMessage();
+            error_log($errorMsg);
+            // Mostrar el error en pantalla para debug
+            echo "<p style='color: red;'><strong>Error MySQL:</strong> " . $e->getMessage() . "</p>";
+            return false;
+        }
+    }
 
 
     public static function save($empresa)
     {
         $con = DB::getConnection();
-        $stmt = $con->prepare("INSERT INTO empresa (nombre, id_user_fk, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $con->prepare("INSERT INTO empresa (id_user_fk, nombre, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
-            $empresa->getNombre(),
             $empresa->getIdUserFk(),
+            $empresa->getNombre(),
             $empresa->getDireccion(),
             $empresa->getPersonaDeContacto(),
             $empresa->getCorreoDeContacto(),
@@ -144,14 +144,10 @@ class RepoEmpresa
 
             $idUser = $empresa->getIdUserFk();
 
-            // Iniciar transacción
-            $con->beginTransaction();
-
             // Eliminar el usuario (CASCADE eliminará automáticamente: empresa -> ofertas -> oferta_ciclo y solicitudes)
             $stmt = $con->prepare("DELETE FROM user WHERE id = ?");
             $stmt->execute([$idUser]);
 
-            $con->commit();
             return true;
         } catch (\Exception $e) {
             $con->rollBack();
@@ -171,8 +167,8 @@ class RepoEmpresa
         if ($fila) {
             return new Empresa(
                 $fila['id'],
-                $fila['nombre'],
                 $fila['id_user_fk'],
+                $fila['nombre'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
                 $fila['correo_de_contacto'],
@@ -195,8 +191,8 @@ class RepoEmpresa
         foreach ($filas as $fila) {
             $empresas[] = new Empresa(
                 $fila['id'],
-                $fila['nombre'],
                 $fila['id_user_fk'],
+                $fila['nombre'],
                 $fila['direccion'],
                 $fila['persona_de_contacto'],
                 $fila['correo_de_contacto'],
@@ -228,10 +224,10 @@ class RepoEmpresa
             $user->setId($idUser);
 
             // Insertar empresa
-            $stmt = $con->prepare("INSERT INTO empresa_candidata (nombre, id_user_fk, direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $con->prepare("INSERT INTO empresa_candidata (id_user_fk, nombre direccion, persona_de_contacto, correo_de_contacto, telefono_de_contacto, logo) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
-                $empresa->getNombre(),
                 $idUser,
+                $empresa->getNombre(),
                 $empresa->getDireccion(),
                 $empresa->getPersonaDeContacto(),
                 $empresa->getCorreoDeContacto(),

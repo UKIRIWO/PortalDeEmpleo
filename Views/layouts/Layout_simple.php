@@ -9,8 +9,9 @@
 </head>
 
 <body>
-    
-    <?= $this->section('contenido') ?>
+    <main>
+        <?= $this->section('contenido') ?>
+    </main>
     <?= $this->section('js') ?>
 </body>
 
