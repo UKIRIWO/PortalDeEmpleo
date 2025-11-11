@@ -87,7 +87,12 @@ if (!Login::estaLogeado()) {
             }
             break;
         case 'EliminarEmpresa':
-            (new EliminarEmpresaController())->index();
+            $controller = new EliminarEmpresaController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->eliminarEmpresa();
+            } else {
+                $controller->index();
+            }
             break;
         case 'Logout':
             Login::logout();

@@ -47,7 +47,7 @@
                 <tr>
                     <th>ID</th>
                     <th>ID_user</th>
-                    <th>Nombre</th>
+                    <th>Nombre de la empresa</th>
                     <th>Email</th>
                     <th>Acciones</th>
                 </tr>
@@ -80,7 +80,7 @@
                     <tr>
                         <th>ID</th>
                         <th>ID_user</th>
-                        <th>Nombre</th>
+                        <th>Nombre de la empresa</th>
                         <th>Email</th>
                         <th>Acciones</th>
                     </tr>

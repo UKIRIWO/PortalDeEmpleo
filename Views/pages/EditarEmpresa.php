@@ -79,7 +79,7 @@
     </div>
 
     <div class="acciones-formulario">
-        <a href="index.php?menu=PanelAdmin" class="btnAzul volver-btn">← Volver</a>
+        <a href="index.php?menu=PanelAdmin" class="btnAzul volver-btn">Volver</a>
         <button type="submit" class="btnVerde">Guardar Cambios</button>
     </div>
 </form>
