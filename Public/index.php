@@ -79,7 +79,12 @@ if (!Login::estaLogeado()) {
             (new DetallesEmpresaController())->index();
             break;
         case 'EditarEmpresa':
-            (new EditarEmpresaController())->index();
+            $controller = new EditarEmpresaController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->procesarCambios();
+            } else {
+                $controller->index();
+            }
             break;
         case 'EliminarEmpresa':
             (new EliminarEmpresaController())->index();

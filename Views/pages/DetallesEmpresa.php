@@ -1,66 +1,67 @@
-<?php $this->layout('layouts/Layout') ?>
-
-<?php $this->start('css') ?>
-<link rel="stylesheet" href="../Public/css/styles.css">
-<?php $this->stop() ?>
+<?php $this->layout('layouts/Layout_simple') ?>
 
 <?php $this->start('contenido') ?>
-    <h1>Detalles de la Empresa</h1>
-    
-    <div class="empresa-card">
-        <?php if ($empresa->getLogo()): ?>
-            <div class="logo-container">
-                <img src="../.imagenes/empresa/<?= $this->e($empresa->getLogo()) ?>" 
-                     alt="Logo de <?= $this->e($empresa->getNombre()) ?>" 
-                     class="empresa-logo">
-            </div>
-        <?php endif; ?>
+<section id="detalles-empresa" class="detalle-empresa-container">
+    <h1 class="titulo-principal">Detalles de la Empresa</h1>
+
+    <div class="tarjeta-empresa">
+        <?php
+        $logo = $empresa->getLogo();
+        $rutaBase = "../.imagenes/empresa/";
+
+        if ($logo && file_exists($rutaBase . $logo)) {
+            $ruta = $rutaBase . $logo;
+        } else {
+            $ruta = $rutaBase . "predeterminada.png";
+        }
+        ?>
         
+        <div class="contenedor-logo">
+            <img src="<?= $ruta ?>"
+                 alt="Logo de <?= $this->e($empresa->getNombre()) ?>"
+                 class="logo-empresa">
+        </div>
+
         <div class="info-empresa">
-            <h2><?= $this->e($empresa->getNombre()) ?></h2>
-            
-            <div class="detalles-grid">
-                <div class="detalle-item">
-                    <strong>ID:</strong>
+            <h2 class="nombre-empresa"><?= $this->e($empresa->getNombre()) ?></h2>
+
+            <div class="grid-detalles">
+                <div class="detalle">
+                    <strong>ID Empresa:</strong>
                     <span><?= $this->e($empresa->getId()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
-                    <strong>ID Usuario:</strong>
+                <div class="detalle">
+                    <strong>Usuario (ID):</strong>
                     <span><?= $this->e($empresa->getIdUserFk()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
-                    <strong>Usuario:</strong>
+                <div class="detalle">
+                    <strong>Nombre de Usuario:</strong>
                     <span><?= $this->e($user->getNombreUsuario()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
+                <div class="detalle">
                     <strong>Dirección:</strong>
                     <span><?= $this->e($empresa->getDireccion()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
+                <div class="detalle">
                     <strong>Persona de Contacto:</strong>
                     <span><?= $this->e($empresa->getPersonaDeContacto()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
+                <div class="detalle">
                     <strong>Correo de Contacto:</strong>
                     <span><?= $this->e($empresa->getCorreoDeContacto()) ?></span>
                 </div>
-                
-                <div class="detalle-item">
+                <div class="detalle">
                     <strong>Teléfono de Contacto:</strong>
                     <span><?= $this->e($empresa->getTelefonoDeContacto()) ?></span>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="acciones">
         <a href="index.php?menu=PanelAdmin">
-            ← Volver al Panel
+            <button class="btnAzul">Volver al Panel</button>
         </a>
     </div>
+</section>
 <?php $this->stop() ?>

@@ -1,9 +1,5 @@
 <?php $this->layout('layouts/Layout') ?>
 
-<?php $this->start('css') ?>
-<link rel="stylesheet" href="../Public/css/eliminar-empresa.css">
-<?php $this->stop() ?>
-
 <?php $this->start('contenido') ?>
 <main class="eliminar-empresa-container">
     <div class="confirmacion-card">

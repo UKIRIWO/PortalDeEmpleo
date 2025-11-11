@@ -12,7 +12,6 @@ class DetallesEmpresaController {
     }
 
     public function index() {
-        
         $empresa = RepoEmpresa::findById($_GET['id']);
         $user = RepoUser::findById($empresa->getIdUserFk());
         $data = [
