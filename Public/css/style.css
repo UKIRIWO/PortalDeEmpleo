@@ -602,7 +602,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
 /*Botón azul especial*/
 .volver-btn {
     display: block;
-    margin: 20px auto 0;
+
     background-color: transparent;
     color: #1976d2;
     border: 2px solid #1976d2;
@@ -620,9 +620,11 @@ input[type="file"]::-webkit-file-upload-button:hover {
     color: white;
 }
 
+#btnVolverEmpresa .volver-btn{
+    margin: 20px auto 0;
+}
 
-
-
+    
 /* ========================================
    F. RESPONSIVE
    ======================================== */
@@ -974,11 +976,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
     margin-bottom: 15px;
 }
 
-h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-}
 
 .mensaje-advertencia {
     font-size: 16px;

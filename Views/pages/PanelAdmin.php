@@ -33,6 +33,7 @@
     </section>
     <!-- Contenedor del modal -->
     <div id="modalCrear"></div>
+    <div id="modalCargaMasiva"></div>
     <div id="modalDetalles"></div>
     <div id="modalEditar"></div>
     <div id="modalEliminar"></div>
