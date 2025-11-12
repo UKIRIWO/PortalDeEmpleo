@@ -1,10 +1,18 @@
 class Modal {
     constructor(contenedorId, urlContenido, funcionJS) {
-        this.contenedor = document.getElementById(contenedorId);
+        this.contenedorId = contenedorId;
         this.urlContenido = urlContenido;
         this.funcionJS = funcionJS;
         
+        this.crearContenedor();
+        this.contenedor = document.getElementById(contenedorId);
         this.cargarContenido();
+    }
+
+    crearContenedor() {
+        const contenedor = document.createElement('div');
+        contenedor.id = this.contenedorId;
+        document.body.appendChild(contenedor);
     }
 
     cargarContenido() {
@@ -21,7 +29,6 @@ class Modal {
         ajx.onreadystatechange = () => {
             if (ajx.readyState === 4 && ajx.status === 200) {
                 accion(ajx);
-                
             }
         };
         ajx.send();

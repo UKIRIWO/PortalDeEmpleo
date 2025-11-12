@@ -284,4 +284,370 @@ window.addEventListener("load", function () {
                 .catch(err => console.error("Error al obtener alumno:", err));
         };
     }
+
+
+// ============================================
+// AÑADIR ESTO AL FINAL DE panelAdmin_alumno.js
+// ============================================
+
+// --- CARGA MASIVA DE ALUMNOS ---
+const modalCargaMasiva = Modal.crear("modalCargaMasiva", "html/cargaMasivaAlumnos.html", function () {
+    const btnAgregarVariosAlumnos = document.getElementById("btnAgregarVariosAlumnos");
+    btnAgregarVariosAlumnos.onclick = () => {
+        modalCargaMasiva.mostrar();
+        cargarFamilias();
+    };
+
+    let alumnosCSV = []; // Almacena los alumnos parseados del CSV
+
+    // Cargar familias al abrir el modal
+    function cargarFamilias() {
+        fetch('/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=familias')
+            .then(res => res.json())
+            .then(familias => {
+                const selectFamilia = document.getElementById("selectFamilia");
+                selectFamilia.innerHTML = '<option value="">-- Selecciona una familia --</option>';
+                
+                familias.forEach(familia => {
+                    const option = document.createElement("option");
+                    option.value = familia.id;
+                    option.textContent = familia.nombre;
+                    selectFamilia.appendChild(option);
+                });
+            })
+            .catch(err => console.error("Error cargando familias:", err));
+    }
+
+    // Cuando se selecciona una familia, cargar sus ciclos
+    document.getElementById("selectFamilia").addEventListener("change", function() {
+        const familiaId = this.value;
+        const selectCiclo = document.getElementById("selectCiclo");
+        
+        if (!familiaId) {
+            selectCiclo.innerHTML = '<option value="">-- Primero selecciona familia --</option>';
+            selectCiclo.disabled = true;
+            return;
+        }
+
+        fetch(`/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=ciclos&familia_id=${familiaId}`)
+            .then(res => res.json())
+            .then(ciclos => {
+                selectCiclo.innerHTML = '<option value="">-- Selecciona un ciclo --</option>';
+                
+                ciclos.forEach(ciclo => {
+                    const option = document.createElement("option");
+                    option.value = ciclo.id;
+                    option.textContent = `${ciclo.nombre} (${ciclo.nivel})`;
+                    selectCiclo.appendChild(option);
+                });
+                
+                selectCiclo.disabled = false;
+            })
+            .catch(err => console.error("Error cargando ciclos:", err));
+    });
+
+    // Botón PINTAR ALUMNOS
+    document.getElementById("btnPintarAlumnos").addEventListener("click", function() {
+        const inputCSV = document.getElementById("inputCSV");
+        const file = inputCSV.files[0];
+
+        if (!file) {
+            alert("Por favor, selecciona un archivo CSV");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const contenido = e.target.result;
+            alumnosCSV = parsearCSV(contenido);
+            
+            if (alumnosCSV.length === 0) {
+                alert("El archivo CSV está vacío o mal formateado");
+                return;
+            }
+
+            pintarTablaAlumnos(alumnosCSV);
+        };
+        reader.readAsText(file);
+    });
+
+    // Parsear CSV (formato: dni,nombre,ape1,correo)
+    function parsearCSV(contenido) {
+        const lineas = contenido.split('\n').filter(linea => linea.trim() !== '');
+        const alumnos = [];
+
+        lineas.forEach((linea, index) => {
+            const campos = linea.split(',').map(campo => campo.trim());
+            
+            if (campos.length >= 4) {
+                alumnos.push({
+                    dni: campos[0],
+                    nombre: campos[1],
+                    ape1: campos[2],
+                    correo: campos[3],
+                    index: index // Para identificar filas con error
+                });
+            }
+        });
+
+        return alumnos;
+    }
+
+    // Pintar tabla de alumnos
+    function pintarTablaAlumnos(alumnos) {
+        const tbody = document.getElementById("tbodyAlumnos");
+        const container = document.getElementById("tablaAlumnosContainer");
+        
+        tbody.innerHTML = "";
+        
+        alumnos.forEach((alumno, i) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td style="text-align: center;">
+                    <input type="checkbox" class="check-alumno" data-index="${i}" checked>
+                </td>
+                <td><input type="text" class="input-dni" value="${alumno.dni}" data-index="${i}"></td>
+                <td><input type="text" class="input-nombre" value="${alumno.nombre}" data-index="${i}"></td>
+                <td><input type="text" class="input-ape1" value="${alumno.ape1}" data-index="${i}"></td>
+                <td><input type="text" class="input-correo" value="${alumno.correo}" data-index="${i}"></td>
+            `;
+            tbody.appendChild(fila);
+        });
+
+        container.style.display = "block";
+        asignarEventosTabla();
+    }
+
+    // Eventos de la tabla
+    function asignarEventosTabla() {
+        // Checkbox en header para marcar/desmarcar todos
+        const checkTodos = document.getElementById("checkTodos");
+        checkTodos.addEventListener("change", function() {
+            const checkboxes = document.querySelectorAll(".check-alumno");
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        // Sincronizar datos editados con el array alumnosCSV
+        const inputs = document.querySelectorAll("#tbodyAlumnos input[type='text']");
+        inputs.forEach(input => {
+            input.addEventListener("blur", function() {
+                const index = parseInt(this.dataset.index);
+                const field = this.className.replace('input-', '');
+                alumnosCSV[index][field] = this.value.trim();
+            });
+        });
+    }
+
+    // Botón LIMPIAR TABLA
+    document.getElementById("btnLimpiarTabla").addEventListener("click", function() {
+        document.getElementById("tbodyAlumnos").innerHTML = "";
+        document.getElementById("tablaAlumnosContainer").style.display = "none";
+        alumnosCSV = [];
+    });
+
+    // Botón SUBIR DATOS
+    document.getElementById("btnSubirDatos").addEventListener("click", function() {
+        const cicloId = document.getElementById("selectCiclo").value;
+        const fechaInicio = document.getElementById("fechaInicio").value;
+        const fechaFin = document.getElementById("fechaFin").value || null;
+
+        // Validaciones
+        if (!cicloId) {
+            alert("Por favor, selecciona un ciclo formativo");
+            return;
+        }
+
+        if (!fechaInicio) {
+            alert("Por favor, ingresa la fecha de inicio");
+            return;
+        }
+
+        // Obtener solo los alumnos marcados
+        const alumnosSeleccionados = [];
+        const checkboxes = document.querySelectorAll(".check-alumno");
+        
+        checkboxes.forEach((cb, i) => {
+            if (cb.checked) {
+                // Obtener datos actualizados de los inputs
+                const fila = cb.closest("tr");
+                alumnosSeleccionados.push({
+                    dni: fila.querySelector(".input-dni").value.trim(),
+                    nombre: fila.querySelector(".input-nombre").value.trim(),
+                    ape1: fila.querySelector(".input-ape1").value.trim(),
+                    correo: fila.querySelector(".input-correo").value.trim()
+                });
+            }
+        });
+
+        if (alumnosSeleccionados.length === 0) {
+            alert("No hay alumnos seleccionados para subir");
+            return;
+        }
+
+        // Enviar datos a la API
+        subirAlumnos(alumnosSeleccionados, cicloId, fechaInicio, fechaFin);
+    });
+
+    // Función para subir alumnos
+    function subirAlumnos(alumnos, cicloId, fechaInicio, fechaFin) {
+        const datos = {
+            alumnos: alumnos,
+            ciclo_id: cicloId,
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin
+        };
+
+        fetch('/portalDeEmpleo/api/AlumnoCargaMasiva.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.success) {
+                if (response.errores.length === 0) {
+                    // Todos se subieron correctamente
+                    mostrarModalExito(response);
+                } else {
+                    // Algunos con errores
+                    mostrarModalErrores(response);
+                }
+            } else {
+                alert("Error: " + response.error);
+            }
+        })
+        .catch(err => {
+            console.error("Error al subir alumnos:", err);
+            alert("Error al procesar la solicitud");
+        });
+    }
+
+    // Modal de éxito
+    function mostrarModalExito(response) {
+        const modalExito = Modal.crear("modalExito", "html/exitoCargaMasiva.html", function() {
+            modalExito.mostrar();
+
+            document.getElementById("mensajeExito").textContent = 
+                `Se han guardado correctamente ${response.exitosos} de ${response.total} alumnos`;
+
+            // Mostrar credenciales generadas
+            const tablaCredenciales = document.getElementById("tablaCredenciales");
+            const tbody = tablaCredenciales.querySelector("tbody");
+            tbody.innerHTML = "";
+
+            response.credenciales.forEach(cred => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${cred.alumno.nombre} ${cred.alumno.ape1}</td>
+                    <td>${cred.username}</td>
+                    <td>${cred.password}</td>
+                `;
+                tbody.appendChild(fila);
+            });
+
+            // Botón "Subir más alumnos"
+            document.getElementById("btnSubirMas").onclick = () => {
+                modalExito.ocultar();
+                reiniciarFormulario();
+                cargarAlumnos();
+            };
+
+            // Botón "Volver al panel"
+            document.getElementById("btnVolverPanel").onclick = () => {
+                modalExito.ocultar();
+                modalCargaMasiva.ocultar();
+                cargarAlumnos(); // Recargar tabla principal
+            };
+        });
+    }
+
+    // Modal de errores
+    function mostrarModalErrores(response) {
+        const modalErrores = Modal.crear("modalErrores", "html/erroresCargaMasiva.html", function() {
+            modalErrores.mostrar();
+
+            document.getElementById("mensajeErrores").textContent = 
+                `Se han subido ${response.exitosos} de ${response.total} alumnos correctamente`;
+
+            // Pintar solo los alumnos con errores
+            pintarTablaErrores(response.errores);
+
+            // Botón "Reintentar" - vuelve a intentar subir solo los erróneos
+            document.getElementById("btnReintentar").onclick = () => {
+                const alumnosReintento = obtenerAlumnosEditadosErrores();
+                const cicloId = document.getElementById("selectCiclo").value;
+                const fechaInicio = document.getElementById("fechaInicio").value;
+                const fechaFin = document.getElementById("fechaFin").value || null;
+                
+                modalErrores.ocultar();
+                subirAlumnos(alumnosReintento, cicloId, fechaInicio, fechaFin);
+            };
+
+            // Botón "Ignorar errores"
+            document.getElementById("btnIgnorarErrores").onclick = () => {
+                modalErrores.ocultar();
+                modalCargaMasiva.ocultar();
+                cargarAlumnos(); // Recargar tabla principal
+            };
+        });
+    }
+
+    // Pintar tabla de errores
+    function pintarTablaErrores(errores) {
+        const tbody = document.getElementById("tbodyAlumnosErrores");
+        tbody.innerHTML = "";
+
+        errores.forEach((error, i) => {
+            const fila = document.createElement("tr");
+            fila.classList.add("error-row");
+            fila.innerHTML = `
+                <td style="text-align: center;">
+                    <input type="checkbox" class="check-error" data-index="${i}" checked>
+                </td>
+                <td><input type="text" class="input-dni-error" value="${error.alumno.dni}" data-index="${i}"></td>
+                <td><input type="text" class="input-nombre-error" value="${error.alumno.nombre}" data-index="${i}"></td>
+                <td><input type="text" class="input-ape1-error" value="${error.alumno.ape1}" data-index="${i}"></td>
+                <td><input type="text" class="input-correo-error" value="${error.alumno.correo}" data-index="${i}"></td>
+                <td style="color: red; font-size: 12px;">${error.error}</td>
+            `;
+            tbody.appendChild(fila);
+        });
+
+        // Checkbox todos en errores
+        document.getElementById("checkTodosErrores").addEventListener("change", function() {
+            const checks = document.querySelectorAll(".check-error");
+            checks.forEach(cb => cb.checked = this.checked);
+        });
+    }
+
+    // Obtener alumnos editados de la tabla de errores
+    function obtenerAlumnosEditadosErrores() {
+        const alumnosEditados = [];
+        const checkboxes = document.querySelectorAll(".check-error");
+
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                const fila = cb.closest("tr");
+                alumnosEditados.push({
+                    dni: fila.querySelector(".input-dni-error").value.trim(),
+                    nombre: fila.querySelector(".input-nombre-error").value.trim(),
+                    ape1: fila.querySelector(".input-ape1-error").value.trim(),
+                    correo: fila.querySelector(".input-correo-error").value.trim()
+                });
+            }
+        });
+
+        return alumnosEditados;
+    }
+
+    // Reiniciar formulario (mantener CSV y tabla)
+    function reiniciarFormulario() {
+        document.getElementById("selectFamilia").value = "";
+        document.getElementById("selectCiclo").innerHTML = '<option value="">-- Primero selecciona familia --</option>';
+        document.getElementById("selectCiclo").disabled = true;
+        document.getElementById("fechaInicio").value = "";
+        document.getElementById("fechaFin").value = "";
+    }
+});
+
 });

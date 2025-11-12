@@ -1,6 +1,7 @@
 <?php
 namespace Repositories;
 use Models\Ciclo;
+
 class RepoCiclo {
 
     public static function findById($id) {
@@ -25,6 +26,26 @@ class RepoCiclo {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM ciclo");
         $stmt->execute();
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $ciclos = [];
+        foreach ($filas as $fila) {
+            $ciclos[] = new Ciclo(
+                $fila['id'],
+                $fila['nombre'],
+                $fila['nivel'],
+                $fila['familia_fk']
+            );
+        }
+
+        return $ciclos;
+    }
+
+    
+    public static function findByFamilia($familiaId) {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT * FROM ciclo WHERE familia_fk = ?");
+        $stmt->execute([$familiaId]);
         $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $ciclos = [];

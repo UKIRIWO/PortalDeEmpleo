@@ -398,6 +398,8 @@ input[type="text"]:focus,input[type="password"]:focus, input[type="date"]:focus 
     background: white;
     padding: 25px 20px;
     z-index: 10;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .cerrarModal {
@@ -713,13 +715,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
 /* Efecto al pasar el ratón por la fila */
 #tablaAlumnos tbody tr:hover, #tablaEmpresas tbody tr:hover, #tablaEmpresasPendientes tbody tr:hover {
     background-color: #e9ecef;
-}
-
-/* Contenedores de Modal (ocultos por defecto, listos para ser estilizados como modales) */
-#modalCrearAlumno, #modalDetallesAlumnos, #modalEditar, #modalEliminar {
-    /* Aquí se definirían los estilos para hacerlos aparecer como modales (por ejemplo, display: none; y luego estilos de superposición) */
-    /* Para este CSS, simplemente definimos un tamaño mínimo si se mostraran para evitar que colapsen completamente */
-    min-height: 0;
 }
 
 /* Estilos para el formulario dentro de la celda de acciones */

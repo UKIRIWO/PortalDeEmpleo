@@ -1,6 +1,7 @@
 <?php
 namespace Repositories;
 use Models\Estudios;
+
 class RepoEstudios {
 
     public static function findById($id) {
@@ -63,15 +64,21 @@ class RepoEstudios {
     }
 
     public static function save($estudios) {
-        $con = DB::getConnection();
-        $stmt = $con->prepare("INSERT INTO estudios (id_alumno_fk, id_ciclo_fk, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)");
-        $stmt->execute([
-            $estudios->getIdAlumnoFk(),
-            $estudios->getIdCicloFk(),
-            $estudios->getFechaInicio(),
-            $estudios->getFechaFin()
-        ]);
-        $estudios->setId($con->lastInsertId());
+        try {
+            $con = DB::getConnection();
+            $stmt = $con->prepare("INSERT INTO estudios (id_alumno_fk, id_ciclo_fk, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)");
+            $stmt->execute([
+                $estudios->getIdAlumnoFk(),
+                $estudios->getIdCicloFk(),
+                $estudios->getFechaInicio(),
+                $estudios->getFechaFin()
+            ]);
+            $estudios->setId($con->lastInsertId());
+            return true;
+        } catch (\Exception $e) {
+            error_log("Error al guardar estudios: " . $e->getMessage());
+            return false;
+        }
     }
 
     public static function update($estudios) {
@@ -92,4 +99,3 @@ class RepoEstudios {
         $stmt->execute([$id]);
     }
 }
-?>

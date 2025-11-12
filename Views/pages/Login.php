@@ -25,8 +25,6 @@
             </div>
         </div>
     </div>
-    <div id="modalAlumno"></div>
-    <div id="modalCamara"></div>
 <?php $this->stop() ?>
 
 <?php $this->start('js') ?>
