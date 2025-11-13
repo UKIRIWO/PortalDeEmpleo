@@ -287,10 +287,9 @@ window.addEventListener("load", function () {
 
 
     // ============================================
-    // AÑADIR ESTO AL FINAL DE panelAdmin_alumno.js
+    // CARGA MASIVA DE ALUMNOS
     // ============================================
 
-    // --- CARGA MASIVA DE ALUMNOS ---
     const modalCargaMasiva = Modal.crear("modalCargaMasiva", "html/cargaMasivaAlumnos.html", function () {
         const btnAgregarVariosAlumnos = document.getElementById("btnAgregarVariosAlumnos");
         btnAgregarVariosAlumnos.onclick = () => {
@@ -298,7 +297,7 @@ window.addEventListener("load", function () {
             cargarFamilias();
         };
 
-        let alumnosCSV = []; // Almacena los alumnos parseados del CSV
+        let alumnosCSV = [];
 
         // Cargar familias al abrir el modal
         function cargarFamilias() {
@@ -337,7 +336,7 @@ window.addEventListener("load", function () {
                     ciclos.forEach(ciclo => {
                         const option = document.createElement("option");
                         option.value = ciclo.id;
-                        option.textContent = `${ciclo.nombre} (${ciclo.nivel})`;
+                        option.textContent = '${ciclo.nombre} (${ciclo.nivel})';
                         selectCiclo.appendChild(option);
                     });
 
@@ -386,7 +385,7 @@ window.addEventListener("load", function () {
                         ape1: campos[2],
                         correo: campos[3],
                         ape2: campos[4] || null,
-                        index: index // Para identificar filas con error
+                        index: index
                     });
                 }
             });
@@ -584,7 +583,7 @@ window.addEventListener("load", function () {
                 document.getElementById("btnReintentar").onclick = () => {
                     const alumnosReintento = obtenerAlumnosEditadosErrores();
                     const cicloId = document.getElementById("selectCiclo").value;
-                    const fechaInicio = document.getElementById("fechaInicio").value;
+                    const fechaInicio = document.getElementById("fechaInicio").value || null;
                     const fechaFin = document.getElementById("fechaFin").value || null;
 
                     modalErrores.ocultar();
