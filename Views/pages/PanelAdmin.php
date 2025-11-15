@@ -1,6 +1,4 @@
-<?php $this->layout('layouts/Layout'); ?>
-<?php // $this->layout('layouts/Layout', ['titulo' => 'Gestión de Empresas y Alumnos']) 
-?>
+<?php $this->layout('layouts/Layout', ['titulo' => $titulo]); ?>
 
 <?php $this->start('js') ?>
 <script src="js/Modal.js"></script>

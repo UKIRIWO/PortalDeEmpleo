@@ -1,9 +1,14 @@
 <?php
-namespace Repositories;
-use Models\User;
-class RepoUser {
 
-    public static function findById($id) {
+namespace Repositories;
+
+use Models\User;
+
+class RepoUser
+{
+
+    public static function findById($id)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user WHERE id = ?");
         $stmt->execute([$id]);
@@ -21,7 +26,8 @@ class RepoUser {
         return null;
     }
 
-    public static function findAll() {
+    public static function findAll()
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user");
         $stmt->execute();
@@ -40,7 +46,8 @@ class RepoUser {
         return $users;
     }
 
-    public static function save($user) {
+    public static function save($user)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("INSERT INTO user (nombre_usuario, password, id_rol_fk) VALUES (?, ?, ?)");
         $stmt->execute([
@@ -51,7 +58,8 @@ class RepoUser {
         $user->setId($con->lastInsertId());
     }
 
-    public static function update($user) {
+    public static function update($user)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("UPDATE user SET nombre_usuario = ?, password = ?, id_rol_fk = ? WHERE id = ?");
         $stmt->execute([
@@ -62,13 +70,15 @@ class RepoUser {
         ]);
     }
 
-    public static function delete($id) {
+    public static function delete($id)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("DELETE FROM user WHERE id = ?");
         $stmt->execute([$id]);
     }
 
-    public static function findByUsername($nombreUsuario) {
+    public static function findByUsername($nombreUsuario)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT * FROM user WHERE nombre_usuario = ?");
         $stmt->execute([$nombreUsuario]);
@@ -86,7 +96,8 @@ class RepoUser {
         return null;
     }
 
-    public static function findUserWithRoleById($id) {
+    public static function findUserWithRoleById($id)
+    {
         $con = DB::getConnection();
         $stmt = $con->prepare("SELECT u.*, r.nombre as rol_nombre
                               FROM user u 
@@ -96,8 +107,14 @@ class RepoUser {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public static function getIdUser($id){
+    public static function verificarUsuario($nombre_usuario, $password)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT * FROM USER WHERE nombre_usuario = ?");
+        $stmt->execute([$nombre_usuario]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+        $resultado = ($fila && password_verify($password, $fila['password'])) ? $fila : false;
+        return $resultado;
     }
 }
-?>

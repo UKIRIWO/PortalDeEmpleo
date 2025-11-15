@@ -6,14 +6,10 @@ include_once '../Loaders/miAutoLoader.php';
 
 use Helpers\Session;
 use Helpers\Login;
+use Helpers\Security;
 use Repositories\RepoAlumno;
-use Repositories\RepoUser;
 use Repositories\RepoFamilia;
 use Repositories\RepoCiclo;
-use Repositories\RepoEstudios;
-use Models\Alumno;
-use Models\User;
-use Models\Estudios;
 
 Session::abrirsesion();
 
@@ -28,10 +24,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 try {
     switch ($method) {
         case 'GET':
-            handleGet();
+            get();
             break;
         case 'POST':
-            handlePost();
+            post();
             break;
         default:
             http_response_code(405);
@@ -49,7 +45,8 @@ try {
 
 
 // GET: Obtener familias y ciclos
-function handleGet() {
+function get() {
+    Security::verificarToken();
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'familias':
@@ -108,7 +105,8 @@ function getCiclosByFamilia() {
 
 
 // POST: Procesar carga masiva
-function handlePost() {
+function post() {
+    Security::verificarToken();
     try {
         $data = json_decode(file_get_contents('php://input'), true);
         

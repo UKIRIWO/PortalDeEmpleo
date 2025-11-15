@@ -1,22 +1,27 @@
 <?php
+
+namespace API;
 header('Content-Type: application/json');
 
 include_once '../Loaders/miAutoLoader.php';
 
 use Helpers\Session;
 use Helpers\Login;
+use Helpers\Security;
 use Repositories\RepoAlumno;
 use Repositories\RepoUser;
 use Models\Alumno;
 use Models\User;
 
+// error_log("entrando en la api");
 Session::abrirsesion();
-
-if (!Login::estaLogeado() || !Login::esAdmin()) {
+if (!Login::estaLogeado() && !Login::esAdmin()) {
+    error_log("no me gusta como caza la perra");
     http_response_code(403);
     echo json_encode(['error' => 'No autorizado']);
     exit;
 }
+// error_log("ha pasado el if (!Login::estaLogeado() && !Login::esAdmin())");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -39,7 +44,7 @@ try {
             http_response_code(405);
             echo json_encode(['error' => 'Método no permitido']);
     }
-} catch (Exception $e) {
+} catch (\Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
@@ -52,6 +57,7 @@ try {
 
 function getAlumnos()
 {
+    Security::verificarToken();
     if (isset($_GET['id'])) {
         $alumno = RepoAlumno::findById($_GET['id']);
         if ($alumno) {
@@ -60,7 +66,7 @@ function getAlumnos()
             if ($alumno->getCurriculum() && $alumno->getCurriculum() !== 'CV pendiente') {
                 $curriculumBase64 = base64_encode($alumno->getCurriculum());
             }
-            
+
             echo json_encode([
                 'id' => $alumno->getId(),
                 'id_user' => $alumno->getIdUserFk(),
@@ -118,6 +124,7 @@ function getAlumnos()
 
 function postAlumno()
 {
+    Security::verificarToken();
     try {
         $username = $_POST['username'] ?? null;
         $password = $_POST['password'] ?? null;
@@ -161,7 +168,7 @@ function postAlumno()
             // http_response_code(500);
             // echo json_encode(['error' => 'Error al crear alumno en la base de datos']);
             // return;
-            throw new Exception('Error al guardar en BD');
+            throw new \Exception('Error al guardar en BD');
         }
 
         // Procesar curriculum (BLOB)
@@ -187,7 +194,7 @@ function postAlumno()
             'mensaje' => 'Alumno creado correctamente',
             'id' => $alumno->getId()
         ]);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         http_response_code(500);
         echo json_encode(['error' => $e->getMessage()]);
     }
@@ -204,6 +211,7 @@ function postAlumno()
 
 function putAlumno()
 {
+    Security::verificarToken();
     try {
         // Obtener datos del JSON
         $data = json_decode(file_get_contents('php://input'), true);
@@ -240,11 +248,11 @@ function putAlumno()
             // El formato es: "data:application/pdf;base64,JVBERi0xLjQK..."
             // Separar el contenido Base64 del prefijo
             $parts = explode(',', $data['curriculum']);
-            
+
             if (count($parts) === 2) {
                 $curriculumBase64 = $parts[1];
                 $curriculumContent = base64_decode($curriculumBase64);
-                
+
                 if ($curriculumContent !== false) {
                     $alumno->setCurriculum($curriculumContent);
                 }
@@ -255,19 +263,19 @@ function putAlumno()
         if (isset($data['foto']) && !empty($data['foto'])) {
             // El formato es: "data:image/png;base64,iVBORw0KGgo..."
             $parts = explode(',', $data['foto']);
-            
+
             if (count($parts) === 2) {
                 $fotoBase64 = $parts[1];
                 $fotoContent = base64_decode($fotoBase64);
-                
+
                 if ($fotoContent !== false) {
                     $rutaFoto = "foto_" . $idUser . ".png";
-                    
+
                     // Crear carpeta si no existe
                     if (!file_exists("../.imagenes/alumno/")) {
                         mkdir("../.imagenes/alumno/", 0777, true);
                     }
-                    
+
                     // Guardar archivo en servidor
                     if (file_put_contents("../.imagenes/alumno/" . $rutaFoto, $fotoContent) !== false) {
                         // Solo actualizar BD si era null antes
@@ -300,16 +308,7 @@ function putAlumno()
             'success' => true,
             'mensaje' => 'Alumno actualizado correctamente'
         ]);
-
-    } catch (PDOException $e) {
-        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
-            http_response_code(409);
-            echo json_encode(['error' => 'Ya existe un registro con estos datos (DNI o username duplicado)']);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error de base de datos: ' . $e->getMessage()]);
-        }
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         http_response_code(500);
         echo json_encode(['error' => $e->getMessage()]);
     }
@@ -330,6 +329,7 @@ function putAlumno()
 
 function deleteAlumno()
 {
+    Security::verificarToken();
     $input = json_decode(file_get_contents("php://input"), true);
 
     if (!isset($input['id'])) {

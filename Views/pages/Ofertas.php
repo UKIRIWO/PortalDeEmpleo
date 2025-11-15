@@ -1,9 +1,10 @@
-<?php $this->layout('layouts/Layout'); ?>
+<?php $this->layout('layouts/Layout', ['titulo' => $titulo]); ?>
 
 <?php $this->start('contenido') ?>
 <h1>Ofertas de trabajo</h1>
 <?php
     use Helpers\Login;
+    use Repositories\RepoEmpresa;
     $rol = Login::getRol();
     switch ($rol) {
         case 'admin':
@@ -16,7 +17,7 @@
 ?>
 <?php foreach ($ofertas as $oferta): ?>
     <div class="divOferta">
-        <p>Empresa: <?= $oferta->getIdEmpresaFk() ?></p>
+        <p>Empresa: <?= RepoEmpresa::findById($oferta->getIdEmpresaFk())->getNombre() ?></p>
         <p>Fecha Inicio: <?= $oferta->getFechaInicio() ?></p>
         <p>Fecha Fin: <?= $oferta->getFechaFin() ?></p>
         <p>Titulo: <?= $oferta->getTitulo() ?></p>

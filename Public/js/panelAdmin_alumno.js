@@ -4,7 +4,9 @@ window.addEventListener("load", function () {
 
     // Get
     function cargarAlumnos() {
-        fetch('/portalDeEmpleo/api/ApiAlumno.php')
+        fetch('/portalDeEmpleo/api/ApiAlumno.php', {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        })
             .then(res => res.json())
             .then(alumnos => {
                 const tbody = document.querySelector("#tablaAlumnos tbody");
@@ -79,6 +81,7 @@ window.addEventListener("load", function () {
             if (fotoPerfil) formData.append("fotoPerfil", fotoPerfil);
 
             fetch('/portalDeEmpleo/api/ApiAlumno.php', {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
                 method: 'POST',
                 body: formData
             })
@@ -103,14 +106,15 @@ window.addEventListener("load", function () {
         btnEditar.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
 
-            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`)
+            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`, {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            })
                 .then(res => res.json())
                 .then(alumno => {
                     const modalEditar = Modal.crear("modalEditar", "html/editarAlumno.html", function () {
 
                         modalEditar.mostrar();
 
-                        // Relleno los input con los datos del alumno
                         document.getElementById("editarUsername").value = alumno.username || "";
                         document.getElementById("editarDni").value = alumno.dni || "";
                         document.getElementById("editarNombre").value = alumno.nombre || "";
@@ -121,11 +125,11 @@ window.addEventListener("load", function () {
                         document.getElementById("editarDireccion").value = alumno.direccion || "";
 
 
-                        // Botón guardar
+
                         const btnGuardar = document.getElementById("btnGuardarEditar");
                         btnGuardar.onclick = async () => {
                             try {
-                                // JSON con los datos
+
                                 const datosActualizados = {
                                     id: alumno.id,
                                     username: document.getElementById("editarUsername").value,
@@ -138,28 +142,31 @@ window.addEventListener("load", function () {
                                     direccion: document.getElementById("editarDireccion").value
                                 };
 
-                                // Password
+
                                 const password = document.getElementById("editarPassword").value;
                                 if (password) {
                                     datosActualizados.password = password;
                                 }
 
-                                // Curriculum (Base64)
+
                                 const curriculumFile = document.getElementById("editarCurriculum").files[0];
                                 if (curriculumFile) {
                                     datosActualizados.curriculum = await fileToBase64(curriculumFile);
                                 }
 
-                                // Foto (Base64)
+
                                 const fotoFile = document.getElementById("editarFoto").files[0];
                                 if (fotoFile) {
                                     datosActualizados.foto = await fileToBase64(fotoFile);
                                 }
 
-                                // Enviar con PUT
+
                                 const response = await fetch('/portalDeEmpleo/api/ApiAlumno.php', {
                                     method: 'PUT',
-                                    headers: { 'Content-Type': 'application/json' },
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                                    },
                                     body: JSON.stringify(datosActualizados)
                                 });
 
@@ -183,7 +190,7 @@ window.addEventListener("load", function () {
                 .catch(err => console.error("Error al obtener alumno:", err));
         };
 
-        // Función auxiliar para convertir archivo a Base64
+
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -205,7 +212,10 @@ window.addEventListener("load", function () {
                 btnConfirmar.onclick = () => {
                     fetch('/portalDeEmpleo/api/ApiAlumno.php', {
                         method: 'DELETE',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        },
                         body: JSON.stringify({ id: idAlumno })
                     })
                         .then(res => res.json())
@@ -231,7 +241,9 @@ window.addEventListener("load", function () {
         btnDetalles.onclick = () => {
             const idAlumno = fila.querySelector(".idAlumno").value;
 
-            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`)
+            fetch(`/portalDeEmpleo/api/ApiAlumno.php?id=${idAlumno}`, {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            })
                 .then(res => res.json())
                 .then(alumno => {
                     const modalDetalles = Modal.crear("modalDetalles", "html/detallesAlumno.html", function () {
@@ -301,7 +313,9 @@ window.addEventListener("load", function () {
 
         // Cargar familias al abrir el modal
         function cargarFamilias() {
-            fetch('/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=familias')
+            fetch('/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=familias', {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            })
                 .then(res => res.json())
                 .then(familias => {
                     const selectFamilia = document.getElementById("selectFamilia");
@@ -328,7 +342,9 @@ window.addEventListener("load", function () {
                 return;
             }
 
-            fetch(`/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=ciclos&familia_id=${familiaId}`)
+            fetch(`/portalDeEmpleo/api/AlumnoCargaMasiva.php?action=ciclos&familia_id=${familiaId}`, {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            })
                 .then(res => res.json())
                 .then(ciclos => {
                     selectCiclo.innerHTML = '<option value="">-- Selecciona un ciclo --</option>';
@@ -494,7 +510,10 @@ window.addEventListener("load", function () {
 
             fetch('/portalDeEmpleo/api/AlumnoCargaMasiva.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify(datos)
             })
                 .then(res => {

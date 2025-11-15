@@ -1,6 +1,6 @@
 <?php
 namespace Helpers;
-include_once "Session.php";
+include_once "Session.php"; 
 use Repositories\RepoRol;
 use Repositories\RepoUser;
 class Login
@@ -13,6 +13,11 @@ class Login
 
     public static function logout()
     {
+        $idUser = $_SESSION['usuario']['id'];
+
+        if ($idUser) {
+            Security::eliminarToken($idUser);
+        }
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");

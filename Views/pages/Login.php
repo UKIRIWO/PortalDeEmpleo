@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/Layout_simple'); ?>
+<?php $this->layout('layouts/Layout_simple', ['titulo' => $titulo]); ?>
 
 <?php $this->unshift('css') ?>
 <link rel="stylesheet" href="css/login.css">
@@ -22,6 +22,7 @@
             <div class="register-buttons" >
                 <span class="btn-register" id="AlumnRegisBtn">Registrarse como Alumno</span>
                 <a href="?menu=RegistroEmpresa" class="btn-register">Registrarse como Empresa</a>
+                <a href="?menu=Inicio" class="btn-register">Inicio</a>
             </div>
         </div>
     </div>
@@ -30,4 +31,5 @@
 <?php $this->start('js') ?>
 <script src="js/Modal.js"></script>
 <script src="js/registroAlumno.js"></script>
+<script src="js/login.js"></script>
 <?php $this->stop() ?>

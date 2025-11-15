@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login Multi-pestaña</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .session-info {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .session-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .session-data {
+            font-family: monospace;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .user-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-active {
+            background: #28a745;
+        }
+        
+        .status-inactive {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Panel de Login -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Sistema de Login Multi-pestaña</h2>
+            </div>
+            <div class="card-body">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('login')">Iniciar Sesión</div>
+                    <div class="tab" onclick="switchTab('register')">Registrarse</div>
+                </div>
+                
+                <!-- Formulario de Login -->
+                <div id="login-tab" class="tab-content active">
+                    <h3>Iniciar Sesión</h3>
+                    <div class="form-group">
+                        <label for="login-username">Usuario</label>
+                        <input type="text" id="login-username" placeholder="Ingresa tu usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" placeholder="Ingresa tu contraseña">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-role">Rol</label>
+                        <select id="login-role">
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                            <option value="moderator">Moderador</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="login()">Iniciar Sesión</button>
+                </div>
+                
+                <!-- Formulario de Registro -->
+                <div id="register-tab" class="tab-content">
+                    <h3>Registrar Nueva Cuenta</h3>
+                    <div class="form-group">
+                        <label for="register-username">Usuario</label>
+                        <input type="text" id="register-username" placeholder="Elige un nombre de usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Contraseña</label>
+                        <input type="password" id="register-password" placeholder="Crea una contraseña segura">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-role">Rol</label>
+                        <select id="register-role">
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                            <option value="moderator">Moderador</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="register()">Registrarse</button>
+                </div>
+                
+                <div class="instructions">
+                    <h4>¿Cómo usar múltiples sesiones?</h4>
+                    <p>1. Inicia sesión con una cuenta en esta pestaña</p>
+                    <p>2. Abre una nueva pestaña con la misma URL</p>
+                    <p>3. Inicia sesión con una cuenta diferente</p>
+                    <p>4. Ambas sesiones permanecerán activas independientemente</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Panel de Información de Sesión -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Estado de Sesiones</h2>
+            </div>
+            <div class="card-body">
+                <div class="session-info">
+                    <h3>Sesión Actual</h3>
+                    <div id="current-session" class="session-data">
+                        No hay sesión activa
+                    </div>
+                </div>
+                
+                <div class="session-info">
+                    <h3>Todas las Sesiones Activas</h3>
+                    <div id="all-sessions" class="session-data">
+                        No hay sesiones activas
+                    </div>
+                </div>
+                
+                <button class="btn btn-danger" onclick="logout()" style="margin-top: 15px;">
+                    Cerrar Sesión Actual
+                </button>
+                
+                <button class="btn btn-success" onclick="refreshSessions()" style="margin-top: 10px;">
+                    Actualizar Sesiones
+                </button>
+                
+                <div class="instructions" style="margin-top: 20px;">
+                    <h4>Explicación Técnica</h4>
+                    <p>Este sistema usa <strong>sessionStorage</strong> para credenciales y <strong>localStorage</strong> para tokens, permitiendo:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Sesiones independientes por pestaña</li>
+                        <li>Persistencia de tokens entre pestañas</li>
+                        <li>Diferentes cuentas en diferentes pestañas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cambiar entre pestañas de login y registro
+        function switchTab(tabName) {
+            // Ocultar todos los contenidos de pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Actualizar pestañas activas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Generar un ID único para la sesión
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+        
+        // Registrar una nueva cuenta
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const role = document.getElementById('register-role').value;
+            
+            if (!username || !password) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+            
+            // Obtener usuarios existentes
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Verificar si el usuario ya existe
+            if (users.find(user => user.username === username)) {
+                alert('Este nombre de usuario ya está en uso');
+                return;
+            }
+            
+            // Agregar nuevo usuario
+            users.push({
+                id: 'user_' + Date.now(),
+                username,
+                password, // En un caso real, esto debería estar encriptado
+                role
+            });
+            
+            // Guardar usuarios
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert('Cuenta creada exitosamente. Ahora puedes iniciar sesión.');
+            switchTab('login');
+            
+            // Limpiar formulario
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+        }
+        
+        // Iniciar sesión
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const role = document.getElementById('login-role').value;
+            
+            if (!username || !password) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+            
+            // Obtener usuarios
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Verificar credenciales
+            const user = users.find(u => u.username === username && u.password === password && u.role === role);
+            
+            if (!user) {
+                alert('Credenciales incorrectas o rol no coincide');
+                return;
+            }
+            
+            // Crear una nueva sesión única para esta pestaña
+            const sessionId = generateSessionId();
+            
+            // Guardar credenciales en sessionStorage (solo para esta pestaña)
+            sessionStorage.setItem('currentSession', sessionId);
+            sessionStorage.setItem('username', username);
+            sessionStorage.setItem('role', role);
+            
+            // Generar y guardar token en localStorage (compartido entre pestañas)
+            const token = 'token_' + Math.random().toString(36).substr(2, 16);
+            const tokenData = {
+                token,
+                userId: user.id,
+                username,
+                role,
+                sessionId,
+                timestamp: Date.now()
+            };
+            
+            // Obtener tokens existentes
+            const tokens = JSON.parse(localStorage.getItem('tokens') || '[]');
+            
+            // Agregar nuevo token
+            tokens.push(tokenData);
+            localStorage.setItem('tokens', JSON.stringify(tokens));
+            
+            // Actualizar la interfaz
+            updateSessionDisplay();
+            
+            alert(`Sesión iniciada como ${username} (${role})`);
+            
+            // Limpiar formulario
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        }
+        
+        // Cerrar sesión
+        function logout() {
+            const sessionId = sessionStorage.getItem('currentSession');
+            
+            if (sessionId) {
+                // Eliminar token del localStorage
+                const tokens = JSON.parse(localStorage.getItem('tokens') || '[]');
+                const updatedTokens = tokens.filter(t => t.sessionId !== sessionId);
+                localStorage.setItem('tokens', JSON.stringify(updatedTokens));
+                
+                // Limpiar sessionStorage
+                sessionStorage.clear();
+                
+                // Actualizar la interfaz
+                updateSessionDisplay();
+                
+                alert('Sesión cerrada exitosamente');
+            } else {
+                alert('No hay sesión activa para cerrar');
+            }
+        }
+        
+        // Actualizar la visualización de sesiones
+        function updateSessionDisplay() {
+            const currentSessionElement = document.getElementById('current-session');
+            const allSessionsElement = document.getElementById('all-sessions');
+            
+            // Obtener sesión actual
+            const sessionId = sessionStorage.getItem('currentSession');
+            const username = sessionStorage.getItem('username');
+            const role = sessionStorage.getItem('role');
+            
+            // Mostrar sesión actual
+            if (sessionId && username && role) {
+                currentSessionElement.textContent = `Usuario: ${username}\nRol: ${role}\nID de Sesión: ${sessionId}`;
+            } else {
+                currentSessionElement.textContent = 'No hay sesión activa';
+            }
+            
+            // Obtener todas las sesiones activas
+            const tokens = JSON.parse(localStorage.getItem('tokens') || '[]');
+            
+            if (tokens.length > 0) {
+                let sessionsText = '';
+                tokens.forEach(token => {
+                    const isCurrent = token.sessionId === sessionId;
+                    sessionsText += `${isCurrent ? '→ ' : ''}Usuario: ${token.username} (${token.role})\n`;
+                    sessionsText += `   ID Sesión: ${token.sessionId}\n`;
+                    sessionsText += `   Token: ${token.token.substr(0, 10)}...\n\n`;
+                });
+                allSessionsElement.textContent = sessionsText;
+            } else {
+                allSessionsElement.textContent = 'No hay sesiones activas';
+            }
+        }
+        
+        // Refrescar la visualización de sesiones
+        function refreshSessions() {
+            updateSessionDisplay();
+            alert('Sesiones actualizadas');
+        }
+        
+        // Limpiar sesiones expiradas (más de 24 horas)
+        function cleanExpiredSessions() {
+            const tokens = JSON.parse(localStorage.getItem('tokens') || '[]');
+            const now = Date.now();
+            const dayInMs = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+            
+            const validTokens = tokens.filter(token => (now - token.timestamp) < dayInMs);
+            
+            if (validTokens.length !== tokens.length) {
+                localStorage.setItem('tokens', JSON.stringify(validTokens));
+                console.log(`Se eliminaron ${tokens.length - validTokens.length} sesiones expiradas`);
+            }
+        }
+        
+        // Inicializar la aplicación
+        function init() {
+            updateSessionDisplay();
+            cleanExpiredSessions();
+            
+            // Actualizar la visualización cada 5 segundos
+            setInterval(updateSessionDisplay, 5000);
+            
+            // También actualizar cuando la pestaña gana foco
+            window.addEventListener('focus', updateSessionDisplay);
+        }
+        
+        // Ejecutar inicialización cuando se carga la página
+        window.onload = init;
+    </script>
+</body>
+</html>

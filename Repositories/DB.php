@@ -19,5 +19,14 @@ class DB {
         }
         return self::$con;
     }
+
+    public static function cantidadVariables($cantidad)
+    {
+        $resultado = "?";
+        for ($i = 1; $i < $cantidad; $i++) {
+            $resultado = $resultado . ", ?";
+        }
+        return $resultado;
+    }
 }
 

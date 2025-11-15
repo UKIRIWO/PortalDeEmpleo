@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SessionStorage vs LocalStorage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #2575fc;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card.localstorage {
+            border-top: 4px solid #4CAF50;
+        }
+        
+        .card.sessionstorage {
+            border-top: 4px solid #FF9800;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            margin: 15px 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #f0f0f0;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .demo-section h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .demo-box {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .demo-box h3 {
+            margin-bottom: 15px;
+            text-align: center;
+            color: #555;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        .btn:hover {
+            background-color: #1c68e0;
+        }
+        
+        .btn-success {
+            background-color: #4CAF50;
+        }
+        
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+        
+        .btn-warning {
+            background-color: #FF9800;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e68900;
+        }
+        
+        .data-display {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: #2575fc;
+            color: white;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        .tip {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SessionStorage vs LocalStorage</h1>
+            <p class="subtitle">Comprendiendo las diferencias entre los mecanismos de almacenamiento web</p>
+        </header>
+        
+        <div class="content">
+            <div class="card localstorage">
+                <h2>LocalStorage</h2>
+                <p>El LocalStorage es un mecanismo de almacenamiento web que permite almacenar datos de forma persistente en el navegador del usuario.</p>
+                
+                <h3>Características principales:</h3>
+                <ul class="feature-list">
+                    <li><span class="highlight">Persistencia:</span> Los datos permanecen almacenados incluso después de cerrar el navegador.</li>
+                    <li><span class="highlight">Capacidad:</span> Aproximadamente 5-10 MB dependiendo del navegador.</li>
+                    <li><span class="highlight">Alcance:</span> Los datos están disponibles en todas las pestañas y ventanas del mismo origen.</li>
+                    <li><span class="highlight">Duración:</span> Los datos permanecen hasta que son eliminados explícitamente por el usuario o la aplicación.</li>
+                    <li><span class="highlight">Uso común:</span> Preferencias del usuario, datos de configuración, carrito de compras persistente.</li>
+                </ul>
+                
+                <div class="tip">
+                    <strong>Tip:</strong> Usa localStorage para datos que necesitan persistir entre sesiones, como preferencias de usuario o información que debe mantenerse disponible incluso después de reiniciar el navegador.
+                </div>
+            </div>
+            
+            <div class="card sessionstorage">
+                <h2>SessionStorage</h2>
+                <p>El SessionStorage es un mecanismo de almacenamiento web que almacena datos solo durante la sesión de la pestaña actual.</p>
+                
+                <h3>Características principales:</h3>
+                <ul class="feature-list">
+                    <li><span class="highlight">Persistencia:</span> Los datos se eliminan al cerrar la pestaña o el navegador.</li>
+                    <li><span class="highlight">Capacidad:</span> Aproximadamente 5-10 MB dependiendo del navegador.</li>
+                    <li><span class="highlight">Alcance:</span> Los datos están disponibles solo en la pestaña actual donde se almacenaron.</li>
+                    <li><span class="highlight">Duración:</span> Los datos permanecen solo durante la sesión actual de la pestaña.</li>
+                    <li><span class="highlight">Uso común:</span> Datos temporales de formularios, información de estado durante una sesión, datos que no necesitan persistir.</li>
+                </ul>
+                
+                <div class="tip">
+                    <strong>Tip:</strong> Usa sessionStorage para datos temporales que solo son relevantes durante la sesión actual, como información de un proceso de varios pasos o datos que no deben compartirse entre pestañas.
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Demostración Práctica</h2>
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h3>LocalStorage</h3>
+                    <div class="input-group">
+                        <label for="localKey">Clave:</label>
+                        <input type="text" id="localKey" placeholder="Ej: usuario">
+                    </div>
+                    <div class="input-group">
+                        <label for="localValue">Valor:</label>
+                        <input type="text" id="localValue" placeholder="Ej: Juan Pérez">
+                    </div>
+                    <button class="btn btn-success" onclick="saveToLocalStorage()">Guardar en LocalStorage</button>
+                    <button class="btn" onclick="getFromLocalStorage()">Obtener de LocalStorage</button>
+                    <button class="btn btn-warning" onclick="clearLocalStorage()">Limpiar LocalStorage</button>
+                    
+                    <div class="data-display" id="localData">
+                        Los datos de localStorage aparecerán aquí
+                    </div>
+                </div>
+                
+                <div class="demo-box">
+                    <h3>SessionStorage</h3>
+                    <div class="input-group">
+                        <label for="sessionKey">Clave:</label>
+                        <input type="text" id="sessionKey" placeholder="Ej: token">
+                    </div>
+                    <div class="input-group">
+                        <label for="sessionValue">Valor:</label>
+                        <input type="text" id="sessionValue" placeholder="Ej: abc123">
+                    </div>
+                    <button class="btn btn-success" onclick="saveToSessionStorage()">Guardar en SessionStorage</button>
+                    <button class="btn" onclick="getFromSessionStorage()">Obtener de SessionStorage</button>
+                    <button class="btn btn-warning" onclick="clearSessionStorage()">Limpiar SessionStorage</button>
+                    
+                    <div class="data-display" id="sessionData">
+                        Los datos de sessionStorage aparecerán aquí
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="showAllData()">Mostrar todos los datos almacenados</button>
+                <button class="btn btn-warning" onclick="clearAllStorage()">Limpiar todo el almacenamiento</button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Comparación Detallada</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>LocalStorage</th>
+                        <th>SessionStorage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Duración de los datos</strong></td>
+                        <td>Persistentes (hasta que se eliminan manualmente)</td>
+                        <td>Temporal (solo durante la sesión de la pestaña)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alcance</strong></td>
+                        <td>Compartido entre todas las pestañas y ventanas del mismo origen</td>
+                        <td>Limitado a la pestaña actual donde se almacenaron</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capacidad máxima</strong></td>
+                        <td>~5-10 MB</td>
+                        <td>~5-10 MB</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uso de API</strong></td>
+                        <td colspan="2" style="text-align: center;">Misma API: setItem(), getItem(), removeItem(), clear()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Casos de uso típicos</strong></td>
+                        <td>Preferencias de usuario, datos de configuración, carrito de compras persistente</td>
+                        <td>Datos temporales de formularios, información de estado durante una sesión</td>
+                    </tr>
+                    <tr>
+                        <td><strong>¿Se envía al servidor?</strong></td>
+                        <td colspan="2" style="text-align: center;">No, los datos permanecen solo en el cliente</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>Demostración de SessionStorage vs LocalStorage - Almacenamiento Web</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funciones para localStorage
+        function saveToLocalStorage() {
+            const key = document.getElementById('localKey').value;
+            const value = document.getElementById('localValue').value;
+            
+            if (key && value) {
+                localStorage.setItem(key, value);
+                alert(`Datos guardados en localStorage: ${key} = ${value}`);
+                document.getElementById('localKey').value = '';
+                document.getElementById('localValue').value = '';
+            } else {
+                alert('Por favor, ingresa una clave y un valor');
+            }
+        }
+        
+        function getFromLocalStorage() {
+            const key = document.getElementById('localKey').value;
+            
+            if (key) {
+                const value = localStorage.getItem(key);
+                if (value) {
+                    document.getElementById('localData').textContent = `${key} = ${value}`;
+                } else {
+                    document.getElementById('localData').textContent = `No se encontró ningún valor para la clave "${key}"`;
+                }
+            } else {
+                alert('Por favor, ingresa una clave para buscar');
+            }
+        }
+        
+        function clearLocalStorage() {
+            localStorage.clear();
+            document.getElementById('localData').textContent = 'LocalStorage ha sido limpiado';
+        }
+        
+        // Funciones para sessionStorage
+        function saveToSessionStorage() {
+            const key = document.getElementById('sessionKey').value;
+            const value = document.getElementById('sessionValue').value;
+            
+            if (key && value) {
+                sessionStorage.setItem(key, value);
+                alert(`Datos guardados en sessionStorage: ${key} = ${value}`);
+                document.getElementById('sessionKey').value = '';
+                document.getElementById('sessionValue').value = '';
+            } else {
+                alert('Por favor, ingresa una clave y un valor');
+            }
+        }
+        
+        function getFromSessionStorage() {
+            const key = document.getElementById('sessionKey').value;
+            
+            if (key) {
+                const value = sessionStorage.getItem(key);
+                if (value) {
+                    document.getElementById('sessionData').textContent = `${key} = ${value}`;
+                } else {
+                    document.getElementById('sessionData').textContent = `No se encontró ningún valor para la clave "${key}"`;
+                }
+            } else {
+                alert('Por favor, ingresa una clave para buscar');
+            }
+        }
+        
+        function clearSessionStorage() {
+            sessionStorage.clear();
+            document.getElementById('sessionData').textContent = 'SessionStorage ha sido limpiado';
+        }
+        
+        // Funciones adicionales
+        function showAllData() {
+            let localData = '=== LOCALSTORAGE ===\n';
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                localData += `${key} = ${localStorage.getItem(key)}\n`;
+            }
+            
+            let sessionData = '=== SESSIONSTORAGE ===\n';
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                sessionData += `${key} = ${sessionStorage.getItem(key)}\n`;
+            }
+            
+            document.getElementById('localData').textContent = localData || 'No hay datos en localStorage';
+            document.getElementById('sessionData').textContent = sessionData || 'No hay datos en sessionStorage';
+        }
+        
+        function clearAllStorage() {
+            localStorage.clear();
+            sessionStorage.clear();
+            document.getElementById('localData').textContent = 'Todos los datos han sido eliminados';
+            document.getElementById('sessionData').textContent = 'Todos los datos han sido eliminados';
+        }
+        
+        // Cargar algunos datos de ejemplo al iniciar
+        window.onload = function() {
+            if (localStorage.length === 0) {
+                localStorage.setItem('ejemplo_local', 'Este dato persiste después de cerrar el navegador');
+            }
+            
+            if (sessionStorage.length === 0) {
+                sessionStorage.setItem('ejemplo_session', 'Este dato se elimina al cerrar la pestaña');
+            }
+        };
+    </script>
+</body>
+</html>

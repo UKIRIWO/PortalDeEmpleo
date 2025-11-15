@@ -14,13 +14,15 @@ use Controllers\OfertasController;
 use Controllers\PanelAdminController;
 use Controllers\PageNotFoundController;
 
+use Repositories\DB;
+
 Session::abrirsesion();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
 // Procesar login
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'Login') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -35,18 +37,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 }
 
 if (!Login::estaLogeado()) {
-    $menu = $_GET['menu'] ?? 'Login';
+    $menu = $_GET['menu'] ?? 'Inicio';
 
-    if ($menu === 'RegistroEmpresa') {
-        $controller = new RegistroEmpresaController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->procesarRegistroCandidata();
-        } else {
-            $controller->index();
-        }
-    } else {
-        (new LoginController())->index();
+    switch ($menu) {
+        case 'RegistroEmpresa':
+            $controller = new RegistroEmpresaController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->procesarRegistroCandidata();
+            } else {
+                $controller->index();
+            }
+            break;
+
+        case 'Login':
+            (new LoginController())->index();
+            break;
+
+        case 'Inicio':
+            (new InicioController())->index();
+            break;
+
+        default:
+            break;
     }
+
+    // if ($menu === 'RegistroEmpresa') {
+    //     $controller = new RegistroEmpresaController();
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $controller->procesarRegistroCandidata();
+    //     } else {
+    //         $controller->index();
+    //     }
+    // } else {
+    //     (new LoginController())->index();
+    // }
 } else {
     $menu = $_GET['menu'] ?? 'Inicio';
 
@@ -58,6 +82,7 @@ if (!Login::estaLogeado()) {
             (new OfertasController())->index();
             break;
         case 'PanelAdmin':
+
             $controller = new PanelAdminController();
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controller->procesarPanelAdmin();

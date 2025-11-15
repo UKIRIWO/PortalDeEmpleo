@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/Layout_simple'); ?>
+<?php $this->layout('layouts/Layout_simple', ['titulo' => $titulo]); ?>
 
 <?php $this->push('css') ?>
 <link rel="stylesheet" href="css/registroEmpresa.css">

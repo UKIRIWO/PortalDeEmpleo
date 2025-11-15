@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>web</title>
+    <title><?= $this->e($titulo ?? 'Portal de Empleo') ?></title>
     
     <link rel="stylesheet" href="../Public/css/style.css">
     

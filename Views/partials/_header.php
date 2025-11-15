@@ -3,11 +3,12 @@
 </a>
 <nav>
     <ul>
-        <li><a href="?menu=Inicio">Inicio</a></li>
-        <li><a href="?menu=Ofertas">Ofertas</a></li>
+        
 
         <?php
+
         use Helpers\Login;
+
         $rol = Login::getRol();
         switch ($rol) {
             case 'admin':
@@ -26,5 +27,10 @@
         ?>
     </ul>
 </nav>
+<?php if (Login::estaLogeado()): ?>
+    <a href="index.php?menu=Logout"><button class="btnLoginCabecera">Logout</button></a>
+<?php else: ?>
+    <a href="index.php?menu=Login"><button class="btnLoginCabecera">Iniciar sesión</button></a>
+<?php endif; ?>
 
-<a href="index.php?menu=Logout"><button class="btnLoginCabecera">Logout</button></a>
+

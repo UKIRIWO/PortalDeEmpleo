@@ -34,6 +34,32 @@ class RepoAlumno
         return null;
     }
 
+    public static function findByIdUser($idUser)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT * FROM alumno WHERE id_user_fk = ?");
+        $stmt->execute([$idUser]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($fila) {
+            return new Alumno(
+                $fila['id'],
+                $fila['id_user_fk'],
+                $fila['dni'],
+                $fila['email'],
+                $fila['nombre'],
+                $fila['ape1'],
+                $fila['ape2'],
+                $fila['curriculum'],
+                $fila['fecha_nacimiento'],
+                $fila['direccion'],
+                $fila['foto']
+            );
+        }
+
+        return null;
+    }
+
     public static function findAll()
     {
         $con = DB::getConnection();
@@ -348,9 +374,7 @@ class RepoAlumno
         ];
     }
 
-    /**
-     * Genera un username único a partir del nombre y apellido
-     */
+    
     private static function generarUsername($nombre, $apellido)
     {
         // Formato: nombre.apellido (todo en minúsculas, sin espacios ni caracteres especiales)
@@ -368,10 +392,7 @@ class RepoAlumno
         return $username;
     }
 
-    /**
-     * Genera una contraseña automática
-     * Formato: últimos 3 dígitos del DNI + 2 primeras letras del nombre en mayúscula
-     */
+    
     private static function generarPassword($dni, $nombre)
     {
         $ultimosTresDni = substr(preg_replace('/[^0-9]/', '', $dni), -3);

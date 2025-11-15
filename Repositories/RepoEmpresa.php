@@ -30,6 +30,29 @@ class RepoEmpresa
         return null;
     }
 
+    public static function findByIdUser($idUser)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT * FROM empresa WHERE id_user_fk = ?");
+        $stmt->execute([$idUser]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($fila) {
+            return new Empresa(
+                $fila['id'],
+                $fila['id_user_fk'],
+                $fila['nombre'],
+                $fila['direccion'],
+                $fila['persona_de_contacto'],
+                $fila['correo_de_contacto'],
+                $fila['telefono_de_contacto'],
+                $fila['logo']
+            );
+        }
+
+        return null;
+    }
+
     public static function findAll()
     {
         $con = DB::getConnection();

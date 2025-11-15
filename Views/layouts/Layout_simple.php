@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mi Proyecto</title>
+    <title><?= $this->e($titulo ?? 'Portal de Empleo') ?></title>
     <link rel="stylesheet" href="../Public/css/style.css">
     <?= $this->section('css') ?>
 </head>
