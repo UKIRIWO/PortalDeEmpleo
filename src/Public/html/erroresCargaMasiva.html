@@ -1,0 +1,47 @@
+<div class="velo" id="veloEditarAlumno">
+    <span class="cerrarModal" id="cerrarModalEditarAlumno">X</span>
+    <div class="modal">
+        <h2>
+            
+            Algunos Alumnos No Se Pudieron Cargar
+        </h2>
+        
+        <div class="error-message" id="mensajeErrores">
+            Se han detectado errores en algunos registros
+        </div>
+
+        <div class="info-message">
+            <strong>Instrucciones:</strong> Corrige los datos erróneos en la tabla de abajo y presiona "Reintentar" para volver a subirlos. Los alumnos que no tengan su checkbox marcado serán ignorados.
+        </div>
+
+        <div class="errores-section">
+            <h3>Alumnos con Errores</h3>
+            <table class="tabla-errores" id="tablaAlumnosErrores">
+                <thead>
+                    <tr>
+                        <th class="check-header">
+                            <input type="checkbox" id="checkTodosErrores" title="Seleccionar/Deseleccionar todos" checked>
+                        </th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido 1</th>
+                        <th>Correo</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyAlumnosErrores">
+                    <!-- Se llenará dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="button-group">
+            <button id="btnReintentar" class="btn btn-warning">
+                Reintentar Subida
+            </button>
+            <button id="btnIgnorarErrores" class="btn btn-danger">
+                Ignorar Errores y Salir
+            </button>
+        </div>
+    </div>
+</div>

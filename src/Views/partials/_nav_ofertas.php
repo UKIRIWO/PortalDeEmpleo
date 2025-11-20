@@ -1,0 +1,1 @@
+<h1>Eres admin o empresa</h1>

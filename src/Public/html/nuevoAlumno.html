@@ -1,0 +1,117 @@
+<div class="velo" id="veloRegistroAlumno">
+    <span class="cerrarModal" id="cerrarModalAlumno">X</span>
+    <div class="modal">
+        <h2>Registro de Alumno</h2>
+
+        <form action="registrar_alumno.php" method="POST" id="formAlumno" enctype="multipart/form-data">
+
+            <h3>Datos de usuario</h3>
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevoUsername">Nombre de usuario</label>
+                    <input type="text" id="nuevoUsername" name="username" >
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevoPassword">Contraseña</label>
+                    <input type="password" id="nuevoPassword" name="password" >
+                </div>
+                <div class="inptLabe">
+                    <label for="repetirPassword">Repetir contraseña</label>
+                    <input type="password" id="repetirPassword" name="password_confirm" >
+                </div>
+            </div>
+
+            <h3>Datos personales</h3>
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevoDni">DNI</label>
+                    <input type="text" id="nuevoDni" name="dni" maxlength="9" >
+                </div>
+                <div class="inptLabe">
+                    <label for="nuevoEmail">Email</label>
+                    <input type="email" id="nuevoEmail" name="email" >
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevoNombre">Nombre</label>
+                    <input type="text" id="nuevoNombre" name="nombre" >
+                </div>
+                <div class="inptLabe">
+                    <label for="nuevoApe1">Primer apellido</label>
+                    <input type="text" id="nuevoApe1" name="ape1" >
+                </div>
+                <div class="inptLabe">
+                    <label for="nuevoApe2">Segundo apellido</label>
+                    <input type="text" id="nuevoApe2" name="ape2">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevaFecha">Fecha de nacimiento</label>
+                    <input type="date" id="nuevaFecha" name="fecha_nacimiento" >
+                </div>
+                <div class="inptLabe">
+                    <label for="nuevaDireccion">Dirección</label>
+                    <input type="text" id="nuevaDireccion" name="direccion" >
+                </div>
+            </div>
+
+            <h3>Estudios</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="selectFamilia">Familia Profesional</label>
+                    <select id="selectFamilia" required>
+                        <option value="">-- Selecciona una familia --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectCiclo">Ciclo Formativo</label>
+                    <select id="selectCiclo" required disabled>
+                        <option value="">-- Primero selecciona familia --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Finalización</label>
+                    <input type="date" id="fechaFin">
+                </div>
+            </div>
+
+            <h3>Documentación</h3>
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevoCurriculum">Currículum (Archivo)</label>
+                    <input type="file" id="nuevoCurriculum" name="curriculum" accept=".pdf,.doc,.docx">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="nuevaFotoPerfil">Foto de Perfil</label>
+                    <input type="file" id="nuevaFotoPerfil" name="fotoPerfil" accept="image/*">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <span class="btn-submit" id="btnGuardarNuevoAlumno">Guardar</span>
+                <span class="btn-submit" id="btnCancelarNuevoAlumno">Cancelar</span>
+            </div>
+            
+            
+        </form>
+    </div>
+</div>

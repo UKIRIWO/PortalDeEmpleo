@@ -1,0 +1,7 @@
+{
+    "require": {
+        "league/plates": "^3.5",
+        "dompdf/dompdf": "^3.1",
+        "phpmailer/phpmailer": "^7.0"
+    }
+}

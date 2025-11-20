@@ -1,0 +1,82 @@
+<div class="velo" id="veloEditarAlumno">
+    <span class="cerrarModal" id="cerrarModalEditarAlumno">X</span>
+    <div class="modal">
+        <h2>Editar Alumno</h2>
+
+        <form id="formEditarAlumno" enctype="multipart/form-data">
+            <h3>Datos de usuario</h3>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarUsername">Nombre de usuario</label>
+                    <input type="text" id="editarUsername" name="editarUsername" required>
+                </div>
+                <div class="inptLabe">
+                    <label for="editarPassword">Cambiar contraseña</label>
+                    <input type="password" id="editarPassword" name="editarPassword">
+                </div>
+            </div>
+
+            <h3>Datos personales</h3>
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarDni">DNI</label>
+                    <input type="text" id="editarDni" name="editarDni" maxlength="9" required>
+                </div>
+
+                <div class="inptLabe">
+                    <label for="editarNombre">Nombre</label>
+                    <input type="text" id="editarNombre" name="editarNombre" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarApe1">Primer apellido</label>
+                    <input type="text" id="editarApe1" name="editarApe1" required>
+                </div>
+
+                <div class="inptLabe">
+                    <label for="editarApe2">Segundo apellido</label>
+                    <input type="text" id="editarApe2" name="editarApe2">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarFechaNacimiento">Fecha de nacimiento</label>
+                    <input type="date" id="editarFechaNacimiento" name="editarFechaNacimiento" required>
+                </div>
+
+                <div class="inptLabe">
+                    <label for="editarDireccion">Dirección</label>
+                    <input type="text" id="editarDireccion" name="editarDireccion" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarEmail">Correo electrónico</label>
+                    <input type="email" id="editarEmail" name="editarEmail" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarCurriculum">Currículum</label>
+                    <input type="file" id="editarCurriculum" name="editarCurriculum">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="inptLabe">
+                    <label for="editarFoto">Foto del alumno</label>
+                    <input type="file" id="editarFoto" name="editarFoto" accept="image/*">
+                </div>
+            </div>
+        </form>
+        <div class="div-Guardar">
+            <button class="btnAgregar" id="btnGuardarEditar">Guardar cambios</button>
+        </div>
+    </div>
+</div>

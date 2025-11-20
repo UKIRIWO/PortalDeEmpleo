@@ -1,0 +1,74 @@
+<div class="velo" id="veloCurriculumAlumno">
+    <span class="cerrarModal" id="btnCerrarCurriculum">X</span>
+    <div class="modal modalCurriculum">
+        <h2>Carga Masiva de Alumnos</h2>
+
+        <div class="info-message">
+            <strong>Formato CSV requerido:</strong> dni, nombre, ape1, correo (sin encabezados)
+        </div>
+
+        <div class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="selectFamilia">Familia Profesional *</label>
+                    <select id="selectFamilia" required>
+                        <option value="">-- Selecciona una familia --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectCiclo">Ciclo Formativo *</label>
+                    <select id="selectCiclo" required disabled>
+                        <option value="">-- Primero selecciona familia --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Finalización</label>
+                    <input type="date" id="fechaFin">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputCSV">Archivo CSV *</label>
+                <input type="file" id="inputCSV" accept=".csv" required>
+            </div>
+
+            <div class="button-group">
+                <button id="btnPintarAlumnos" class="btn btn-primary">Pintar Alumnos</button>
+                <button id="btnLimpiarTabla" class="btn btn-secondary">Limpiar Tabla</button>
+            </div>
+        </div>
+
+        <div class="tabla-alumnos-container" id="tablaAlumnosContainer">
+            <h3>Alumnos a Cargar</h3>
+            <table class="tabla-alumnos" id="tablaAlumnos">
+                <thead>
+                    <tr>
+                        <th class="check-header">
+                            <input type="checkbox" id="checkTodos" title="Seleccionar/Deseleccionar todos">
+                        </th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido 1</th>
+                        <th>Correo</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyAlumnos">
+                    <!-- Se llenará dinámicamente -->
+                </tbody>
+            </table>
+
+            <div class="button-group">
+                <button id="btnSubirDatos" class="btn btn-success">Subir Datos</button>
+            </div>
+        </div>
+    </div>
+</div>

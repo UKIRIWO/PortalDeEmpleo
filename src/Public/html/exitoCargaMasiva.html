@@ -1,0 +1,41 @@
+<div class="velo" id="veloCurriculumAlumno">
+    <span class="cerrarModal" id="btnCerrarCurriculum">X</span>
+    <div class="modal modalCurriculum">
+        <h2>
+            Carga Completada con Éxito
+        </h2>
+        
+        <div class="success-message" id="mensajeExito">
+            Se han guardado correctamente todos los alumnos
+        </div>
+
+        <div class="info-message">
+            <strong>Importante:</strong> Guarda estas credenciales y entrégalas a los alumnos. Una vez cerrado este modal, no podrás volver a verlas.
+        </div>
+
+        <div class="credenciales-section">
+            <h3>Credenciales Generadas</h3>
+            <table class="tabla-credenciales" id="tablaCredenciales">
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Se llenará dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="button-group">
+            <button id="btnSubirMas" class="btn btn-primary">
+                Subir Más Alumnos
+            </button>
+            <button id="btnVolverPanel" class="btn btn-secondary">
+                Volver al Panel
+            </button>
+        </div>
+    </div>
+</div>

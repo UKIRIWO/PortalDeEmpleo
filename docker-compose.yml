@@ -1,0 +1,45 @@
+services:
+
+  php-apache:
+    build: .
+    container_name: php_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    depends_on:
+      - mysql
+      - mailhog
+    networks:
+      - red_personalizada
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: portal_de_empleo
+      MYSQL_PASSWORD: root
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    networks:
+      - red_personalizada
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - red_personalizada
+
+networks:
+  red_personalizada:
+    driver: bridge
